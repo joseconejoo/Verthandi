@@ -1,0 +1,306 @@
+{% extends 'index.html' %}
+{% load humanize %}
+
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Asistencia Informatica</h1>
+        <h1 class="fblanc">20 de noviembre 2019</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        <div class="item active left">
+          </div>
+
+          
+            <div class="container">
+
+
+
+              <table class="bg-color">
+              <tr>
+                <th>Nº</th>
+                <th>Usuario </th>
+                <th>Nombre</th>
+                {% comment %}
+                <th>departamento</th>
+                <th>Perfil</th>
+                {% endcomment %}
+
+                <th>asistente</th>
+
+              </tr>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>1</h3>
+                      </td>
+                        <td>
+                           Panclox99 
+                        </td>
+                        <td>
+                          Panclosito de la Trinidad Palacios
+                        </td>
+                            
+
+                        <td>
+
+                            <span id="iconB" class="fa fa-check" style="color:rgba(0, 255, 0,0.95);" ></span>
+
+                        </td>
+
+
+
+
+
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>2</h3>
+                      </td>
+                        <td>
+                           Rufin 
+                        </td>
+                        <td>
+                          Rufo de la Trinidad Palacios
+                        </td>
+                            
+
+                        <td>
+
+                            <span id="iconB" class="fa fa-times" style="color:rgba(255, 0, 0,0.95);" ></span>
+
+                        </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'noti_detalle' v_us1.pk %}" class="btn btn-primary" >Ir</a>
+
+                        </td>
+                        <td>
+                          <a href="{% url 'userAP'%}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                        {% endcomment %}
+
+                      </span>
+                  </div>
+                  </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% for v_us1 in v_us %}
+              
+
+              <!-- hola -->
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+                        <td>
+                           {{v_us1.username }}
+
+                        </td>
+                        <td>
+                          {% for dat in datos %}
+                          {% if dat.pk == v_us1.pk %}
+                            {{dat.nombre}}
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td>
+                            {% for dat in datos %}
+                            {% if dat.pk == v_us1.pk %}
+                              {{dat.cedula|intcomma}}
+
+                              {% endif %}
+                              {% endfor %}
+
+                        </td>
+                            
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+                        </td>
+                        {% endcomment %}
+                        <td>
+                          <a href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                      </span>
+                  </div>
+                  </tr>
+              {% endfor %}
+              </table>
+
+            </div>
+          </div>
+
+          
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="pr1">Nueva Publicacion</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' action="a" id="F-bs-1" name="amxj">
+
+            <fieldset>
+              {% for field in form2 %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {{ field.errors }}
+                </div>
+                  {% if forloop.counter == 1%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder='Titulo' {{field}}
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if forloop.counter == 2%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder="Informacion" type="text" {{field}} 
+                    </div>
+                  </div>
+                  {% endif %}
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}
+ </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Fav and touch icons -->
+  <link rel="shortcut icon" href="img/icons/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/72x72.png">
+  <link rel="apple-touch-icon-precomposed" href="img/icons/default.png">
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/familysatisfy-bree+serif-candal-pt+sans.css' %}">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'css2/lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'css2/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css2/css/style19.css' %}" rel="stylesheet">
+
+  <!--Your custom colour override - predefined colours are: colour-blue.css, colour-green.css, colour-lavander.css, orange is default-->
+  <link href="#" id="colour-scheme" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: Valkyria
+    Theme URL: https://bootstrapmade.com/Valkyria-free-multipurpose-bootstrap-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+
+</head>
+
+<!-- ======== @Region: body ======== -->
+
+<body class="fullscreen-centered page-login">
+  <!--Change the background class to alter background image, options are: benches, boots, buildings, city, metro -->
+  <div id="background-wrapper" class="benches" data-stellar-background-ratio="0.8">
+    {% block content %} {% endblock %}
+    <!-- ======== @Region: #content ======== -->
+  </div>
+
+</body>
+
+</html>

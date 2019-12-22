@@ -1,0 +1,225 @@
+{% extends 'index.html' %}
+
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+<div id="highlighted-slider" class="container slide">
+  <div class="item-slider" data-toggle="owlcarousel" data-owlcarousel-settings='{"singleItem":true, "navigation":true, "transitionStyle":"fadeUp", "autoPlay":true, "pagination":false}'  >
+    <div class="item active first">
+      <div class="row">
+        <div class="bg-color21 col-md-1 hidden-xs">
+          
+        </div>
+        <div class="col-md-5 text-right-md item-caption bg-color3">
+          <p class="h1 text-weight-light">
+              
+            </p>
+          <p class='titulo-s'>La unidad lo hace todo y, por lo mismo, debemos conservar este precioso principio
+            <br><br>
+            -Simon Bolivar</p>
+        </div>
+        <div class="bg-color2 col-md-1 hidden-xs">
+          
+        </div>
+
+        <div class="col-md-3 hidden-xs">
+          <img src="static/css2/img/Simon-bolivar.jpg" alt="" class="center-block img-responsive">
+        </div>
+      </div>
+    </div>
+    <div class="item second">
+      <div class="row">
+        <div class="bg-color21 col-md-1 hidden-xs">
+          
+        </div>
+        <div class="col-md-5 text-right-md item-caption bg-color3">
+
+            <p class='titulo-s'>La unidad lo hace todo y, por lo mismo, debemos conservar este precioso principio
+
+            -Simon Bolivar</p>
+        </div>
+        <div class="bg-color2 col-md-1 hidden-xs">
+          
+        </div>
+
+        <div class="col-md-3 hidden-xs">
+          <img src="img/slides/slide2.png" alt="" class="center-block img-responsive">
+        </div>
+      </div>
+    </div>
+    <div class="item third">
+      <div class="row">
+        <div class="bg-color21 col-md-1 hidden-xs">
+          
+        </div>
+
+        <div class="col-md-5 text-weight-light-md item-caption bg-color3">
+          <h2 class="h1 text-weight-light">
+              Valkyria
+            </h2>
+
+            <p class='titulo-s'>Sistema de Información Para el Registro y Control Del Clap “Alimento” En La Comunidad Arenosa1.</p>
+        </div>
+        <div class="bg-color2 col-md-1 hidden-xs">
+          
+        </div>
+
+        <div class="col-md-3 hidden-xs">
+          <img src="static/css2/img/Simon-bolivar.jpg" alt="" class="center-block img-responsive">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Gobernacion de Portuguesa</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        <div class="item active left">
+          </div>
+          {% comment %}
+          {% if user.is_superuser %}
+          <a href="{% url 'post_new' %}" class="top-menu text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_new' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nuevo Post</span></a>
+          <br>
+          <br>
+          {% endif %}
+          {% endcomment %}
+          <div class="col-md-12" style="padding-bottom:60px;">
+            <div class="item active left">
+              <div class="col-md-6 col-sm-6 left-images">
+                <img src="static/css2/img/gobernacion-de-Portuguesa.jpg" class="img-responsive">
+              </div>
+              <div class="col-md-6 col-sm-6 details-text">
+                <div class="content-holder">
+                  <span> <h2>Informacion de interes <span class="colorBlanc2 text-center"></span> </h2> </span>
+                  <p></p>
+                  <address>
+                              <strong>Mision: </strong>
+                                La Gobernación del Estado Portuguesa, es una institución pública que representa al Estado dentro del marco de sus atribuciones y funciones, la cual tiene como propósito mejorar la calidad de vida de los ciudadanos a través del desarrollo económico y social, así como también se encarga de cuidar la conservación del orden público administrativo como los recursos y servicios de la comunidad, lo cual garantiza el desarrollo integral del estado.
+                              <div class="colorBlanc3">
+                                <strong>Ubicacion: </strong>
+                                <span href="" class="colorBlanc3">Entre Calles 15 Y 16 Carrera 5. Guanare. <a href="https://www.google.com/maps/place/Gobernaci%C3%B3n+del+Estado+Portuguesa/@9.0443583,-69.7505667,15z/data=!4m5!3m4!1s0x0:0x3b4751bb283f6da4!8m2!3d9.0443583!4d-69.7505667" class="fas fa-external-link-alt"><i class="fa fa-external-link"></i></a> </span> 
+                              </div>
+                              <strong>Hora de atencion: </strong>
+                              8:00-12:00 PM
+                              <br>
+                              <strong>Correo: </strong>
+                              inf0rmat1cadirecgobportuguesa@outlook.es
+                            </address>
+                  <a class="btn btn-imfo btn-read-more" href="https://es.wikipedia.org/wiki/Gobernador_de_Portuguesa#V%C3%A9ase_tambi%C3%A9n">Informacion relacionada - Wikipedia</a>
+                </div>
+              </div>
+            </div>
+          
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="pr1">Nueva Publicacion</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' action="a" id="F-bs-1" name="amxj">
+
+            <fieldset>
+              {% for field in form2 %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {{ field.errors }}
+                </div>
+                  {% if forloop.counter == 1%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder='Titulo' {{field}}
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if forloop.counter == 2%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder="Informacion" type="text" {{field}} 
+                    </div>
+                  </div>
+                  {% endif %}
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

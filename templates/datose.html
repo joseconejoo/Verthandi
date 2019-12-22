@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" style="padding:60px;">
+        <h1 class="header-h" ><p> Perfil</p></h1>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        <div class="item active left">
+          </div>
+
+            <table class="bg-color">
+                <p> </p>
+                <form accept-charset="UTF-8" role="form" method='post'>
+
+                	<fieldset>
+			                {% for field in form %}
+
+
+			                {% csrf_token %}
+			                {% if field.errors %}
+			                <script type="text/javascript">
+				                var varka = '{{field.errors}}';
+				                varka = varka.replace(/\<li>/g, '');
+				                varka = varka.replace(/\<\/li>/g, '');
+				                varka = varka.replace(/\<\/ul>/g, '');
+				                varka = varka.replace(/\<ul class="errorlist">/g, '')
+				                varka = varka.replace('.', '.\n\n');
+				                alert(varka);
+			                </script>
+			                {% endif %}
+
+			                {% comment %}
+
+			                <td>Nombre de usuario:</td>
+			                <td> {{ field }} </td>
+			                <br>
+			                {% endcomment %}
+
+			                {% if forloop.counter == 1%}
+			                <tr>
+			                <td>Nombre: </td><td> {{ field }}</td>
+			                </tr>
+			                {% endif %}
+
+			                {% if forloop.counter == 2%}
+			                <tr>
+			                <td>Apellido: </td> <td>{{ field }}</td>
+			                </tr>
+			                {% endif %}
+
+			                {% if forloop.counter == 3%}
+			                <tr>
+			                <td>Cedula: </td> <td> {{ field }}</td>
+			                </tr>
+			                {% endif %}
+
+			                {% if forloop.counter == 4%}
+			                <tr>
+			                <td>Correo: </td> <td> {{ field }}</td>
+			                </tr>
+			                {% endif %}
+
+
+			                {% endfor %}
+	                
+
+			            </table>
+                	  <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
+
+
+
+
+                	</fieldset>
+                	<br>
+
+
+                </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center" id="pr1">Producto Nuevo</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' action="asd" id="F-bs-1" name="amxj">
+
+            <fieldset>
+              {% for field in form2 %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {{ field.errors }}
+                </div>
+                  {% if forloop.counter == 1%}
+                  <div class="">{{field}}
+                  </div>
+                  {% endif %}
+
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

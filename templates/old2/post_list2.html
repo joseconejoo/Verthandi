@@ -1,0 +1,365 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load myfilters %}
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Notificaciones de fallas</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        {% if user.is_superuser or user.is_staff %}
+        <div class="item active left">
+          </div>
+
+          
+            <div class="container">
+
+
+
+              <table class="bg-color">
+              <tr>
+                  
+                
+                <th>Nº</th>
+
+                <th>Nombre</th>
+                <th>Nº publicacione</th>
+                <th>Ultima publicacion</th>
+              </tr>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+                  <div class="">
+                    <td class="estado_prog_ver">
+                      <h3>1</h3>
+                      </td>
+                        <td>
+                           Problemas Solucionados
+
+                        </td>
+                        <td>
+                          0
+                        </td>
+                        <td>
+                          
+
+                        </td>
+                            
+
+
+                      </span>
+                  </div>
+                  </tr>
+
+
+
+
+                  <tr>
+
+                      <div class="">
+                        <td class="estado_prog_amar">
+                          <h3>2</h3>
+                          </td>
+                            <td>
+                               Soluciones en Proceso
+
+                            </td>
+                            <td>
+                              0
+                            </td>
+                            <td>
+                              
+
+                            </td>
+                                
+
+
+                          </span>
+                      </div>
+                      </tr>
+
+
+                    <tr>
+
+                        <div class="">
+                          <td class="estado_prog_red">
+                            <h3>3</h3>
+                            </td>
+                              <td>
+                                 Desincorporacion
+
+                              </td>
+                              <td>
+                                0
+                              </td>
+                              <td>
+                                
+
+                              </td>
+                                  
+
+
+                            </span>
+                        </div>
+                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  
+                  <a class="top-menu text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% for v_us1 in v_us %}
+              
+
+              <!-- hola -->
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+                        <td>
+                           {{v_us1.username }}
+
+                        </td>
+                        <td>
+                          {% for dat in datos %}
+                          {% if dat.pk == v_us1.pk %}
+                            {{dat.nombre}}
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td>
+                            {% for dat in datos %}
+                            {% if dat.pk == v_us1.pk %}
+                              {{dat.cedula|intcomma}}
+
+                              {% endif %}
+                              {% endfor %}
+
+                        </td>
+                            
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+                        </td>
+                        {% endcomment %}
+                        <td>
+                          <a href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                      </span>
+                  </div>
+                  </tr>
+              {% endfor %}
+              </table>
+              
+
+            </div>
+          </div>
+
+          
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="pr1">Notificacion de Falla</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+
+            <fieldset>
+              {% for field in form %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {{ field.errors }}
+                </div>
+                  {% if forloop.counter == 1%}
+                    {{field|addclass:'form-control blancColor'}}
+                  {% endif %}
+                  {% if forloop.counter == 2%}
+                    {{field|addclass:'form-control blancColor'}}
+                  {% endif %}
+                  {% if forloop.counter == 3%}
+                    {{field|notifa3:'form-control blancColor'}}
+                  {% endif %}
+                  <div class="col-md-6">
+                    {% if forloop.counter == 4%}
+                      {{field|notifa1:'form-control blancColor'}}
+                    {% endif %}
+
+                  </div>
+                  <div class="col-md-6">
+                    {% if forloop.counter == 5%}
+                      {{field|notifa2:'form-control blancColor'}}
+                    {% endif %}
+
+                  </div>
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+{% endblock %}

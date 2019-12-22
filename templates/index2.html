@@ -1,0 +1,57 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}
+ </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <link rel="shortcut icon" href="img/icons/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/72x72.png">
+  <link rel="apple-touch-icon-precomposed" href="img/icons/default.png">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/familysatisfy-bree+serif-candal-pt+sans.css' %}">
+
+  <link href="{% static 'css2/lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'css2/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'css2/css/style19.css' %}" rel="stylesheet">
+
+  <link href="#" id="colour-scheme" rel="stylesheet">
+
+
+</head>
+
+
+<body class="fullscreen-centered page-login">
+  <div id="background-wrapper" class="benches" data-stellar-background-ratio="0.8">
+    {% block content %} {% endblock %}
+  </div>
+
+</body>
+
+</html>
+
+<script src="{% static 'css2/js/jquery.min.js' %}"></script>
+<script src="{% static 'css2/js/jquery.easing.min.js' %}"></script>
+
+<script src="{% static 'css2/js/bootstrap.min.js' %}"></script>
+
+
+<script src="{% static 'css2/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'css2/lib/stellar/stellar.min.js' %}"></script>
+<script src="{% static 'css2/lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'css2/lib/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'css2/contactform/contactform.js' %}"></script>
+
+<script src="{% static 'css2/js/custom15.js' %}"></script>
+{% block contentscripts1 %}
+{% endblock %}

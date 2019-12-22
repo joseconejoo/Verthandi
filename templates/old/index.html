@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="es">
+	
+
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=divice-width, initial-scale=0.1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet">
+	
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{% static 'lib/fontawesome/css/all.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+	<title>|Valkyria|</title>
+</head>
+<body>
+	<div class="contenedor">
+		<article>
+
+
+			<!--
+			<button class="boton-abrir" id="boton-abrir">Incio de sesion</button>
+		-->
+			{% if user.is_authenticated %}
+			<h1>Bienvenido.</h1>
+			<a class="boton-abrir" href="{% url 'logout' %}">logout</a>
+			{% else %}
+			<h1>¿Preparado para ingresar?</h1>
+			<a class="boton-abrir" id="boton-abrir" href="{% url 'login'%}">Login</a>
+			<a class="boton-abrir" id="boton-abrir" href="{% url 'registros1'%}">Registrese</a>
+
+
+
+		    {% endif %}
+			<p>
+				
+			</p>
+
+		</article>
+		<div class="page-header">
+		    <h1><a href="/">Valkyria</a></h1>
+		    {% comment %}
+		    {% if user.is_authenticated %}
+		    <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+		    {% else %}
+		    {% endif %}
+		    {% endcomment %}
+
+		    <p>
+		    	
+		    </p>
+		    {% block content2 %}
+		    {% endblock %}
+		</div>
+
+		<div class="content container">
+		    <div class="row">
+		        <div class="col-md-8">
+		        {% block content %}
+		        {% endblock %}
+		        </div>
+		    </div>
+		</div>
+		
+		
+	</div>
+
+	<!--
+	<footer>System Valkyria</footer>
+	-->
+
+<body>
+	<div class="fondo">
+		
+	</div>
+
+</body>
+</body>
+</html>

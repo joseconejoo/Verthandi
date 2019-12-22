@@ -1,0 +1,375 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load myfilters %}
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Notificaciones de fallas</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        {% if user.is_superuser or user.is_staff %}
+        <div class="item active left">
+          </div>
+
+          
+            <div class="container">
+
+
+
+              <table class="bg-color">
+              <tr>
+                  
+                
+                <th>Nº</th>
+
+                <th>Nombre</th>
+                <th>Nº publicacione</th>
+                <th>Ultima publicacion</th>
+              </tr>
+
+
+
+
+
+
+
+
+
+
+
+              <tr>
+
+                  <div class="">
+                    <td class="estado_prog_ver">
+                      <h3>1</h3>
+                      </td>
+                        <td>
+                           Problemas Solucionados
+
+                        </td>
+                        <td>
+                          0
+                        </td>
+                        <td>
+                          
+
+                        </td>
+                            
+
+
+                      </span>
+                  </div>
+                  </tr>
+
+
+
+
+                  <tr>
+
+                      <div class="">
+                        <td class="estado_prog_amar">
+                          <h3>2</h3>
+                          </td>
+                            <td>
+                               Soluciones en Proceso
+
+                            </td>
+                            <td>
+                              0
+                            </td>
+                            <td>
+                              
+
+                            </td>
+                                
+
+
+                          </span>
+                      </div>
+                      </tr>
+
+
+                    <tr>
+
+                        <div class="">
+                          <td class="estado_prog_red">
+                            <h3>3</h3>
+                            </td>
+                              <td>
+                                 Desincorporacion
+
+                              </td>
+                              <td>
+                                0
+                              </td>
+                              <td>
+                                
+
+                              </td>
+                                  
+
+
+                            </span>
+                        </div>
+                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% if form %}
+                  
+                  <a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
+                  {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+              </table>
+
+
+            </div>
+          </div>
+
+
+          <!-- de aqui para abajo modificar -->
+
+          {% if user.is_superuser or user.is_staff %}
+
+        <table class="bg-color">
+          <tr>
+              
+            
+            <th>Nº</th>
+
+            <th>Usuario - departamento</th>
+            <th>Nombre</th>
+            {% comment %}
+            <th>departamento</th>
+            <th>Perfil</th>
+            {% endcomment %}
+            <th>Problema</th>
+            <th>Enlace</th>
+          </tr>
+
+          <tr>
+
+              <div class="">
+                <td class="estado_prog_whit">
+                  <h3>1</h3>
+                  </td>
+                    <td>
+                       eadministra - Departamento de administracion y contabilidad
+
+                    </td>
+                    <td>
+                      Panclo de la Trinidad Palacios
+                    </td>
+                    <td>
+                      Mi equipo presenta fallas a la hora de intentar prenderlo, no hace nada.
+
+                    </td>
+                        
+
+                    <td>
+
+                        <a href="{% url 'noti_detalle' %}" class="btn btn-primary" >Ir</a>
+
+                    </td>
+
+
+                  </span>
+              </div>
+              </tr>
+
+        </table>          
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="pr1">Notificacion de Falla</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+
+            <fieldset>
+              {% for field in form %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {% if field.errors %}
+                  <script type="text/javascript">
+                    var varka = '{{field.errors}}';
+                    varka = varka.replace(/\<li>/g, '');
+                    varka = varka.replace(/\<\/li>/g, '');
+                    varka = varka.replace(/\<\/ul>/g, '');
+                    varka = varka.replace(/\<ul class="errorlist">/g, '')
+                    varka = varka.replace('.', '.\n\n');
+
+
+                    alert(varka);
+                  </script>
+                  {% endif %}
+
+                </div>
+                  {% if forloop.counter == 1%}
+                    {{field|addclass:'form-control blancColor'}}
+                  {% endif %}
+                  {% if forloop.counter == 2%}
+                    {{field|addclass:'form-control blancColor'}}
+                  {% endif %}
+                  {% if forloop.counter == 3%}
+                    {{field|notifa3:'form-control blancColor'}}
+                  {% endif %}
+                  <div class="col-md-6">
+                    {% if forloop.counter == 4%}
+                      {{field|notifa1:'form-control blancColor'}}
+                    {% endif %}
+
+                  </div>
+                  <div class="col-md-6">
+                    {% if forloop.counter == 5%}
+                      {{field|notifa2:'form-control blancColor'}}
+                    {% endif %}
+
+                  </div>
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+{% endblock %}

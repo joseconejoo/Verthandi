@@ -1,0 +1,82 @@
+{% extends 'index.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="bg-color" class="section-padding">
+	<div class="container">
+
+		<div class="col-xs-12 text-center" style="padding:60px;">
+		  <h1 class="fblanc">Aceptar Usuarios</h1>
+		  
+		  <br>
+		</div>
+
+		<table class="bg-color">
+		<tr>
+		  <th>Nº</th>
+		  <th>Usuario</th>
+		  <th>Nombre</th>
+		  <th>Cedula</th>
+		  {% comment %}
+		  <th>Perfil</th>
+		  {% endcomment %}
+		  <th>Aceptar</th>
+
+		</tr>
+		{% for v_us1 in v_us %}
+		
+
+		<!-- hola -->
+
+		<tr>
+
+		    <div class="">
+		      <td>
+		        <h3>{{ forloop.counter }}</h3>
+		        </td>
+		        	<td>
+		        	   {{v_us1.username }}
+
+		        	</td>
+		        	<td>
+		        		{% for dat in datos %}
+		        		{% if dat.pk == v_us1.pk %}
+		        			{{dat.nombre}}
+
+		        	  	{% endif %}
+		        	  	{% endfor %}
+
+		        	</td>
+		        	<td>
+		        			{% for dat in datos %}
+		        			{% if dat.pk == v_us1.pk %}
+		        				{{dat.cedula|intcomma}}
+
+		        		  	{% endif %}
+		        		  	{% endfor %}
+
+		        	</td>
+		              
+
+		          {% comment %}    
+		          <td>
+
+		          		<a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+		          </td>
+		          {% endcomment %}
+		          <td>
+		          	<a href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+		          	<a href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+		          </td>
+		        </span>
+		    </div>
+		    </tr>
+		{% endfor %}
+		</table>
+
+	</div>
+</div>
+{% endblock %}

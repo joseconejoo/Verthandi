@@ -1,0 +1,98 @@
+{% extends 'index2.html' %}
+{% load myfilters %}
+
+{% block title %}Login{% endblock %}
+
+
+
+
+
+{% block content %}
+  <div id="content">
+    <div class="header">
+      <div class="header-inner">
+        <!--navbar-branding/logo - hidden image tag & site name so things like Facebook to pick up, actual logo set via CSS for flexibility -->
+        <a class="navbar-brand center-block" href="{% url 'post_landing' %}" title="Home">
+          <h1 class="hidden">
+              <img src="img/logo.png" alt="Gaal Logo">
+              Gaal
+            </h1>
+            <h2 class="logo-name">Gaal</h2>
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="panel panel-default" id="loginP">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+            	Login
+              </h3>
+          </div>
+          <div class="panel-body">
+
+          	<form accept-charset="UTF-8" role="form" method='post'>
+
+          		<fieldset>
+          		  {% for field in form %}
+
+          		    {% csrf_token %}
+          		    <div class="errores">
+                    {% if form.errors %}
+                    <script type="text/javascript">
+                      var varka = '{{form.errors}}';
+                      varka = varka.replace(/\<li>/g, '');
+                      varka = varka.replace(/\<\/li>/g, '');
+                      varka = varka.replace(/\<\/ul>/g, '');
+                      varka = varka.replace(/\<ul class="errorlist">/g, '')
+                      varka = varka.replace(/\<ul class="errorlist nonfield">/g, '')
+                      varka = varka.replace(/__all__/g, '')
+                      varka = varka.replace('.', '.\n\n');
+
+
+                      alert(varka);
+                    </script>
+                    {% endif %}
+          		    </div>
+          		      {% if forloop.counter == 1%}
+          		      <div class="form-group">
+          		        <div class="input-group input-group-lg">
+          		          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+          		          {{field|login1:'form-control'}}
+          		        </div>
+          		      </div>
+          		      {% endif %}
+          		      {% if forloop.counter == 2%}
+          		      <div class="form-group">
+          		        <div class="input-group input-group-lg">
+          		          <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
+          		          {{field|login2:'form-control'}} 
+          		        </div>
+          		      </div>
+          		      {% endif %}
+
+          		      <p></p>
+          		      {% if field.help_text %}
+          		      <p class="help">{{ field.help_text|safe }}</p>
+          		      {% endif %}
+
+          		  {% endfor %}
+
+          		  <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+          		</fieldset>
+          		<br>
+          		<p class="m-b-0 m-t colorNegro">No tienes cuenta? <a href="{% url 'registros1' %}">Registrate</a>.</p>
+
+
+          	</form>
+
+
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /row -->
+  </div>
+
+{% endblock %}
