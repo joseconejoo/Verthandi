@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.forms import AuthenticationForm as AuthForm
 from django.contrib.auth import (
-    authenticate, get_user_model, password_validation,
+    authenticate, get_user_model, password_validation, backends
 )
 from django.utils.translation import gettext, gettext_lazy as _
 UserModel = get_user_model()
@@ -43,6 +43,23 @@ class sop_notifF(forms.ModelForm):
 	        self.fields['descrip1'].queryset = self.instance.tipo_sop.P_detal_set.order_by('nombre')
 
 
+
+
+
+class ModelBackend2(backends.ModelBackend):
+	def authenticate(self, request, username=None, password=None, **kwargs):
+	    if username is None:
+	        username = kwargs.get(UserModel.USERNAME_FIELD)
+	    try:
+	        user = UserModel._default_manager.get_by_natural_key(username)
+	    except UserModel.DoesNotExist:
+	        UserModel().set_password(password)
+	    else:
+	        if user.check_password(password):
+	            return user
+
+
+
 class AuthenticationForm(AuthForm):
 	error_messages = {
 	    'invalid_login': _(
@@ -50,9 +67,8 @@ class AuthenticationForm(AuthForm):
 	        "fields may be case-sensitive."
 	    ),
 	    'inactive': _("This account is inactive."),
-	    'inactivo': ("Esta cuenta no ha sido aprobada."),
+	    'inactivo': ("Esta cuenta no esta activa."),
 	}
-
 
 	def clean(self):
 	    username = self.cleaned_data.get('username')
@@ -60,14 +76,15 @@ class AuthenticationForm(AuthForm):
 
 	    if username is not None and password:
 	        self.user_cache = authenticate(self.request, username=username, password=password)
-	        self.verif = None
+	        self.auth = ModelBackend2()
+	        self.authUser = False
+	        
 	        try:
-	        	self.verif = User.objects.get(username=username)
+	        	self.authUser = self.auth.authenticate(self.request, username=username,password=password)
 	        except:
 	        	pass
-
-	        if self.verif:
-	        	if not self.verif.is_active:
+	        if self.authUser:
+	        	if not self.authUser.is_active:
 	        		raise self.get_inactive_user()
 	        	else:
 	        		self.validacion(self.user_cache)
@@ -106,3 +123,5 @@ class AuthenticationForm(AuthForm):
 
 		else:
 			self.confirm_login_allowed(self.user_cache)
+
+

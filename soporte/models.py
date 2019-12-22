@@ -12,9 +12,9 @@ class Niveles(models.Model):
 
 class Datos(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
-    nombVer = RegexValidator(regex=r'^[a-zA-ZñÑ]+$', message="Solo letras para el nombre por favor.")
+    nombVer = RegexValidator(regex=r'^[a-zA-ZñÑ\s]+$', message="Solo letras para el nombre por favor.")
     nombre = models.CharField(validators=[nombVer],max_length=200)
-    apellVer = RegexValidator(regex=r'^[a-zA-ZñÑ]+$', message="Solo letras para el apellido por favor.")
+    apellVer = RegexValidator(regex=r'^[a-zA-ZñÑ\s]+$', message="Solo letras para el apellido por favor.")
     apellido = models.CharField(validators=[apellVer],max_length=200)
     cedula = models.IntegerField(unique=True)
     email = models.EmailField(null=True)
