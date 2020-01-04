@@ -239,27 +239,27 @@ document.getElementById('id').scrollIntoView();
 
 /* opciones de soporte */
 
-    $("#id_tipo_sop").change(function () {
-      var url = $("#ProblemForm").attr("dataP-url");
-      var tipo_sopId = $(this).val();  
+$("#id_tipo_sop").change(function () {
+  var url = $("#ProblemForm").attr("dataP-url");
+  var tipo_sopId = $(this).val();  
 
-      if (tipo_sopId) {
-        $.ajax({
-          url: url,
-          data: {
-            'tipo_sop': tipo_sopId
-          },
-          success: function (data) {
-            $("#id_descrip1").html(data);
-          }
-        });
-
-      }
-
-      else if (!tipo_sopId) {
-        data2 = '"<option value="">---------</option>"';
-        $("#id_descrip1").html(data2);
-
+  if (tipo_sopId) {
+    $.ajax({
+      url: url,
+      data: {
+        'tipo_sop': tipo_sopId
+      },
+      success: function (data) {
+        $("#id_descrip1").html(data);
       }
     });
+
+  }
+
+  else if (!tipo_sopId) {
+    data2 = '"<option value="">---------</option>"';
+    $("#id_descrip1").html(data2);
+
+  }
+});
 

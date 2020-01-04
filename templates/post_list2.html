@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
 {% load humanize %}
 {% load myfilters %}
+
 {% block content2 %}
   {% if user.is_authenticated %}
   <div class="M_d">
@@ -200,6 +201,7 @@
                   {% if form %}
                   
                   <a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
+
                   {% endif %}
 
 
