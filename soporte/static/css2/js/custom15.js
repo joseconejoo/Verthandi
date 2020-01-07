@@ -163,9 +163,15 @@ $('#myModal1').on('show.bs.modal', function (e) {
               'max-height':'10%'
 
        });
+
        var xadd = $(e.relatedTarget).data('id');
        var valks = $(e.relatedTarget).data('href');
+       var nombre = $(e.relatedTarget).data('nombre');
+       var tipo_op = $(e.relatedTarget).data('tipo');
 
+       if (nombre && tipo_op) {
+        document.getElementById("pr1").innerHTML = "Desea "+tipo_op +" al usuario "+ nombre+" ?";
+       }
        //document.getElementById("pr1").innerHTML = x12[3];
        //var xsd = document.getElementById("Fbs1").acat;
        var oForm = document.forms["amxj"];

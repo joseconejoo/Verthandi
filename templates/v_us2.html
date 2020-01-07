@@ -68,9 +68,9 @@
 		          </td>
 		          {% endcomment %}
 		          <td>
-		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="aceptar"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
 
-		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userNE' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminar"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
 
 		          </td>
 		        </span>
@@ -88,22 +88,13 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <div class="container-modal">
   <div class="modal fade" id="myModal1">
     <div class="modal-dialog">
       <div class="modal-content">
       
         <div class="modal-header">
-          <h4 class="modal-title text-center fblanc" id="pr1">Notificacion de Falla</h4>
+          <h4 class="modal-title text-center fblanc" id="pr1">Notificacion de f</h4>
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -113,54 +104,15 @@
 
             <fieldset>
             	{% csrf_token %}
+            <div class="col-md-6">
+            	<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
 
-              {% for field in form %}
-
-                <div class="errores">
-                  {% if field.errors %}
-                  <script type="text/javascript">
-                    var varka = '{{field.errors}}';
-                    varka = varka.replace(/\<li>/g, '');
-                    varka = varka.replace(/\<\/li>/g, '');
-                    varka = varka.replace(/\<\/ul>/g, '');
-                    varka = varka.replace(/\<ul class="errorlist">/g, '')
-                    varka = varka.replace('.', '.\n\n');
-
-
-                    alert(varka);
-                  </script>
-                  {% endif %}
-
-                </div>
-                  {% if forloop.counter == 1%}
-                    {{field|addclass:'form-control blancColor'}}
-                  {% endif %}
-                  {% if forloop.counter == 2%}
-                    {{field|addclass:'form-control blancColor'}}
-                  {% endif %}
-                  {% if forloop.counter == 3%}
-                    {{field|notifa3:'form-control blancColor'}}
-                  {% endif %}
-                  <div class="col-md-6">
-                    {% if forloop.counter == 4%}
-                      {{field|notifa1:'form-control blancColor'}}
-                    {% endif %}
-
-                  </div>
-                  <div class="col-md-6">
-                    {% if forloop.counter == 5%}
-                      {{field|notifa2:'form-control blancColor'}}
-                    {% endif %}
-
-                  </div>
-                  <p></p>
-                  {% if field.help_text %}
-                  <p class="help">{{ field.help_text|safe }}</p>
-                  {% endif %}
-
-              {% endfor %}
-
-              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </div>
+            <div class="col-md-6">
+            	<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+            	
+            </div>
+              
             </fieldset>
             <br>
 
@@ -179,5 +131,17 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block modals %}
 
 {% endblock %}

@@ -90,7 +90,8 @@ table {
 }
 
 .imagen12{
-  max-width: 5%;
+  /* para rezisear la imagen*/
+  max-height: 3em;
   height: auto;
   margin-right: 2%;
 }
