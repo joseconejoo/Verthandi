@@ -1,7 +1,4 @@
 {% extends 'index2.html' %}
-{% load humanize %}
-{% load myfilters %}
-
 
 {% block title %}Registro{% endblock %}
 
@@ -23,18 +20,18 @@
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3">
         <div class="panel panel-default" id="loginP">
-          <div class="panel-heading bnegro2">
-            <h3 class="panel-title bnegro">
+          <div class="panel-heading">
+            <h3 class="panel-title">
             	Registro
 
               </h3>
           </div>
-          <div class="panel-body modal-dialog-registro">
+          <div class="panel-body">
 
           	<div class="fields" id="dentroboto">
           		<form accept-charset="UTF-8" role="form" method='post'>
 
-          			<fieldset class="">
+          			<fieldset>
           			  {% for field in form %}
 
           			    {% csrf_token %}
@@ -57,7 +54,7 @@
           			      <div class="form-group col-md-12">
           			        <div class="input-group input-group-lg">
           			          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
-                          {{field|regist1:'form-control fblanc'}}
+          			          <input class="form-control" placeholder='Usuario' {{field}}
           			        </div>
           			      </div>
           			      {% endif %}
@@ -65,7 +62,7 @@
           			      <div class="form-group col-md-6 col-sm-6">
           			        <div class="input-group input-group-lg">
           			          <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
-                          {{field|regist2:'form-control fblanc'}} 
+          			          <input class="form-control" placeholder="Contraseña" {{field}} 
           			        </div>
           			      </div>
           			      {% endif %}
@@ -73,7 +70,7 @@
           			      <div class="form-group col-md-6 col-sm-6">
           			        <div class="input-group input-group-lg">
           			          <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
-                          {{field|regist3:'form-control fblanc'}} 
+          			          <input class="form-control" placeholder="Confirmar" {{field}} 
           			        </div>
           			      </div>
 
@@ -104,7 +101,7 @@
           			      <div class="form-group col-md-6 col-sm-6">
                         <div class="input-group input-group-lg">
                           <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
-                          {{field|regist4:'form-control fblanc'}}
+                          <input class="form-control" placeholder='Nombre'  {{field}}
                         </div>
                       </div>
           			      {% endif %}
@@ -113,16 +110,15 @@
                       <div class="form-group col-md-6 col-sm-6">
                         <div class="input-group input-group-lg">
                           <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
-                          {{field|regist5:'form-control fblanc'}}
+                          <input class="form-control" placeholder='Apellido'  {{field}}
                         </div>
-
                       </div>
                       {% endif %}
                       {% if forloop.counter == 3%}
                       <div class="form-group col-md-12">
                         <div class="input-group input-group-lg">
                           <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
-                          {{field|regist6:'form-control fblanc'}}
+                          <input class="form-control" placeholder='Cedula'  {{field}}
                         </div>
                       </div>
                       {% endif %}

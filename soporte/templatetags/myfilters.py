@@ -40,3 +40,23 @@ def addclass(value, arg):
     return value.as_widget(attrs={'class': arg,"placeholder": "Detalles del problema"})
 
 
+
+@register.filter(name='regist1')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Usuario"})
+@register.filter(name='regist2')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Contraseña"})
+@register.filter(name='regist3')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Confirmar"})
+@register.filter(name='regist4')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Nombre"})
+@register.filter(name='regist5')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Apellido"})
+@register.filter(name='regist6')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Cedula"})
+

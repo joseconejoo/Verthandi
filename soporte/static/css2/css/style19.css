@@ -1144,3 +1144,75 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: 27%;
   transform: translate(0%,20%);
 }
+
+
+/* registro form x2*/
+.modal-dialog-registro {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.96) ;
+
+}
+
+.modal-dialog-registro input:focus {
+  background-image: none;
+  border-color: rgba(255, 255, 255,0.4)!important;
+  box-shadow: none!important;
+  /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
+  */
+  outline: 0 none;
+  border-bottom: 1px solid rgba(255, 255, 255,0.4);
+
+  outline: none;
+}
+
+.modal-dialog-registro select:focus {
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
+  */
+  outline: 0 none;
+  border-bottom: 1px solid rgba(255, 255, 255,0.4);
+
+  outline: none;
+
+  background-image: none;
+
+}
+
+.modal-dialog-registro button {
+  background: black;
+  border-color: transparent;
+  border-bottom: transparent;
+}
+
+
+.modal-dialog-registro button:hover {
+  background: rgba(255, 255, 255,0.05);
+  border-color: transparent;
+}
+
+.modal-dialog-registro button:active,.modal-dialog-registro button:target,.modal-dialog-registro button:focus,.modal-dialog-registro button:active:focus{
+  background: rgba(255, 255, 255,0.03);
+  border-color: transparent !important;
+  border-bottom: transparent !important;
+  outline: 0 none;
+  box-shadow: none !important;
+}
+
+.modal-dialog-registro .close{
+  color: white;
+  font-size: 23px;
+}
+
+
+.bnegro {
+  background: black;
+  background-color: black!important;
+  color:white;
+}
+
+.bnegro2 {
+  background-color: #191919!important;
+
+}
