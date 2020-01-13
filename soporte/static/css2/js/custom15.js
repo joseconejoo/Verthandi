@@ -255,6 +255,7 @@ $("#id_tipo_sop").change(function () {
       data: {
         'tipo_sop': tipo_sopId
       },
+      /*data de consulta arriba, data de recibido abajo*/
       success: function (data) {
         $("#id_descrip1").html(data);
       }
@@ -268,4 +269,5 @@ $("#id_tipo_sop").change(function () {
 
   }
 });
+
 

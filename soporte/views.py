@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import HttpResponseRedirect, HttpResponse, FileResponse
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
 from .models import sop_notif, P_detal, Niveles, Datos
 from django.contrib.auth.models import User
@@ -200,3 +200,10 @@ def opcisP(request):
     tipo_sop_id = request.GET.get('tipo_sop')
     p_detal = P_detal.objects.filter(p_opci_id=tipo_sop_id).order_by('nombre')
     return render(request, 'old2/opciones.html', {'posts': p_detal})
+
+def validar_usuario(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(data)

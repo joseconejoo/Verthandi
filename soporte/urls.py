@@ -21,5 +21,6 @@ urlpatterns = [
     path('perfil', views.Datos1, name='datos1'),
 
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
+    path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
 
 ]
