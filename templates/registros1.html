@@ -58,7 +58,9 @@
           			        <div class="input-group input-group-lg">
           			          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
                           {{field|regist1:'form-control fblanc'}}
+                          <span class="input-group-addon2" id="spaniconBRe"><i class="fa fa-times" id="iconBRe" style="color:rgba(255, 0, 0,0.95);display:none;"></i></span>
           			        </div>
+
           			      </div>
           			      {% endif %}
           			      {% if forloop.counter == 2%}
@@ -159,7 +161,13 @@
     var url = $("#ProblemForm").data('url');
 
     var username = $(this).val();
-
+    var element = document.getElementById("id_username");
+    var variable;
+    /*
+    for (variable in $(this)) {
+      console.log(variable);
+    }
+    */
     $.ajax({
       url: url,
       data: {
@@ -167,14 +175,26 @@
       },
       dataType: 'json',
       success: function (data) {
-        if (data.is_taken) {
-          alert("A user with this username already exists.");
+        if (data.usuario_tomado) {
+          $("#id_username").addClass("form-control2");
+          $("#id_username").addClass("form-control2");
+          $("#spaniconBRe").addClass("form-control2");
+          $("#iconBRe").css('display', 'inline');
+
+          /* $("#id_username").classList.add("form-control2"); */
+          /*alert("Un usuario con este nombre existe.");*/
+        }
+        else {
+          $("#id_username").removeClass("form-control2");
+          $("#spaniconBRe").removeClass("form-control2");
+          $("#iconBRe").css('display', 'none');
         }
       }
     });
 
     
   });
+
 </script>
 
 {% endblock %}
