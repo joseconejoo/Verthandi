@@ -973,6 +973,15 @@ th {
   font-size: 23px;
 }
 
+#iconBRe {
+  font-size: 23px;
+  color:rgba(255, 0, 0,0.95);
+  display:none;
+}
+#spaniconBRe {
+  display: none;
+}
+
 /*registros*/
 #iconB2 {
   font-size: 23px;
@@ -993,7 +1002,7 @@ th {
 /* Bolsa Form */
 .modal-dialog {
   width: 33%;
-  background: rgba(0, 0, 0, 0.96) ;
+  background: rgba(0, 0, 0, 0.97) ;
 
 }
 
@@ -1061,7 +1070,7 @@ th {
 
 select {
   padding: 5%;
-  background: rgba(0, 0, 0, 0.96) ;
+  background: rgba(0, 0, 0, 0.97) ;
   
   border-color: transparent;
 
@@ -1073,7 +1082,7 @@ select {
 
 }
 select option {
-  background: rgba(0, 0, 0, 0.96) ;
+  background: rgba(0, 0, 0, 0.97) ;
 
   border-color: transparent;
 
@@ -1155,14 +1164,14 @@ input[type=number]::-webkit-outer-spin-button {
 /* registro form x2*/
 .modal-dialog-registro {
   width: 100%;
-  background: rgba(0, 0, 0, 0.96) ;
+  background: rgba(0, 0, 0, 0.97) ;
 
 }
 
-.modal-dialog-registro input:focus {
+.modal-dialog-registro #ProblemForm input:focus {
   background-image: none;
-  border-color: rgba(255, 255, 255,0.3)!important;
-  box-shadow: none!important;
+  border-color: rgba(255, 255, 255,0.3);
+  box-shadow: none;
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
   outline: 0 none;
@@ -1171,39 +1180,51 @@ input[type=number]::-webkit-outer-spin-button {
   outline: none;
 }
 
-.modal-dialog-registro input:focus + #spaniconBRe {
-  background-image: none;
-  border-color: rgba(255, 255, 255,0.3)!important;
-  box-shadow: none!important;
-  /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
-  */
+.modal-dialog-registro #ProblemForm span:not(.form-control-neg) input:focus + #spaniconBRe {
   outline: 0 none;
-  border-bottom: 1px solid rgba(255, 255, 255,0.3);
 
   outline: none;
+  background-image: none;
+  border-color: rgba(255, 0, 0,0.9);
+
+  border-bottom: 1px solid rgba(255, 255, 255,0.3);
+
+
 }
+.modal-dialog-registro #ProblemForm .form-control-neg input:focus + #spaniconBRe {
+  
+  outline: 0 none!important;
+  outline-color: none!important;
 
+  outline: none;
+  background-image: none;
+  border-color: rgba(255, 0, 0,0.9);
 
-/*comprobacion de usuario */
-.form-control2, .form-group .form-control2 {
-  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000)!important;
-  border-color: rgba(255, 0, 0,0.9)!important;
-
-  border-bottom: 1px solid rgba(255, 0, 0,0.9)!important;
+  border-bottom: 1px solid rgba(255, 0, 0,0.9);
 
   box-shadow: 0px 1px 0px red;
 
 }
 
-.form-control2, .form-group .form-control2 input:focus {
+/*comprobacion de usuario */
+#dentroboto #ProblemForm .form-group .form-control-neg {
+  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000)!important;
+  border-color: rgba(255, 0, 0,0.9);
+
+  border-bottom: 1px solid rgba(255, 0, 0,0.9);
+
+  box-shadow: 0px 1px 0px red;
+
+}
+
+#dentroboto #ProblemForm .form-group .form-control-neg input:focus {
   outline: 0 none;
 
   outline: none;
   background-image: none;
+  border-color: rgba(255, 0, 0,0.9);
 
-  border-color: rgba(255, 0, 0,0.9)!important;
-
-  border-bottom: 1px solid rgba(255, 0, 0,0.9)!important;
+  border-bottom: 1px solid rgba(255, 0, 0,0.9);
 
   box-shadow: 0px 1px 0px red;
 

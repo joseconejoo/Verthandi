@@ -84,7 +84,7 @@
 
 {% endblock %}
 
-{% block contentscripts1 %}
+{% block modals %}
 {% if form.errors %}
 
 <div class="alert1">
@@ -94,6 +94,7 @@
 
 <script type="text/javascript">
   var varka = '{{form.errors}}';
+
   varka = varka.replace(/\<li>/g, '');
   varka = varka.replace(/\<\/li>/g, '');
   varka = varka.replace(/\<\/ul>/g, '');

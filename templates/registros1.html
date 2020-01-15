@@ -58,7 +58,8 @@
           			        <div class="input-group input-group-lg">
           			          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
                           {{field|regist1:'form-control fblanc'}}
-                          <span class="input-group-addon2" id="spaniconBRe"><i class="fa fa-times" id="iconBRe" style="color:rgba(255, 0, 0,0.95);display:none;"></i></span>
+                          <span class="input-group-addon2" id="spaniconBRe"><i class="fa fa-times" id="iconBRe" ></i></span>
+
           			        </div>
 
           			      </div>
@@ -168,30 +169,40 @@
       console.log(variable);
     }
     */
-    $.ajax({
-      url: url,
-      data: {
-        'username': username
-      },
-      dataType: 'json',
-      success: function (data) {
-        if (data.usuario_tomado) {
-          $("#id_username").addClass("form-control2");
-          $("#id_username").addClass("form-control2");
-          $("#spaniconBRe").addClass("form-control2");
-          $("#iconBRe").css('display', 'inline');
+    if (username) {
+      $.ajax({
+        url: url,
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.usuario_tomado) {
+            $("#id_username").addClass("form-control-neg");
+            $("#id_username").addClass("form-control-neg");
+            $("#spaniconBRe").addClass("form-control-neg");
+            $("#focusinput").addClass("form-control-neg");
+            $("#spaniconBRe").css('display', 'table-cell');
+            $("#iconBRe").css('display', 'inline');
 
-          /* $("#id_username").classList.add("form-control2"); */
-          /*alert("Un usuario con este nombre existe.");*/
+            /* $("#id_username").classList.add("form-control-neg"); */
+            /*alert("Un usuario con este nombre existe.");*/
+          }
+          else {
+            $("#id_username").removeClass("form-control-neg");
+            $("#spaniconBRe").removeClass("form-control-neg");
+            $("#iconBRe").css('display', 'none');
+          }
         }
-        else {
-          $("#id_username").removeClass("form-control2");
-          $("#spaniconBRe").removeClass("form-control2");
-          $("#iconBRe").css('display', 'none');
-        }
-      }
-    });
+      });
 
+    }
+    else if (!username) {
+      $("#id_username").removeClass("form-control-neg");
+      $("#spaniconBRe").removeClass("form-control-neg");
+      $("#iconBRe").css('display', 'none');
+
+    }
     
   });
 

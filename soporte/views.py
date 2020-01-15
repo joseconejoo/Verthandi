@@ -203,7 +203,8 @@ def opcisP(request):
 
 def validar_usuario(request):
     username = request.GET.get('username', None)
+    usu_ex = User.objects.filter(username__exact=username).exists()
     data = {
-        'usuario_tomado': User.objects.filter(username__iexact=username).exists()
+        'usuario_tomado': usu_ex
     }
     return JsonResponse(data)
