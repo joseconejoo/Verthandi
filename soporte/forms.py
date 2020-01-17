@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm as AuthForm
 from django.contrib.auth import (
     authenticate, get_user_model, password_validation, backends
 )
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
 from .models import Datos, Niveles, sop_notif, P_detal

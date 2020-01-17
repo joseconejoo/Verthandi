@@ -34,7 +34,7 @@
           	<div class="fields" id="dentroboto">
           		<form id="ProblemForm" accept-charset="UTF-8" role="form" method='post' data-url="{% url 'ajax_valid_usu' %}">
 
-          			<fieldset class="">
+          			<fieldset class="" id="focusim">
           			  {% for field in form %}
 
           			    {% csrf_token %}
@@ -56,9 +56,12 @@
           			      {% if forloop.counter == 1%}
           			      <div class="form-group col-md-12">
           			        <div class="input-group input-group-lg">
-          			          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+          			          <span class="input-group-addon"><i onload="chechk()" class="fa fa-fw fa-user" name='username'></i></span>
                           {{field|regist1:'form-control fblanc'}}
-                          <span class="input-group-addon2" id="spaniconBRe"><i class="fa fa-times" id="iconBRe" ></i></span>
+                          <span class="input-group-addon2" id="spaniconBRe">
+                            <i class="fa fa-times" id="iconBRe" ></i>
+                            <i class="fa fa-check" id="iconBRe2" ></i>
+                          </span>
 
           			        </div>
 
@@ -158,53 +161,71 @@
 
 {% block modals%}
 <script type="text/javascript">
-  $("#id_username").change(function (e) {
-    var url = $("#ProblemForm").data('url');
-
-    var username = $(this).val();
-    var element = document.getElementById("id_username");
-    var variable;
-    /*
-    for (variable in $(this)) {
-      console.log(variable);
-    }
-    */
-    if (username) {
-      $.ajax({
-        url: url,
-        data: {
-          'username': username
-        },
-        dataType: 'json',
-        success: function (data) {
-          if (data.usuario_tomado) {
-            $("#id_username").addClass("form-control-neg");
-            $("#id_username").addClass("form-control-neg");
-            $("#spaniconBRe").addClass("form-control-neg");
-            $("#focusinput").addClass("form-control-neg");
-            $("#spaniconBRe").css('display', 'table-cell');
-            $("#iconBRe").css('display', 'inline');
-
-            /* $("#id_username").classList.add("form-control-neg"); */
-            /*alert("Un usuario con este nombre existe.");*/
-          }
-          else {
-            $("#id_username").removeClass("form-control-neg");
-            $("#spaniconBRe").removeClass("form-control-neg");
-            $("#iconBRe").css('display', 'none');
-          }
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+    function check (e) {
+        var url = $("#ProblemForm").data('url');
+        await sleep(500);
+        alert ("username");
+        var username = $(this).val();
+        var element = document.getElementById("id_username");
+        var variable;
+        /*
+        for (variable in $(this)) {
+          console.log(variable);
         }
-      });
+        */
+        if (username) {
+          $.ajax({
+            url: url,
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.usuario_tomado) {
+                $("#id_username").removeClass("form-control-accept");
+                $("#spaniconBRe").removeClass("form-control-accept");
+                $("#id_username").addClass("form-control-neg");
+                $("#spaniconBRe").addClass("form-control-neg");
+                $("#spaniconBRe").css('display', 'table-cell');
+                $("#iconBRe2").css('display', 'none');
+                $("#iconBRe").css('display', 'inline');
 
-    }
-    else if (!username) {
-      $("#id_username").removeClass("form-control-neg");
-      $("#spaniconBRe").removeClass("form-control-neg");
-      $("#iconBRe").css('display', 'none');
+                /* $("#id_username").classList.add("form-control-neg"); */
+                /*alert("Un usuario con este nombre existe.");*/
+              }
+              else {
+                $("#id_username").removeClass("form-control-neg");
+                $("#spaniconBRe").removeClass("form-control-neg");
+                $("#id_username").addClass("form-control-accept");
+                $("#spaniconBRe").addClass("form-control-accept");
 
-    }
-    
-  });
+                $("#spaniconBRe").css('display', 'table-cell');
+                $("#iconBRe").css('display', 'none');
+                $("#iconBRe2").css('display', 'inline');
+              }
+            }
+          });
+
+        }
+        else if (!username) {
+          $("#id_username").removeClass("form-control-neg");
+          $("#spaniconBRe").removeClass("form-control-neg");
+          $("#id_username").removeClass("form-control-accept");
+          $("#spaniconBRe").removeClass("form-control-accept");
+          $("#spaniconBRe").css('display', 'none');
+          $("#iconBRe").css('display', 'none');
+          $("#iconBRe2").css('display', 'none');
+
+        }
+        
+      }
+  var userid = $("#id_username");
+  userid.change(check);
+  window.onload = check;
+
 
 </script>
 
