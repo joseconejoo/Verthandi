@@ -46,6 +46,8 @@
                         varka = varka.replace(/\<\/li>/g, '');
                         varka = varka.replace(/\<\/ul>/g, '');
                         varka = varka.replace(/\<ul class="errorlist">/g, '')
+                        varka = varka.replace(new RegExp("[^a-zA-ZñÑ0-9ú. ]", "g"), " ");
+                        varka = varka.replace(/The two password fields didn t match./g,"Las dos contraseñas no coinciden.");
                         varka = varka.replace('.', '.\n\n');
 
 
