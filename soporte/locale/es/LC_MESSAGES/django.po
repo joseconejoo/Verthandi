@@ -54,5 +54,5 @@ msgstr "redirecciones"
 msgid "redirects"
 msgstr "redirecciones"
 
-msgid "The two password fields didn't match."
+msgid "The two password fields didn't match"
 msgstr "Probadno papa"

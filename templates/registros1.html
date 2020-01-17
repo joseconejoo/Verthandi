@@ -56,7 +56,7 @@
           			      {% if forloop.counter == 1%}
           			      <div class="form-group col-md-12">
           			        <div class="input-group input-group-lg">
-          			          <span class="input-group-addon"><i onload="chechk()" class="fa fa-fw fa-user" name='username'></i></span>
+          			          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
                           {{field|regist1:'form-control fblanc'}}
                           <span class="input-group-addon2" id="spaniconBRe">
                             <i class="fa fa-times" id="iconBRe" ></i>
@@ -161,13 +161,8 @@
 
 {% block modals%}
 <script type="text/javascript">
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
     function check (e) {
         var url = $("#ProblemForm").data('url');
-        await sleep(500);
-        alert ("username");
         var username = $(this).val();
         var element = document.getElementById("id_username");
         var variable;
@@ -223,9 +218,7 @@
         
       }
   var userid = $("#id_username");
-  userid.change(check);
-  window.onload = check;
-
+  userid.change(check).change();
 
 </script>
 
