@@ -20,6 +20,8 @@ urlpatterns = [
 	path('datos/<int:pk>/edit/', views.datose, name='datose'),
     path('perfil', views.Datos1, name='datos1'),
 
+    path('opciones_avanzadas', views.opcis_admin, name='opcisAdmin'),
+
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
 

@@ -1341,3 +1341,16 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 0;
 
 }
+
+.responsive-width {
+  white-space: nowrap;
+  margin-bottom: 3%;
+  height: 100%;
+  width: 100%;
+  /* //colocar overflow despues de una linea
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

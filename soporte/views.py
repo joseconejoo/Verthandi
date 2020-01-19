@@ -197,14 +197,21 @@ def asisInf(request):
     return render(request, 'asisInf.html')
 
 def opcisP(request):
+    #Ajax
     tipo_sop_id = request.GET.get('tipo_sop')
     p_detal = P_detal.objects.filter(p_opci_id=tipo_sop_id).order_by('nombre')
     return render(request, 'old2/opciones.html', {'posts': p_detal})
 
 def validar_usuario(request):
+    #Ajax
     username = request.GET.get('username', None)
     usu_ex = User.objects.filter(username__exact=username).exists()
     data = {
         'usuario_tomado': usu_ex
     }
     return JsonResponse(data)
+
+def opcis_admin(request):
+    posts=None
+
+    return render(request, 'opciones_admin.html', {'posts': posts})
