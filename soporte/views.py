@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import sop_notif, P_detal, Niveles, Datos
+from .models import P_opci, sop_notif, P_detal, Niveles, Datos
 from django.contrib.auth.models import User
 
 from .forms import AuthenticationForm, sop_notifF, NivelesF, DatosF
@@ -215,3 +215,8 @@ def opcis_admin(request):
     posts=None
 
     return render(request, 'opciones_admin.html', {'posts': posts})
+
+def adm_sop_opcis(request):
+    opcionesSop = P_opci.objects.filter().order_by('id')
+    
+    return render(request, 'adm_sop_opcis.html', {'opcionesS': opcionesSop})

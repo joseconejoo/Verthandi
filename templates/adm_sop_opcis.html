@@ -8,36 +8,53 @@
 	<div class="container">
 
 		<div class="col-xs-12 text-center" style="padding:60px;">
-		  <h1 class="fblanc">Opciones Avanzadas</h1>
+		  <h1 class="fblanc">Opciones Del Soporte</h1>
 		  
 		  <br>
 		</div>
-		<div class="col-md-14">
 
-			<div class="col-md-6">
-				<a href="{% url 'adm_sop_opcis' %}">
-					<button class="btn btn-lg btn-block btn-primary responsive-width">
-						<span >
-							Opciones de soporte
-						</span>
-					</button>
-				</a>
-			</div>
+		<table class="bg-color">
+		<tr>
+		  <th>Nº</th>
+		  <th>Nombre</th>
+		  <th></th>
 
-			<div class="col-md-6">
-				<button class="btn btn-lg btn-primary btn-block responsive-width">holaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaa  aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa  aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa</button>
-			</div>
 
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
+		</tr>
+		{% for opciones1x in opcionesS %}
+		<!-- hola -->
+
+		<tr>
+
+		    <div class="">
+		      <td>
+		        <h3>{{ forloop.counter }}</h3>
+		        </td>
+		        	<td class="min-width-table">
+		        	    {{opciones1x.nombre }}
+
+
+		        	</td>
+
+
+		          <td>
+
+		          	   <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' opciones1x.pk %}" data-nombre="{{opciones1x.username }}" data-tipo="aceptacion">
+		          	   	<span class="btn-3d blue" >
+		          	   		<i class="fa fa-pencil" id="iconBpencil">
+		          	    		</i>
+		          	    		Editar
+		          	    </span>
+		          		</a>
+
+
+
+		          </td>
+		        </span>
+		    </div>
+		    </tr>
+		{% endfor %}
+		</table>
 
 	</div>
 </div>
