@@ -9,7 +9,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileRe
 from .models import P_opci, sop_notif, P_detal, Niveles, Datos
 from django.contrib.auth.models import User
 
-from .forms import AuthenticationForm, sop_notifF, NivelesF, DatosF
+from .forms import P_detalF ,P_opciF,AuthenticationForm, sop_notifF, NivelesF, DatosF
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import (
@@ -218,5 +218,54 @@ def opcis_admin(request):
 
 def adm_sop_opcis(request):
     opcionesSop = P_opci.objects.filter().order_by('id')
-    
-    return render(request, 'adm_sop_opcis.html', {'opcionesS': opcionesSop})
+    form = None
+    if (request.user.is_superuser):   
+        form = P_opciF()
+    return render(request, 'adm_sop_opcis.html', {'opcionesS': opcionesSop,'form':form})
+
+def adm_sop_opcisFormF(request,pk1):
+    if request.method == "POST":
+        if (request.user.is_superuser):
+            pk2 = get_object_or_404(P_opci, pk=pk1)
+            form = P_opciF(request.POST, instance=pk2)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.save()
+                return redirect('adm_sop_opcis')
+
+    else:
+        if (request.user.is_superuser):
+            form = P_opciF(instance=pk1)
+            print(1,"\n1\n")
+
+def adm_sop_opcis_det(request,pk1):
+    opcionesSop = P_detal.objects.filter(p_opci=pk1).order_by('id')
+    form = None
+    if (request.user.is_superuser):   
+        form = P_detalF()
+    return render(request, 'adm_sop_opcisDetal.html', {'opcionesS': opcionesSop,'form':form})
+
+def adm_sop_opcis_detFormF(request,pk1):
+    if request.method == "POST":
+        if (request.user.is_superuser):
+            pk2 = get_object_or_404(P_detal, pk=pk1)
+            redirec = pk2.p_opci.pk
+            form = P_detalF(request.POST, instance=pk2)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.save()
+                return redirect('adm_sop_opcis_det',pk1=redirec)
+
+    else:
+        if (request.user.is_superuser):
+            form = P_detalF(instance=pk1)
+            print(1,"\n1\n")
+def adm_sop_opcis_detNE(request, pk):
+    if request.user.is_superuser:
+        elim_opci_detal = get_object_or_404(P_detal, pk=pk)
+        redirec = elim_opci_detal.p_opci.pk
+        elim_opci_detal.delete()
+        return redirect('adm_sop_opcis_det',pk1=redirec)
+
+    else:
+        return redirect ("/")

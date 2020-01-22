@@ -9,10 +9,18 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import Datos, Niveles, sop_notif, P_detal
+from .models import P_opci ,Datos, Niveles, sop_notif, P_detal
+
+class P_detalF(forms.ModelForm):
+	class Meta:
+		model = P_detal
+		fields = ('nombre',)
 
 
-
+class P_opciF(forms.ModelForm):
+	class Meta:
+		model = P_opci
+		fields = ('nombre',)
 
 class DatosF(forms.ModelForm):
 	class Meta:

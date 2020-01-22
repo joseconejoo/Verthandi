@@ -21,7 +21,11 @@ urlpatterns = [
     path('perfil', views.Datos1, name='datos1'),
 
     path('opciones_avanzadas', views.opcis_admin, name='opcisAdmin'),
-    path('opciones_avanzadas/Opciones-De-Soporte', views.adm_sop_opcis, name='adm_sop_opcis'),
+    path('opciones_avanzadas/Opciones-Soporte', views.adm_sop_opcis, name='adm_sop_opcis'),
+    path('opciones_avanzadas/Opciones-SoporteForm/<int:pk1>', views.adm_sop_opcisFormF, name='adm_sop_opcisFormF'),
+    path('opciones_avanzadas/Opciones-Soporte/<int:pk1>', views.adm_sop_opcis_det, name='adm_sop_opcis_det'),
+    path('opciones_avanzadas/Opciones-SoporteForm/Edit/<int:pk1>', views.adm_sop_opcis_detFormF, name='adm_sop_opcis_detFormF'),
+    path('opcion?!d#@|reprobar!02091/<int:pk>', views.adm_sop_opcis_detNE, name='adm_sop_opcis_detNE'),
 
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),

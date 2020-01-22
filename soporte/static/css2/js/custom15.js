@@ -174,7 +174,8 @@ $('#myModal1').on('show.bs.modal', function (e) {
        }
        //document.getElementById("pr1").innerHTML = x12[3];
        //var xsd = document.getElementById("Fbs1").acat;
-       var oForm = document.forms["amxj"];
+       var oForm = document.forms["ProblemForm"];
+       //problemform2 if modal 2
        oForm.action=valks;
 
 
@@ -198,18 +199,35 @@ $('#myModal2').on('show.bs.modal', function (e) {
               'max-height':'10%'
 
        });
+
        var xadd = $(e.relatedTarget).data('id');
        var valks = $(e.relatedTarget).data('href');
+       var nombre = $(e.relatedTarget).data('nombre');
+       var tipo_op = $(e.relatedTarget).data('tipo');
 
-       var oForm = document.forms["amxj2"];
+       if (nombre && tipo_op) {
+        document.getElementById("text-mod1").innerHTML = "Confirmar "+tipo_op +" del usuario "+ nombre+"";
+       }
+       //document.getElementById("pr1").innerHTML = x12[3];
+       //var xsd = document.getElementById("Fbs1").acat;
+
+       var oForm = document.forms["ProblemForm2"];
        oForm.action=valks;
 
 
+       //var xsd = document.getElementById("Fbs1").acat;
+       //alert(oForm.action);
 
+       //alert(JSON.stringify(valks, null, 4));
+       //accesKey o className puede significar cualquier clase de html
+       //xasd=$('#abrirpop2').val(this.id);
+       //alert(JSON.stringify(xasd, null, 4));
+       //document.getElementById("pr1").innerHTML = xadd;
+       //document.getElementById("pr1").innerHTML = "xaddT";
+
+       //window.print("hola")
 
 });
-
-
 /*
 
 $('.container-modal .title').each(function (idx, item) {

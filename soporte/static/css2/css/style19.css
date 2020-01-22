@@ -977,6 +977,12 @@ th {
   font-size: 23px;
 }
 
+
+#iconEnlace {
+  font-size: 2em;
+}
+
+
 #iconBRe {
   font-size: 23px;
   color:rgba(255, 0, 0,0.95);

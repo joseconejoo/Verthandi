@@ -17,7 +17,7 @@
 		<tr>
 		  <th>Nº</th>
 		  <th>Nombre</th>
-		  <th>Detalles</th>
+		  <th>Eliminar</th>
 		  <th>Modificar</th>
 
 
@@ -35,16 +35,21 @@
 		        	    {{opciones1x.nombre }}
 
 		        	    <td>
-		        	    	<a href="{% url 'adm_sop_opcis_det' opciones1x.pk %}">
-		        	    		<i class="fa fa-external-link" id="iconEnlace"></i>
-		        	    	</a>
+                       <a data-toggle="modal" data-target="#myModal2" data-id="" data-href="{% url 'adm_sop_opcis_detNE' opciones1x.pk %}" data-nombre="{{opciones1x.username }}" data-tipo="aceptacion">
+                        <span class="btn-3d red" >
+                          <i class="fa fa-pencil" id="iconBpencil">
+                            </i>
+                            Eliminar
+                        </span>
+                      </a>
+
 		        	    </td>
 		        	</td>
 
 
 		          <td>
 
-		          	   <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'adm_sop_opcisFormF' opciones1x.pk %}" data-nombre="{{opciones1x.username }}" data-tipo="aceptacion">
+		          	   <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'adm_sop_opcis_detFormF' opciones1x.pk %}" data-nombre="{{opciones1x.username }}" data-tipo="aceptacion">
 		          	   	<span class="btn-3d blue" >
 		          	   		<i class="fa fa-pencil" id="iconBpencil">
 		          	    		</i>
@@ -78,7 +83,7 @@
       <div class="modal-content">
       
         <div class="modal-header">
-          <h4 class="modal-title text-center fblanc" id="pr1">Modificar de nombre</h4>
+          <h4 class="modal-title text-center fblanc" id="pr1">Modificar nombre</h4>
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -150,6 +155,54 @@
 </div>
 
 
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="text-mod1">Confirmar eliminacion</h4>
+
+          <button type="button" class="close" data-dismiss="modal"></button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm2" dataP-url="{% url 'ajax_opcisP' %}" name="amxj2">
+
+            <fieldset>
+              {% csrf_token %}
+            <div class="col-md-6">
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+              
+            </div>
+              
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 {% endblock %}
 
 
@@ -160,5 +213,7 @@
 
 
 {% block modals %}
+
+
 
 {% endblock %}
