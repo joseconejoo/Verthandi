@@ -572,10 +572,34 @@ table {
     text-transform: none;
     font-style: normal;
     padding-bottom: 15px;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.copyright {
+  white-space: nowrap;
+}
+
+.credits {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.credits p {
+  white-space: nowrap;
+  display: inline-block;
+
+}
+.credits a {
+  white-space: nowrap;
+  display: inline-block;
+
 }
 .footer .navigation, .footer .social-list {
     float: none;
     margin-bottom: 20px;
+    white-space: nowrap;
+    display: inline-block;
 }
 .list-horizontal li {
     display: inline-block;
@@ -589,6 +613,7 @@ table {
     color: #fff;
     text-transform: uppercase;
     margin: 0 5px;
+    white-space: nowrap;
 }
 @media (min-width: 768px) and (max-width: 980px) {
     .content-holder h2 {
