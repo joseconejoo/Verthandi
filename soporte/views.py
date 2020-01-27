@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import P_opci, sop_notif, P_detal, Niveles, Datos
+from .models import unidad2 ,P_opci, sop_notif, P_detal, Niveles, Datos
 from django.contrib.auth.models import User
 
 from .forms import P_detalF ,P_opciF,AuthenticationForm, sop_notifF, NivelesF, DatosF
@@ -20,6 +20,8 @@ from django.contrib.auth import (
 
 # Create your views here.
 def registros1(request):
+    formlistoption = None
+    formlistoption = unidad2.objects.filter().order_by('id')
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
         form2= DatosF(request.POST)
@@ -39,8 +41,12 @@ def registros1(request):
     else:
         foxr = UserCreationForm()
         form2 = DatosF()
-
-    return render(request, 'registros1.html', {'form': foxr, "form2":form2})
+        
+        """
+        for x in range(0,1):
+            print (formlistoption[0].id)
+        """
+    return render(request, 'registros1.html', {'form': foxr, "form2":form2, 'formOpti':formlistoption})
 
 
 class login(LoginView):
@@ -77,6 +83,38 @@ def post_list(request):
 def post_list2(request):
     #print (request.user.niveles.Nivel)
     posts=None
+    def migracion():
+
+        from django.db import connections
+
+        def my_custom_sql(self):
+            with connections["mysqlBD1"].cursor() as cursor:
+                cursor.execute("SELECT * FROM unidad")
+                row = cursor.fetchall()
+                print (row)
+
+            return row
+            """
+            columns = [col[0] for col in cursor.description]
+            return [
+                dict(zip(columns, row))
+                for row in cursor.fetchall()
+            ]
+            """
+        x123=my_custom_sql("hola")
+        print ("aplicando")
+        for x in range(0,2):
+            """
+            print (x123[x])
+            """
+            try:
+                unidad2.objects.create(id=x123[x][0],nom_unidad=x123[x][1])
+            except:
+                pass
+            """
+            print (x123[x][0])
+            """
+    #migracion()
     if request.method == "POST":
         form = sop_notifF(request.POST)
         if form.is_valid():
@@ -259,7 +297,6 @@ def adm_sop_opcis_detFormF(request,pk1):
     else:
         if (request.user.is_superuser):
             form = P_detalF(instance=pk1)
-            print(1,"\n1\n")
 def adm_sop_opcis_detNE(request, pk):
     if request.user.is_superuser:
         elim_opci_detal = get_object_or_404(P_detal, pk=pk)

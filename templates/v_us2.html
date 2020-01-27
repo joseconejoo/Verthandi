@@ -19,9 +19,12 @@
 		  <th>Usuario</th>
 		  <th>Nombre</th>
 		  <th>Cedula</th>
+		  <th class="min-width-table2">Area</th>
+
 		  {% comment %}
 		  <th>Perfil</th>
 		  {% endcomment %}
+
 		  <th>Aceptar</th>
 
 		</tr>
@@ -49,6 +52,7 @@
 		        	  	{% endfor %}
 
 		        	</td>
+
 		        	<td>
 		        			{% for dat in datos %}
 		        			{% if dat.pk == v_us1.pk %}
@@ -56,6 +60,15 @@
 
 		        		  	{% endif %}
 		        		  	{% endfor %}
+
+		        	</td>
+		        	<td>
+		        		{% for dat in datos %}
+		        		{% if dat.pk == v_us1.pk %}
+		        			{{dat.cod_area}}
+
+		        	  	{% endif %}
+		        	  	{% endfor %}
 
 		        	</td>
 		              
@@ -80,9 +93,12 @@
 		</table>
 
 	</div>
+
+	<div style="min-height: 166px;">
+		
+	</div>
+
 </div>
-
-
 
 
 

@@ -1,5 +1,5 @@
 from django import forms
-
+import pdb
 from django.contrib.auth.models import User
 
 from django.contrib.auth.forms import AuthenticationForm as AuthForm
@@ -9,13 +9,12 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import P_opci ,Datos, Niveles, sop_notif, P_detal
+from .models import unidad2, P_opci ,Datos, Niveles, sop_notif, P_detal
 
 class P_detalF(forms.ModelForm):
 	class Meta:
 		model = P_detal
 		fields = ('nombre',)
-
 
 class P_opciF(forms.ModelForm):
 	class Meta:
@@ -25,7 +24,21 @@ class P_opciF(forms.ModelForm):
 class DatosF(forms.ModelForm):
 	class Meta:
 		model = Datos
-		fields = ('nombre', 'apellido', 'cedula')
+		fields = ('nombre', 'apellido','cod_area','cedula')
+
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    #pdb.set_trace()
+	    if self.data.get('cod_area'):
+	    	cod_area2 = self.data.get('cod_area')
+	    	cod_area2p = unidad2.objects.get(nom_unidad__exact=cod_area2)
+	    	cod_area2 = cod_area2p.pk
+	    	_mutable = self.data._mutable
+	    	self.data._mutable = True
+	    	self.data['cod_area'] = cod_area2
+	    	self.data._mutable = _mutable
+
+
 
 class NivelesF(forms.ModelForm):
 	class Meta:

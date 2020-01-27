@@ -2,10 +2,16 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
 # Create your models here.
+
+class unidad2(models.Model):
+    nom_unidad = models.CharField(max_length=500)
+    def __str__(self):
+        return self.nom_unidad
+
 class Niveles(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     Nivel = models.IntegerField(null=True)
@@ -16,10 +22,10 @@ class Datos(models.Model):
     nombre = models.CharField(validators=[nombVer],max_length=200)
     apellVer = RegexValidator(regex=r'^[a-zA-ZñÑ\s]+$', message="Solo letras para el apellido por favor.")
     apellido = models.CharField(validators=[apellVer],max_length=200)
-    cedula = models.IntegerField(unique=True)
+    cedula = models.PositiveIntegerField(unique=True,validators=[MinValueValidator(1000000,message="cedula no valida."), MaxValueValidator(35000000,message="cedula no valida.")])
     email = models.EmailField(null=True)
     fedicion = models.DateTimeField(blank=True, null=True)
-    cod_area = models.IntegerField(null=True)
+    cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE)
     cod_nivel = models.IntegerField(null=True)
 
     def publish(self):
@@ -58,5 +64,3 @@ class sop_notif(models.Model):
     def __str__(self):
         return self.id
 
-
-        
