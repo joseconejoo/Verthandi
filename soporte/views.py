@@ -9,7 +9,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileRe
 from .models import unidad2 ,P_opci, sop_notif, P_detal, Niveles, Datos
 from django.contrib.auth.models import User
 
-from .forms import P_detalF ,P_opciF,AuthenticationForm, sop_notifF, NivelesF, DatosF
+from .forms import DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, NivelesF, DatosF
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import (
@@ -24,7 +24,7 @@ def registros1(request):
     formlistoption = unidad2.objects.filter().order_by('id')
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
-        form2= DatosF(request.POST)
+        form2= DatosRF(request.POST)
 
         if foxr.is_valid() and form2.is_valid():
 
@@ -40,7 +40,7 @@ def registros1(request):
             return redirect('login')
     else:
         foxr = UserCreationForm()
-        form2 = DatosF()
+        form2 = DatosRF()
         
         """
         for x in range(0,1):

@@ -24,6 +24,12 @@ class P_opciF(forms.ModelForm):
 class DatosF(forms.ModelForm):
 	class Meta:
 		model = Datos
+		fields = ('nombre', 'apellido','cedula')
+
+
+class DatosRF(forms.ModelForm):
+	class Meta:
+		model = Datos
 		fields = ('nombre', 'apellido','cod_area','cedula')
 
 	def __init__(self, *args, **kwargs):
