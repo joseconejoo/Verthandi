@@ -6,10 +6,12 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import unidad2 ,P_opci, sop_notif, P_detal, Niveles, Datos
+from .models import unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, NivelesF, DatosF
+from .forms import DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+
+from .Com import migracion
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import (
@@ -35,7 +37,7 @@ def registros1(request):
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
             post2.save()
-            Niveles.objects.create(user=User.objects.get(id=post.pk))
+            #Niveles.objects.create(user=User.objects.get(id=post.pk))
             
             return redirect('login')
     else:
@@ -54,6 +56,7 @@ class login(LoginView):
     form_class = AuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
+        #migracion()
         if request.user.is_authenticated!=True:
             if self.redirect_authenticated_user and self.request.user.is_authenticated:
                 redirect_to = self.get_success_url()
@@ -83,38 +86,6 @@ def post_list(request):
 def post_list2(request):
     #print (request.user.niveles.Nivel)
     posts=None
-    def migracion():
-
-        from django.db import connections
-
-        def my_custom_sql(self):
-            with connections["mysqlBD1"].cursor() as cursor:
-                cursor.execute("SELECT * FROM unidad")
-                row = cursor.fetchall()
-                print (row)
-
-            return row
-            """
-            columns = [col[0] for col in cursor.description]
-            return [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ]
-            """
-        x123=my_custom_sql("hola")
-        print ("aplicando")
-        for x in range(0,2):
-            """
-            print (x123[x])
-            """
-            try:
-                unidad2.objects.create(id=x123[x][0],nom_unidad=x123[x][1])
-            except:
-                pass
-            """
-            print (x123[x][0])
-            """
-    #migracion()
     if request.method == "POST":
         form = sop_notifF(request.POST)
         if form.is_valid():
@@ -154,8 +125,9 @@ def a_us(request):
 def userAP(request, pk):
     if request.user.is_superuser:
         Verthandi = get_object_or_404(User, pk=pk)
-
-        Verthandi.is_active = True
+        #print (Verthandi['is_active'])
+        Verthandi.is_active = False
+        #Verthandi.is_active = True
         Verthandi.save()
         return redirect('a_us')
 
@@ -217,11 +189,14 @@ def Datos1(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.usuario = request.user
+            #Actualizar Createsuperuser y eliminar esto
+            if (request.user.is_superuser):
+                post.cod_area = unidad2.objects.get(pk=1)
+
             post.fedicion = timezone.now()
             post.save()
             return redirect('datos_u', pk=post.pk)
     else:
-
         if Datos.objects.filter(usuario_id=request.user.pk).exists():
             return redirect('datos_u', pk=request.user.pk)
         form = DatosF()
@@ -257,7 +232,7 @@ def opcis_admin(request):
 def adm_sop_opcis(request):
     opcionesSop = P_opci.objects.filter().order_by('id')
     form = None
-    if (request.user.is_superuser):   
+    if (request.user.is_superuser):
         form = P_opciF()
     return render(request, 'adm_sop_opcis.html', {'opcionesS': opcionesSop,'form':form})
 
@@ -306,3 +281,27 @@ def adm_sop_opcis_detNE(request, pk):
 
     else:
         return redirect ("/")
+
+def op_codigo(request):
+    post = Codigos.objects.order_by('id')
+
+    return render(request, 'valids.html', {'code': post})
+
+def Valid1_codigo(request):
+    if request.user.is_superuser or request.user.is_staff:
+        if request.method == "POST":
+            while True:
+                x12 = random.randint(100000000000, 999999999999)
+                if not Codigos.objects.filter(codigo=x12).exists() :
+                    Codigos.objects.create(codigo=x12)
+                    return redirect('Valid_v')
+
+
+        else:
+            form = ValidF()
+        return render(request, 'valid.html', {'form': form})
+    else:
+        return redirect('Error1')
+
+def Error(request):
+    return render(request, "Negado.html")

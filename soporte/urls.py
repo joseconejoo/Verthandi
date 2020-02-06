@@ -27,6 +27,12 @@ urlpatterns = [
     path('opciones_avanzadas/Opciones-SoporteForm/Edit/<int:pk1>', views.adm_sop_opcis_detFormF, name='adm_sop_opcis_detFormF'),
     path('opcion?!d#@|reprobar!02091/<int:pk>', views.adm_sop_opcis_detNE, name='adm_sop_opcis_detNE'),
 
+
+    path('opciones_avanzadas/Opciones-Soporte/Codigo', views.op_codigo, name='op_codigo'),
+    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create', views.Valid1_codigo, name='Valid1_codigo'),
+    path('Acceso_Denegado', views.Error, name='Error1'),
+
+
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
 

@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content2 %}
+
+{% endblock %}
+{% block entrada %}
+
+
+{% endblock %}
+{% block content %}
+<div class="bg-color">
+<form action="{% url 'Valid' %}" method="post">
+	{% csrf_token %}
+
+	<button class="btn btn-default" type="submit">Añadir codigo</button>
+</form>
+
+
+    {% for codigo in code %}
+
+        <div class="codigo">
+          <h2 style="color: white;">Codigo: {{codigo.codigo }}</h2>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

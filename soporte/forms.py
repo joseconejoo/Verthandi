@@ -9,7 +9,12 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import unidad2, P_opci ,Datos, Niveles, sop_notif, P_detal
+from .models import Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
+
+class CodigosF(forms.ModelForm):
+	class Meta:
+		model = Codigos
+		fields = ('codigo',)
 
 class P_detalF(forms.ModelForm):
 	class Meta:
@@ -25,7 +30,6 @@ class DatosF(forms.ModelForm):
 	class Meta:
 		model = Datos
 		fields = ('nombre', 'apellido','cedula')
-
 
 class DatosRF(forms.ModelForm):
 	class Meta:
@@ -45,11 +49,6 @@ class DatosRF(forms.ModelForm):
 	    	self.data._mutable = _mutable
 
 
-
-class NivelesF(forms.ModelForm):
-	class Meta:
-		model = Niveles
-		fields = ('Nivel',)
 
 class sop_notifF(forms.ModelForm):
 	class Meta:
@@ -94,7 +93,7 @@ class AuthenticationForm(AuthForm):
 	        "fields may be case-sensitive."
 	    ),
 	    'inactive': _("This account is inactive."),
-	    'inactivo': ("Esta cuenta no esta activa."),
+	    'inactivo': _("Esta cuenta no esta activa."),
 	}
 
 	def clean(self):

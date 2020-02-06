@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'Verthandi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -90,7 +90,7 @@ DATABASES = {
         'PORT': '3306',   
     }
 }
-"""
+
 
 """
 DATABASES = {
@@ -105,14 +105,14 @@ DATABASES = {
 }
 
 """
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -145,7 +145,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = 'post_noti'
+LOGIN_REDIRECT_URL = 'datos1'
 LOGOUT_REDIRECT_URL = '/'
 
 

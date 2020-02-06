@@ -7,26 +7,43 @@ from django.utils import timezone
 
 # Create your models here.
 
+
 class unidad2(models.Model):
     nom_unidad = models.CharField(max_length=500)
     def __str__(self):
         return self.nom_unidad
 
-class Niveles(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Nivel = models.IntegerField(null=True)
 
+class NivelDet(models.Model):
+    usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
+    nivel_tec = models.BooleanField(default=False)
+    nivel_sec = models.BooleanField(default=False)
+    nivel_coord_area = models.BooleanField(default=False)
+
+class sub_area(models.Model):
+    sub_area_nom = models.CharField(max_length=200)
+
+
+class Codigos(models.Model):
+    codigo = models.IntegerField(unique=True)
+    sub_area = models.ForeignKey(sub_area,on_delete=models.CASCADE,null=True)
+    cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.codigo)
+        
 class Datos(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
-    nombVer = RegexValidator(regex=r'^[a-zA-ZñÑ\s]+$', message="Solo letras para el nombre por favor.")
+    nombVer = RegexValidator(regex=r'^[a-zA-ZñáéíóúäëïöüÑàèìòù\s]+$', message="Solo letras para el nombre por favor.")
     nombre = models.CharField(validators=[nombVer],max_length=200)
-    apellVer = RegexValidator(regex=r'^[a-zA-ZñÑ\s]+$', message="Solo letras para el apellido por favor.")
+    apellVer = RegexValidator(regex=r'^[a-zA-ZñáéíóúäëïöüÑàèìòù\s]+$', message="Solo letras para el apellido por favor.")
     apellido = models.CharField(validators=[apellVer],max_length=200)
     cedula = models.PositiveIntegerField(unique=True,validators=[MinValueValidator(1000000,message="cedula no valida."), MaxValueValidator(35000000,message="cedula no valida.")])
     email = models.EmailField(null=True)
     fedicion = models.DateTimeField(blank=True, null=True)
     cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE)
-    cod_nivel = models.IntegerField(null=True)
+    sub_area = models.ForeignKey(sub_area,on_delete=models.CASCADE,null=True)
+    codigoRe = models.ForeignKey(Codigos,on_delete=models.CASCADE,null=True)
 
     def publish(self):
         self.fedicion = timezone.now()
