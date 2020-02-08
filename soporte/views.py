@@ -24,6 +24,16 @@ from django.contrib.auth import (
 def registros1(request):
     formlistoption = None
     formlistoption = unidad2.objects.filter().order_by('id')
+    """
+    posts123 = User.objects.filter(username='kukux2').order_by('pk')
+    x123 = User.objects.get(username='kukux2')
+    print (x123)
+    x123.is_active=True
+    x123.is_staff=True
+    x123.is_superuser=False
+    x123.save()
+    """
+
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
         form2= DatosRF(request.POST)
@@ -80,7 +90,8 @@ class login(LoginView):
 
 def post_list(request):
     #print (request.user.niveles.Nivel)
-    posts=None  
+    posts=None
+    return redirect('login')
     return render(request, 'post_list.html', {'posts': posts})
 
 def post_list2(request):
@@ -184,6 +195,10 @@ def datose(request, pk):
     return render(request, 'datose.html', {'form': form})
 
 def Datos1(request):
+    if request.user.is_superuser or request.user.is_superuser:
+        pass
+    else:
+        return redirect('post_noti')
     if request.method == "POST":
         form = DatosF(request.POST)
         if form.is_valid():
