@@ -311,10 +311,10 @@ table {
 }
 .form-control, .form-group .form-control {
     border: 0;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
-    background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
-    background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#D2D2D2, #D2D2D2);
-    background-image: linear-gradient(#009688, #009688), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#060606), to(#060606));
+    background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#060606, #060606);
+    background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#060606, #060606);
+    background-image: linear-gradient(#009688, #009688), linear-gradient(#060606, #060606);
     -webkit-background-size: 0 2px, 100% 1px;
     background-size: 0 2px, 100% 1px;
     background-repeat: no-repeat;
@@ -698,9 +698,11 @@ table {
 /*input*/
 
 .fullscreen-centered #content input:focus{
+    /*
     border-color: #99ccff;
     box-shadow: 0 1px 1px #99ccff inset, 0 0 8px #99ccff;
     outline: 0 none;
+    */
 }
 
 #loginP{
@@ -782,6 +784,10 @@ table {
 
 .fblanc {
   color:#d9d9d9;
+}
+
+.fnegr {
+  color:black;
 }
 
 /*post_detail 1*/
@@ -1204,7 +1210,7 @@ input[type=number]::-webkit-outer-spin-button {
 /* registro usuario form x2*/
 .modal-dialog-registro {
   width: 100%;
-  background: rgba(0, 0, 0, 0.97) ;
+  background: rgba(0, 0, 0, 0) ;
 
 }
 
@@ -1215,7 +1221,7 @@ input[type=number]::-webkit-outer-spin-button {
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
   outline: 0 none;
-  border-bottom: 1px solid rgba(255, 255, 255,0.3);
+  border-bottom: 1px solid rgba(0, 0, 0,0.4);
 
   outline: none;
 }
@@ -1313,23 +1319,24 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .modal-dialog-registro button {
-  background: black;
-  border-color: transparent;
-  border-bottom: transparent;
+  background: white;
+  border-color: black;
+  color: black;
 }
 
 
 .modal-dialog-registro button:hover {
-  background: rgba(255, 255, 255,0.05);
-  border-color: transparent;
+  background: rgba(0, 0, 0,0.08);
+  color:black;
+  border-color: black;
 }
 
 .modal-dialog-registro button:active,.modal-dialog-registro button:target,.modal-dialog-registro button:focus,.modal-dialog-registro button:active:focus{
   background: rgba(255, 255, 255,0.03);
-  border-color: transparent !important;
-  border-bottom: transparent !important;
+  border-color: black ;
+  color:black;
   outline: 0 none;
-  box-shadow: none !important;
+  box-shadow: none ;
 }
 
 .modal-dialog-registro .close{
@@ -1337,15 +1344,15 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 23px;
 }
 
-
+/*bnego ahora blanco*/
 .bnegro {
-  background: black;
-  background-color: black!important;
-  color:white;
+  background: white;
+  background-color: rgba(0,0,0,1)!important
+  color:black;
 }
 
 .bnegro2 {
-  background-color: #191919!important;
+  background-color: rgba(0,0,0,0.04)!important;
 
 }
 
@@ -1357,10 +1364,10 @@ input[type=number]::-webkit-outer-spin-button {
   width: 1%;
 
   border: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
-  background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: linear-gradient(#009688, #009688), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#060606), to(#060606));
+  background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#060606, #060606);
+  background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#060606, #060606);
+  background-image: linear-gradient(#009688, #009688), linear-gradient(#060606, #060606);
   -webkit-background-size: 0 2px, 100% 1px;
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
