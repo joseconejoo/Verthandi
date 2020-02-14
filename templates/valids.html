@@ -9,19 +9,53 @@
 {% endblock %}
 {% block content %}
 <div class="bg-color">
-<form action="{% url 'Valid' %}" method="post">
-	{% csrf_token %}
-
-	<button class="btn btn-default" type="submit">Añadir codigo</button>
-</form>
-
 
     {% for codigo in code %}
+    <form action="{% url 'Valid1_codigo' codigo.pk %}" method="post">
+    	{% csrf_token %}
+
+    	<button class="btn btn-default" type="submit">Añadir codigo</button>
+    </form>
+
+
 
         <div class="codigo">
-          <h2 style="color: white;">Codigo: {{codigo.codigo }}</h2>
+          <h2 style="color: white;">{{codigo.nom_nivel }}</h2>
         </div>
+        <table class="bg-color">
+        <tr>
+          <th></th>
+          <th>Código</th>
+          <th></th>
+
+        </tr>
+       
+        <!-- hola -->
+
+        <tr>
+
+            <div class="">
+              <td>
+                <h3>{{ forloop.counter }}</h3>
+                </td>
+                	<td>
+                		{{v_us1.nom_nivel }}
+
+
+                	</td>
+                      
+
+                  <td>
+                  	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Error1' %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+
+                  </td>
+                </span>
+            </div>
+            </tr>
+        </table>
+
     {% endfor %}
+
 
 </div>
 {% endblock %}

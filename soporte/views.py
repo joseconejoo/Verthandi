@@ -6,12 +6,14 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
+from .models import NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
 from .forms import CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
+
+import random
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import (
@@ -305,17 +307,18 @@ def adm_sop_opcis_detNE(request, pk):
 
 def op_codigo(request):
     post = Codigos.objects.order_by('id')
+    post2 = NivelesNum.objects.order_by('id')
+    #post.delete()
+    return render(request, 'valids.html', {'code': post2})
 
-    return render(request, 'valids.html', {'code': post})
-
-def Valid1_codigo(request):
+def Valid1_codigo(request,pk):
     if request.user.is_superuser or request.user.is_staff:
         if request.method == "POST":
             while True:
-                x12 = random.randint(100000000000, 999999999999)
+                x12 = random.randint(100000, 999999)
                 if not Codigos.objects.filter(codigo=x12).exists() :
                     Codigos.objects.create(codigo=x12)
-                    return redirect('Valid_v')
+                    return redirect('op_codigo')
 
 
         else:

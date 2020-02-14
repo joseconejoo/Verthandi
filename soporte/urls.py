@@ -29,7 +29,7 @@ urlpatterns = [
 
 
     path('opciones_avanzadas/Opciones-Soporte/Codigo', views.op_codigo, name='op_codigo'),
-    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create', views.Valid1_codigo, name='Valid1_codigo'),
+    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create<int:pk>', views.Valid1_codigo, name='Valid1_codigo'),
     path('Acceso_Denegado', views.Error, name='Error1'),
 
 

@@ -13,6 +13,11 @@ class unidad2(models.Model):
     def __str__(self):
         return self.nom_unidad
 
+class NivelesNum(models.Model):
+    nom_nivel = models.CharField(max_length=200)
+    def __str__(self):
+        return str(self.nom_nivel)
+    
 
 class NivelDet(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
@@ -28,9 +33,11 @@ class Codigos(models.Model):
     codigo = models.IntegerField(unique=True)
     sub_area = models.ForeignKey(sub_area,on_delete=models.CASCADE,null=True)
     cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE,null=True)
+    nivel_num = models.ForeignKey(NivelesNum, on_delete=models.CASCADE)
+
 
     def __str__(self):
-        return str(self.codigo)
+        return str(self.sub_area)
         
 class Datos(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
