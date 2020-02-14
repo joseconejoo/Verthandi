@@ -1048,18 +1048,18 @@ th {
 /* Bolsa Form */
 .modal-dialog {
   width: 33%;
-  background: rgba(0, 0, 0, 0.97) ;
+  background: rgba(255, 255, 255, 1) ;
 
 }
 
 .modal-dialog input:focus {
   background-image: none;
-  border-color: transparent;
+  border-color: rgba(255, 255, 255,0.3);
   box-shadow: none;
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
   outline: 0 none;
-  border-bottom: 1px solid rgba(255, 255, 255,0.3);
+  border-bottom: 1px solid rgba(0, 0, 0,0.4);
 
   outline: none;
 }
@@ -1070,8 +1070,20 @@ th {
   box-shadow: none;
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
+  border-bottom: 1px solid rgba(0, 0, 0,0.4);
+
+  background-image: none;
+
+}
+
+.modal-dialog select option {
+  background: white;
+  color: black;
+  border-color: transparent;
+  box-shadow: none;
+  /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
+  */
   outline: 0 none;
-  border-bottom: 1px solid rgba(255, 255, 255,0.3);
 
   outline: none;
 
@@ -1079,28 +1091,31 @@ th {
 
 }
 
+
 .modal-dialog button {
-  background: black;
-  border-color: transparent;
-  border-bottom: transparent;
+  margin-top: 20%;
+  background: white;
+  color:black;
+  border-color: black;
 }
 
 
 .modal-dialog button:hover {
-  background: rgba(255, 255, 255,0.05);
-  border-color: transparent;
+  background: rgba(0, 0, 0,0.08);
+  color:black;
+  border-color: black;
 }
 
 .modal-dialog button:active,.modal-dialog button:target,.modal-dialog button:focus,.modal-dialog button:active:focus{
   background: rgba(255, 255, 255,0.03);
-  border-color: transparent !important;
-  border-bottom: transparent !important;
+  border-color: black ;
+  color:black;
   outline: 0 none;
-  box-shadow: none !important;
+  box-shadow: none ;
 }
 
 .modal-dialog .close{
-  color: white;
+  color: black;
   font-size: 23px;
 }
 

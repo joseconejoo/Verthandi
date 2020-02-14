@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
 {% load humanize %}
 {% load myfilters %}
+
 {% block content2 %}
   {% if user.is_authenticated %}
   <div class="M_d">
@@ -13,11 +14,6 @@
   {% else %}
     <p>Usted es un visitante.</p>
   {% endif %}
-
-{% endblock %}
-
-
-{% block info %}
 
 {% endblock %}
 

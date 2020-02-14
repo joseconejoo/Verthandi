@@ -16,7 +16,7 @@
               <img src="img/logo.png" alt="Valkyria Logo">
               Valkyria
             </h1>
-            <h2 class="logo-name">Gaal</h2>
+            <h2 class="logo-name">Siglas</h2>
         </a>
       </div>
     </div>
@@ -155,6 +155,41 @@
           			      <p></p>
 
           			  {% endfor %}
+                  {% for field in form3 %}
+                              {% if field.errors %}
+                              <script type="text/javascript">
+                                var varka = '{{field.errors}}';
+                                varka = varka.replace(/\<li>/g, '');
+                                varka = varka.replace(/\<\/li>/g, '');
+                                varka = varka.replace(/\<\/ul>/g, '');
+                                varka = varka.replace(/\<ul class="errorlist">/g, '')
+                                varka = varka.replace('.', '.\n\n');
+
+
+                                alert(varka);
+                              </script>
+                              {% endif %}
+
+                    {% csrf_token %}
+                      {% if forloop.counter == 1%}
+                      <div class="form-group col-md-12 col-sm-12">
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+                          {{field|regist7:'form-control '}}
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      {% if forloop.counter == 2%}
+                      <div class="form-group col-md-6 col-sm-6">
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+                          {{field|regist5:'form-control '}}
+                        </div>
+
+                      </div>
+                      {% endif %}
+                      {% endfor %}
 
           			  <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
           			</fieldset>

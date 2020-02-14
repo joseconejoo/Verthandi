@@ -60,3 +60,6 @@ def addclass(value, arg):
 def addclass(value, arg):
     return value.as_widget(attrs={'class': arg,"placeholder": "Cedula"})
 
+@register.filter(name='regist7')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Codigo para Registrar"})

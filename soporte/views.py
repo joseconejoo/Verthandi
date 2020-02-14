@@ -9,7 +9,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileRe
 from .models import unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+from .forms import CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
 
@@ -32,12 +32,17 @@ def registros1(request):
     x123.is_staff=True
     x123.is_superuser=False
     x123.save()
-    """
+    
+    for x in range(0,10):
+        print (x==0)
 
+    User.objects.create_user(username='parapeto2',password='123654ASD')
+    """
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
         form2= DatosRF(request.POST)
-
+        form3Cod = CodigosF(request.POST)
+        #print (request.POST.get('codigo'))
         if foxr.is_valid() and form2.is_valid():
 
             post = foxr.save(commit=False)
@@ -53,12 +58,13 @@ def registros1(request):
     else:
         foxr = UserCreationForm()
         form2 = DatosRF()
+        form3Cod = CodigosF()
         
         """
         for x in range(0,1):
             print (formlistoption[0].id)
         """
-    return render(request, 'registros1.html', {'form': foxr, "form2":form2, 'formOpti':formlistoption})
+    return render(request, 'registros1.html', {'form3':form3Cod,'form': foxr, "form2":form2, 'formOpti':formlistoption})
 
 
 class login(LoginView):
