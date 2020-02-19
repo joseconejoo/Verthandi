@@ -49,7 +49,7 @@
                         varka = varka.replace(new RegExp("[^a-zA-ZñÑ0-9úáéíó. ]", "g"), " ");
                         varka = varka.replace(/The two password fields didn t match./g,"Las dos contraseñas no coinciden.");
                         varka = varka.replace('.', '.\n\n');
-
+                        varka = varka.replace(/Debe contener al menos 8 caracteres.Esta contraseña es demasiado común.Esta contraseña es completamente numérica./g,"Debe contener al menos 8 caracteres. Es demasiado común. Es completamente numérica.");
 
                         alert(varka);
                       </script>
@@ -156,6 +156,7 @@
 
           			  {% endfor %}
                   {% for field in form3 %}
+			{% comment %}
                               {% if field.errors %}
                               <script type="text/javascript">
                                 var varka = '{{field.errors}}';
@@ -169,7 +170,7 @@
                                 alert(varka);
                               </script>
                               {% endif %}
-
+			{% endcomment %}
                     {% csrf_token %}
                       {% if forloop.counter == 1%}
                       <div class="form-group col-md-12 col-sm-12">
