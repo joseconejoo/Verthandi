@@ -168,9 +168,14 @@ $('#myModal1').on('show.bs.modal', function (e) {
        var valks = $(e.relatedTarget).data('href');
        var nombre = $(e.relatedTarget).data('nombre');
        var tipo_op = $(e.relatedTarget).data('tipo');
+       var pestana = $(e.relatedTarget).data('pestana_nom');
 
        if (nombre && tipo_op) {
         document.getElementById("text-mod1").innerHTML = "Confirmar "+tipo_op +" del usuario "+ nombre+"";
+       }
+
+       if (pestana) {
+        document.getElementById("text-mod1").innerHTML = pestana;
        }
        //document.getElementById("pr1").innerHTML = x12[3];
        //var xsd = document.getElementById("Fbs1").acat;
@@ -204,10 +209,17 @@ $('#myModal2').on('show.bs.modal', function (e) {
        var valks = $(e.relatedTarget).data('href');
        var nombre = $(e.relatedTarget).data('nombre');
        var tipo_op = $(e.relatedTarget).data('tipo');
+       var pestana = $(e.relatedTarget).data('pestana_nom');
+
 
        if (nombre && tipo_op) {
         document.getElementById("text-mod1").innerHTML = "Confirmar "+tipo_op +" del usuario "+ nombre+"";
        }
+
+       if (pestana) {
+        document.getElementById("text-mod1").innerHTML = pestana;
+       }
+
        //document.getElementById("pr1").innerHTML = x12[3];
        //var xsd = document.getElementById("Fbs1").acat;
 

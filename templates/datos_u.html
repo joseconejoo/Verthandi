@@ -20,7 +20,11 @@
                 <p> </p>
 
                 <td>Nombre de usuario:</td>
+                {% if user.is_superuser %}
+                <td> {{ datos.usuario|linebreaksbr }} - Usuario Administrador </td>
+                {% else %}
                 <td> {{ datos.usuario|linebreaksbr }} </td>
+                {% endif %}
                 <br>
                 <tr>
                 <td>Nombre: </td><td> {{ datos.nombre|linebreaksbr }}</td>

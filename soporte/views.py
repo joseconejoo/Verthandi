@@ -46,16 +46,21 @@ def registros1(request):
         form3Cod = CodigosF(request.POST)
         #print (request.POST.get('codigo'))
         if foxr.is_valid() and form2.is_valid():
-
+            codd = request.POST.get('codigo')
             post = foxr.save(commit=False)
+            cod_usu_n = get_object_or_404(Codigos, codigo=codd)
+            numero_nivel = int(str(cod_usu_n.nivel_num.pk))
+            #cod_usu_n2 = get_object_or_404(NivelesNum, pk=numero_nivel)
+            cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
             post.is_active=0
             post2=form2.save(commit=False)
             post.save()
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
+            post2.nivel_usua=cod_usu_n2
             post2.save()
             #Niveles.objects.create(user=User.objects.get(id=post.pk))
-            
+            activate = True
             return redirect('login')
     else:
         foxr = UserCreationForm()
@@ -307,18 +312,76 @@ def adm_sop_opcis_detNE(request, pk):
 
 def op_codigo(request):
     post = Codigos.objects.order_by('id')
-    post2 = NivelesNum.objects.order_by('id')
-    #post.delete()
-    return render(request, 'valids.html', {'code': post2})
+    post2 = NivelesNum.objects.order_by('id')[:2]
+    post3 = P_opci.objects.order_by('id')
 
-def Valid1_codigo(request,pk):
+    coord = []
+    empl = []
+
+    for n_numeros in post2:
+        if n_numeros.pk == 3 or n_numeros.pk == 4:
+            lis_codigo = []
+            lis_sub = []
+            if Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]).exists():
+                for x in Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]):
+                    lis_codigo.append(int(str(x.pk))) 
+                for y in post3:
+                    for x in Codigos.objects.filter(sub_area=y.pk):
+                        if x.pk in lis_codigo:
+                            if n_numeros.pk == 3:
+                                coord.append(x)    
+                            elif n_numeros.pk == 4:
+                                empl.append(x)
+                            print('esta')
+                #print (lis_codigos)
+        else:
+            if Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]).exists():
+                codigo = Codigos.objects.get(nivel_num=post2[n_numeros.pk-1])
+                n_numeros.codigo1 = codigo.codigo
+                n_numeros.codigo1pk = codigo.pk
+
+    #post.delete()
+    return render(request, 'valids.html', {'code': post2,'sub_a':post3,'coord':coord,'empl':empl})
+
+def Valid1_codigo(request,pk,pk1=0):
     if request.user.is_superuser or request.user.is_staff:
         if request.method == "POST":
-            while True:
-                x12 = random.randint(100000, 999999)
-                if not Codigos.objects.filter(codigo=x12).exists() :
-                    Codigos.objects.create(codigo=x12)
+            if pk1 == 0:
+                if Codigos.objects.filter(nivel_num=pk).exists():
                     return redirect('op_codigo')
+                    #verifica que no haya otro codigo en el lugar
+                else:
+                    while True:
+                        x12 = random.randint(1000, 9999)
+                        if not Codigos.objects.filter(codigo=x12).exists() :
+                            nivel1 = NivelesNum.objects.get(pk=pk)
+                            Codigos.objects.create(codigo=x12,nivel_num=nivel1)
+                            return redirect('op_codigo')
+            else:
+                lis_codigos = []
+                if Codigos.objects.filter(nivel_num=pk).exists():
+                    lis_codigos.append(Codigos.objects.filter(nivel_num=pk))
+                    #HACER CORREGIR ESTA PARTE, VERIFICACION NO FUNCIONA
+                    if not Codigos.objects.filter(sub_area=pk1) in lis_codigos:
+                        while True:
+                            x12 = random.randint(1000, 9999)
+                            if not Codigos.objects.filter(codigo=x12).exists() :
+                                nivel1 = NivelesNum.objects.get(pk=pk)
+                                nivel2 = P_opci.objects.get(pk=pk1)
+                                Codigos.objects.create(codigo=x12,nivel_num=nivel1,sub_area=nivel2)
+                                return redirect('op_codigo')
+
+                    else:
+                        return redirect('op_codigo')
+                else:
+                    while True:
+                        x12 = random.randint(1000, 9999)
+                        if not Codigos.objects.filter(codigo=x12).exists() :
+                            nivel1 = NivelesNum.objects.get(pk=pk)
+                            nivel2 = P_opci.objects.get(pk=pk1)
+                            Codigos.objects.create(codigo=x12,nivel_num=nivel1,sub_area=nivel2)
+                            return redirect('op_codigo')
+
 
 
         else:
@@ -326,6 +389,13 @@ def Valid1_codigo(request,pk):
         return render(request, 'valid.html', {'form': form})
     else:
         return redirect('Error1')
+
+
+def Del1_codigo(request,pk):
+    codigo = Codigos.objects.get(pk=pk)
+    codigo.delete()
+    return redirect('op_codigo')
+
 
 def Error(request):
     return render(request, "Negado.html")

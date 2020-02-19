@@ -552,8 +552,9 @@ table {
 }
 
 .footer .footer-top {
-    padding-top: 9rem;
-    padding-bottom: 5rem;
+  /* original, padding-top 9rem, padding-bottom 6rem */
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
 }
 .footer .widget-title, .footer .widget-title a {
     font-size: 1.4rem;
@@ -571,7 +572,9 @@ table {
     color: #999;
     text-transform: none;
     font-style: normal;
+    /*
     padding-bottom: 15px;
+    */
     white-space: nowrap;
     display: inline-block;
 }
@@ -748,6 +751,18 @@ table {
   background-attachment: fixed;
   padding-bottom: 0;
   border-bottom: 2px solid #99ccff;
+
+
+
+
+
+
+  position: absolute;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 /*index 1*/
@@ -1526,4 +1541,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .min-width-table2 {
   width: 20%;
+}
+
+.min-height1 {
+  min-height:140px;
+  max-width:90%;
+  margin-left: 5%;
 }

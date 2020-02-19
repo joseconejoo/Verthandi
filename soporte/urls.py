@@ -29,7 +29,8 @@ urlpatterns = [
 
 
     path('opciones_avanzadas/Opciones-Soporte/Codigo', views.op_codigo, name='op_codigo'),
-    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create<int:pk>', views.Valid1_codigo, name='Valid1_codigo'),
+    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create<int:pk><int:pk1>', views.Valid1_codigo, name='Valid1_codigo'),
+    path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Delete<int:pk>', views.Del1_codigo, name='Del1_codigo'),
     path('Acceso_Denegado', views.Error, name='Error1'),
 
 

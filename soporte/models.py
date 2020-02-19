@@ -7,6 +7,19 @@ from django.utils import timezone
 
 # Create your models here.
 
+class P_opci(models.Model):
+    nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.nombre
+
+
+class P_detal(models.Model):
+    p_opci = models.ForeignKey(P_opci, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.nombre
 
 class unidad2(models.Model):
     nom_unidad = models.CharField(max_length=500)
@@ -31,13 +44,13 @@ class sub_area(models.Model):
 
 class Codigos(models.Model):
     codigo = models.IntegerField(unique=True)
-    sub_area = models.ForeignKey(sub_area,on_delete=models.CASCADE,null=True)
+    sub_area = models.ForeignKey(P_opci,on_delete=models.CASCADE,null=True)
     cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE,null=True)
     nivel_num = models.ForeignKey(NivelesNum, on_delete=models.CASCADE)
 
 
     def __str__(self):
-        return str(self.sub_area)
+        return str(self.nivel_num)
         
 class Datos(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
@@ -49,30 +62,19 @@ class Datos(models.Model):
     email = models.EmailField(null=True)
     fedicion = models.DateTimeField(blank=True, null=True)
     cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE)
-    sub_area = models.ForeignKey(sub_area,on_delete=models.CASCADE,null=True)
-    codigoRe = models.ForeignKey(Codigos,on_delete=models.CASCADE,null=True)
+    sub_area = models.ForeignKey(P_opci,on_delete=models.CASCADE,null=True)
+    nivel_usua = models.ForeignKey(NivelesNum,on_delete=models.CASCADE)
 
     def publish(self):
         self.fedicion = timezone.now()
         self.save()
+        #,default=NivelesNum.objects.get(pk=1).pk
 
     def __str__(self):
         return str(self.usuario_id)+" "+(self.nombre)
 
 
-class P_opci(models.Model):
-    nombre = models.CharField(max_length=30)
 
-    def __str__(self):
-        return self.nombre
-
-
-class P_detal(models.Model):
-    p_opci = models.ForeignKey(P_opci, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.nombre
 
 class sop_notif(models.Model):
     usu_tec = models.ForeignKey('auth.User',on_delete=models.CASCADE, null=True, related_name='Tecnico')

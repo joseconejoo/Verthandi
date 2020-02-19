@@ -46,7 +46,8 @@
 		        	<td>
 		        		{% for dat in datos %}
 		        		{% if dat.pk == v_us1.pk %}
-		        			{{dat.nombre}}
+		        			{{dat.nombre}} -
+		        			{{dat.nivel_usua}}
 
 		        	  	{% endif %}
 		        	  	{% endfor %}

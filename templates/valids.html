@@ -1,61 +1,189 @@
 {% extends 'index.html' %}
-
-{% block content2 %}
-
-{% endblock %}
-{% block entrada %}
+{% load humanize %}
+{% load myfilters %}
 
 
-{% endblock %}
 {% block content %}
-<div class="bg-color">
+<div class="bg-color" class="section-padding">
+	<div class="container">
 
-    {% for codigo in code %}
-    <form action="{% url 'Valid1_codigo' codigo.pk %}" method="post">
-    	{% csrf_token %}
+		<div class="col-xs-12 text-center" style="padding:60px;">
+		  <h1 class="fblanc">Direccion de Informatica</h1>
+		  
+		  <br>
+		</div>
 
-    	<button class="btn btn-default" type="submit">Añadir codigo</button>
-    </form>
-
-
-
-        <div class="codigo">
-          <h2 style="color: white;">{{codigo.nom_nivel }}</h2>
-        </div>
-        <table class="bg-color">
-        <tr>
-          <th></th>
-          <th>Código</th>
-          <th></th>
-
-        </tr>
-       
-        <!-- hola -->
-
-        <tr>
-
-            <div class="">
-              <td>
-                <h3>{{ forloop.counter }}</h3>
-                </td>
-                	<td>
-                		{{v_us1.nom_nivel }}
+		{% for codigo in code %}
 
 
-                	</td>
-                      
+		    <div class="codigo text-center">
+		      <h2 style="color: white;">{{codigo.nom_nivel }}</h2>
+		    </div>
+		    <table class="bg-color min-height1">
+		    <tr>
+		      <th></th>
+		      <th>Código</th>
+		      {% if codigo.pk == 4 or codigo.pk == 3 %}
+		      <th>Sub área</th>
+		      {% endif %}
+		      <th></th>
 
-                  <td>
-                  	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Error1' %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+		    </tr>
+		   
+		    <!-- hola -->
 
-                  </td>
-                </span>
-            </div>
-            </tr>
-        </table>
+		    {% if codigo.pk == 3 %}
 
-    {% endfor %}
+		      {% for subareas in sub_a %}
+		        <tr>
 
+		            <div class="">
+		              <td>
+		                <h3>{{ forloop.counter }}</h3>
+		                </td>
+		                  <td>
+		                  	{% for coord in coord %}
+		                  	{% if subareas.pk == coord.sub_area.pk %}
+		                  	{{coord.codigo}}
+		                  	{% endif %}
+		                  	{% endfor %}
+
+		                  </td>
+		                  <td>
+		                    {{subareas.nombre}}
+
+		                  </td>
+
+		                  <td>
+		                  	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+
+		                  </td>
+		                </span>
+		            </div>
+		            </tr>
+
+		      {% endfor %}
+		      {% elif codigo.pk == 4 %}
+
+		        {% for subareas in sub_a %}
+		          <tr>
+
+		              <div class="">
+		                <td>
+		                  <h3>{{ forloop.counter }}</h3>
+		                  </td>
+		                    <td>
+
+
+		                    </td>
+		                    <td>
+		                      {{subareas.nombre}}
+
+		                    </td>
+
+		                    <td>
+		                    	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+
+		                    </td>
+		                  </span>
+		              </div>
+		              </tr>
+
+		        {% endfor %}
+		    {% else %}
+		    <tr>
+
+		        <div class="">
+		          <td>
+		            <h3>{{ forloop.counter }}</h3>
+		            </td>
+		              <td>
+		                {{ codigo.codigo1 }}
+
+		              </td> 
+		              <td>
+		                {% if codigo.codigo1 %}
+
+		                <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Del1_codigo' codigo.codigo1pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+		                {% else %}
+		                <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+
+		                {% endif %}
+		              </td>
+
+		            </span>
+		        </div>
+		        </tr>
+
+		    {% endif %}
+
+		    </table>
+
+		{% endfor %}	</div>
+
+	<div style="min-height: 166px;">
+		
+	</div>
 
 </div>
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
+
+          <button type="button" class="close" data-dismiss="modal"></button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+
+            <fieldset>
+            	{% csrf_token %}
+            <div class="col-md-6">
+            	<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+
+            </div>
+            <div class="col-md-6">
+            	<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+            	
+            </div>
+              
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block modals %}
+
 {% endblock %}
