@@ -8,96 +8,113 @@
 	<div class="container">
 
 		<div class="col-xs-12 text-center" style="padding:60px;">
-		  <h1 class="fblanc">Aceptar Usuarios</h1>
-		  
-		  <br>
+			<h1 class="fblanc">Aceptar Usuarios</h1>
+
+			<br>
 		</div>
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			{% if message.tags == 'success' %}
+			{% comment %}
+			<div class="alert1 success">
+				<span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+				<strong></strong> <span id="alert1text"> {{ message }}</span>
+			</div>
+			{% endcomment %}
+			{% endif %}
 
+			{% comment %}
+			<li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+			{% endcomment %}
+			{% endfor %}
+		</ul>
+		{% endif %}
 		<table class="bg-color">
-		<tr>
-		  <th>Nº</th>
-		  <th>Usuario</th>
-		  <th>Nombre</th>
-		  <th>Cédula</th>
-		  <th class="min-width-table2">Área</th>
+			<tr>
+				<th>Nº</th>
+				<th>Usuario</th>
+				<th>Nombre</th>
+				<th>Cédula</th>
+				<th class="min-width-table2">Área</th>
 
-		  {% comment %}
-		  <th>Perfil</th>
-		  {% endcomment %}
+				{% comment %}
+				<th>Perfil</th>
+				{% endcomment %}
 
-		  <th>Aceptar</th>
+				<th>Aprobar</th>
 
+			</tr>
+			{% for v_us1 in v_us %}
+
+
+			<!-- hola -->
+
+			<tr>
+
+				<div class="">
+					<td>
+						<h3>{{ forloop.counter }}</h3>
+					</td>
+					<td>
+						{{v_us1.username }}
+
+					</td>
+					<td>
+						{% for dat in datos %}
+						{% if dat.pk == v_us1.pk %}
+						{{dat.nombre}} -
+						{{dat.nivel_usua}}
+
+						{% endif %}
+						{% endfor %}
+
+					</td>
+
+					<td>
+						{% for dat in datos %}
+						{% if dat.pk == v_us1.pk %}
+						{{dat.cedula|intcomma}}
+
+						{% endif %}
+						{% endfor %}
+
+					</td>
+					<td>
+						{% for dat in datos %}
+						{% if dat.pk == v_us1.pk %}
+						{{dat.cod_area}}
+
+						{% endif %}
+						{% endfor %}
+
+					</td>
+
+
+					{% comment %}    
+					<td>
+
+						<a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+					</td>
+					{% endcomment %}
+					<td>
+						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="Aprobacion"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userNE' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+					</td>
+				</span>
+			</div>
 		</tr>
-		{% for v_us1 in v_us %}
-		
-
-		<!-- hola -->
-
-		<tr>
-
-		    <div class="">
-		      <td>
-		        <h3>{{ forloop.counter }}</h3>
-		        </td>
-		        	<td>
-		        	   {{v_us1.username }}
-
-		        	</td>
-		        	<td>
-		        		{% for dat in datos %}
-		        		{% if dat.pk == v_us1.pk %}
-		        			{{dat.nombre}} -
-		        			{{dat.nivel_usua}}
-
-		        	  	{% endif %}
-		        	  	{% endfor %}
-
-		        	</td>
-
-		        	<td>
-		        			{% for dat in datos %}
-		        			{% if dat.pk == v_us1.pk %}
-		        				{{dat.cedula|intcomma}}
-
-		        		  	{% endif %}
-		        		  	{% endfor %}
-
-		        	</td>
-		        	<td>
-		        		{% for dat in datos %}
-		        		{% if dat.pk == v_us1.pk %}
-		        			{{dat.cod_area}}
-
-		        	  	{% endif %}
-		        	  	{% endfor %}
-
-		        	</td>
-		              
-
-		          {% comment %}    
-		          <td>
-
-		          		<a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
-
-		          </td>
-		          {% endcomment %}
-		          <td>
-		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="aceptacion"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
-
-		          	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userNE' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
-
-		          </td>
-		        </span>
-		    </div>
-		    </tr>
 		{% endfor %}
-		</table>
+	</table>
 
-	</div>
+</div>
 
-	<div style="min-height: 166px;">
-		
-	</div>
+<div style="min-height: 166px;">
+
+</div>
 
 </div>
 
@@ -106,50 +123,41 @@
 
 
 <div class="container-modal">
-  <div class="modal fade" id="myModal1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <div class="modal-header">
-          <h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
+	<div class="modal fade" id="myModal1">
+		<div class="modal-dialog">
+			<div class="modal-content">
 
-          <button type="button" class="close" data-dismiss="modal"></button>
-        </div>
-        
-        <div class="modal-body" id="popupb">
-          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+				<div class="modal-header">
+					<h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
 
-            <fieldset>
-            	{% csrf_token %}
-            <div class="col-md-6">
-            	<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+					<button type="button" class="close" data-dismiss="modal"></button>
+				</div>
 
-            </div>
-            <div class="col-md-6">
-            	<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
-            	
-            </div>
-              
-            </fieldset>
-            <br>
+				<div class="modal-body" id="popupb">
+					<form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
 
+						<fieldset>
+							{% csrf_token %}
+							<div class="col-md-6">
+								<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
 
-          </form>
-        </div>
-                          
-      </div>
-    </div>
-  
-</div>
+							</div>
+							<div class="col-md-6">
+								<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+
+							</div>
+
+						</fieldset>
+						<br>
 
 
+					</form>
+				</div>
 
+			</div>
+		</div>
 
-
-
-
-
-{% endblock %}
+	</div>
 
 
 
@@ -158,6 +166,15 @@
 
 
 
-{% block modals %}
+	{% endblock %}
 
-{% endblock %}
+
+
+
+
+
+
+
+	{% block modals %}
+
+	{% endblock %}

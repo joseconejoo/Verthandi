@@ -26,6 +26,11 @@ class P_opciF(forms.ModelForm):
 		model = P_opci
 		fields = ('nombre',)
 
+class Datos_per_infoF(forms.ModelForm):
+	class Meta:
+		model = Datos
+		fields = ('nombre', 'apellido','cedula','sub_area')
+
 class DatosF(forms.ModelForm):
 	class Meta:
 		model = Datos
@@ -34,7 +39,7 @@ class DatosF(forms.ModelForm):
 class DatosRF(forms.ModelForm):
 	class Meta:
 		model = Datos
-		fields = ('nombre', 'apellido','cod_area','cedula')
+		fields = ('nombre', 'apellido','cedula','cod_area')
 
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)

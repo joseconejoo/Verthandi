@@ -85,6 +85,22 @@
 {% endblock %}
 
 {% block modals %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div class="alert1 success">
+      <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong></strong> <span id="alert1text"> {{ message }}</span>
+    </div>    {% endif %}
+    {% comment %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endcomment %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+
 {% if form.errors %}
 
 <div class="alert1">

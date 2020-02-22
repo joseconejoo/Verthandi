@@ -25,7 +25,7 @@
       <div class="container">
         <div class="row">
           <div class="inner text-center">
-            
+
             <p class='titulo-s2'><img src="/static/css2/img/portuguesa12test3.png" class="imagen12">
             Dirección de informática, Gobernación de Portuguesa - UPTP </p>
 
@@ -45,40 +45,40 @@
     </div>
   </section>
   <section id="event">
+
     {% block content %}
     {% endblock %}
   </section>
   <header id="header">
     <div class="container-fluid">
       {% if user.is_authenticated %}
-        <div id="mySidenav" class="sidenav">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          {% if user.is_staff or user.is_superuser%}
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-          
-          <a href="{% url 'post_noti' %}">Notificaciones</a>
-          {% if datos.usuario %}
-          <a class="boton-abrir" id="M_boton-abrir" href="{% url 'datos_u' pk=user.pk  %}">Perfil</a>
-          {% else %}
-          <a  href="{% url 'datos1' %}" id="M_boton-abrir" class="boton-abrir">Perfil</a>        
-          {% endif %}
+        {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'post_noti' %}">Notificaciones</a>
 
-          {% if user.is_superuser %}
-          <a class="boton-abrir" id="M_boton-abrir" href="{% url 'a_us' %}">Aceptar usuarios</a>
-          <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
-          <a class="boton-abrir" id="M_boton-abrir" href="{% url 'opcisAdmin' %}">Opciones Avanzadas</a>
-          {% endif %}
-          {% endif %}
-          
 
-          <a href="{% url 'logout' %}">Salir</a>
-
-        </div>
-
-        <span onclick="openNav()" class="pull-right menu-icon">Menú ☰   </span>
-        {% if user.is_staff or user.is_superuser%}
-        <i class="fa fa-bell-o pull-right menu-icon2"></i><span class="fa-badge menu-icon2 fa fa-small f_verde menu-icon3"><p class="text-center">1</p></span>
+        {% if user.is_superuser %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'a_us' %}">Aprobación de usuarios</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'opcisAdmin' %}">Opciones Avanzadas</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'personal_inf' %}">Personal Informatica</a>
         {% endif %}
+        {% endif %}
+
+        {% if user.datos.nivel_usua.pk == 2 %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="">Registrar Vacaciones</a>
+        {% endif %}
+      </div>
+
+      <span onclick="openNav()" class="pull-right menu-icon">Menú ☰   </span>
+      {% if user.is_staff or user.is_superuser%}
+      <i class="fa fa-bell-o pull-right menu-icon2"></i><span class="fa-badge menu-icon2 fa fa-small f_verde menu-icon3"><p class="text-center">1</p></span>
+
+
+      {% endif %}
 
       {% else %}
       <div class="menu-login22">
@@ -87,7 +87,26 @@
       {% endif %}
     </div>
   </header>
-  
+  {% if user.is_authenticated %}
+  <div class="menu_drop menu-icon-nomb">
+    <ul>
+      <li class="dropdown">
+        <a href="javascript:;" class="dropbtn">{{user.datos.nombre}} <i class="fa fa-sort-desc" id="iconB"></i></a>
+        <div class="dropdown-content">
+          {% if datos.usuario %}
+          <a class="boton-abrir" id="M_boton-abrir" href="{% url 'datos_u' pk=user.pk  %}">Perfil</a>
+          {% else %}
+          <a  href="{% url 'datos1' %}" id="M_boton-abrir" class="boton-abrir">Perfil</a>        
+          {% endif %}
+          <a href="{% url 'logout' %}">Salir</a>
+
+
+        </div>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+
   <footer class="footer text-center">
     <div class="footer-top">
       <div class="row">
@@ -106,34 +125,34 @@
 
               <div class="credits">
                © Siglas.  Diseño <a href="https://www.facebook.com/groups/2144533458915020/">Siglas Project</a>
-                
-              </div>
-              <p class="clear-float">
+
+             </div>
+             <p class="clear-float">
 
 
-              </p>
-            </div>
+             </p>
+           </div>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- / footer -->
-<script src="{% static 'css2/js/jquery.min.js' %}"></script>
-<script src="{% static 'css2/js/jquery.easing.min.js' %}"></script>
+         </div>
+       </div>
+     </div>
+   </div>
+ </footer>
+ <!-- / footer -->
+ <script src="{% static 'css2/js/jquery.min.js' %}"></script>
+ <script src="{% static 'css2/js/jquery.easing.min.js' %}"></script>
 
-<script src="{% static 'css2/js/bootstrap.min.js' %}"></script>
-
-
-<script src="{% static 'css2/lib/owlcarousel/owl.carousel.min.js' %}"></script>
-<script src="{% static 'css2/lib/stellar/stellar.min.js' %}"></script>
-<script src="{% static 'css2/lib/waypoints/waypoints.min.js' %}"></script>
-<script src="{% static 'css2/lib/counterup/counterup.min.js' %}"></script>
-<script src="{% static 'css2/contactform/contactform.js' %}"></script>
+ <script src="{% static 'css2/js/bootstrap.min.js' %}"></script>
 
 
-<script src="{% static 'css2/js/custom15.js' %}"></script>
+ <script src="{% static 'css2/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+ <script src="{% static 'css2/lib/stellar/stellar.min.js' %}"></script>
+ <script src="{% static 'css2/lib/waypoints/waypoints.min.js' %}"></script>
+ <script src="{% static 'css2/lib/counterup/counterup.min.js' %}"></script>
+ <script src="{% static 'css2/contactform/contactform.js' %}"></script>
+
+
+ <script src="{% static 'css2/js/custom15.js' %}"></script>
 
 
 </body>

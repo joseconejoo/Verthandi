@@ -32,8 +32,9 @@ urlpatterns = [
     path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Create<int:pk><int:pk1>', views.Valid1_codigo, name='Valid1_codigo'),
     path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Delete<int:pk>', views.Del1_codigo, name='Del1_codigo'),
     path('Acceso_Denegado', views.Error, name='Error1'),
-
-
+    path('Personal-Informatica', views.personal_inf, name='personal_inf'),
+    path('Personal-Informatica/Registro', views.registros_personal_inf, name='registros_personal_inf'),
+    
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
 

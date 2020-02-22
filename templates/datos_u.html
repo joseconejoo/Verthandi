@@ -20,30 +20,38 @@
                 <p> </p>
 
                 <td>Nombre de usuario:</td>
-                {% if user.is_superuser %}
+                {% if user.datos.nivel_usua.pk == 1 %}
+                <td> {{ datos.usuario|linebreaksbr }} - Usuario Coordinador </td>
+                {% elif user.is_superuser %}
                 <td> {{ datos.usuario|linebreaksbr }} - Usuario Administrador </td>
+                {% elif user.datos.nivel_usua.pk == 2 %}
+                <td> {{ datos.usuario|linebreaksbr }} - Usuario Secretaria </td>
                 {% else %}
                 <td> {{ datos.usuario|linebreaksbr }} </td>
                 {% endif %}
                 <br>
-                <tr>
+                <tr class='no_color'>
                 <td>Nombre: </td><td> {{ datos.nombre|linebreaksbr }}</td>
                 </tr>
-                <tr>
+                <tr class='no_color'>
                 <td>Apellido: </td> <td>{{ datos.apellido|linebreaksbr }}</td>
                 </tr>
-                <tr>
+                <tr class='no_color'>
                 <td>Cedula: </td> <td> {{ datos.cedula|intcomma }}</td>
                 </tr>
                 {% comment %}
-                <tr>
+                <tr class='no_color'>
                 <td>Correo: </td> <td> {{ datos.email|linebreaksbr }}</td>
                 </tr>
                 {% endcomment %}
 
 
-                <tr>
-                <td>Ultima edicion de perfil: </td> <td> {{ datos.fedicion }}</td>
+                <tr class='no_color'>
+                  {% if datos.fedicion %}
+                  <td>Ultima edicion de perfil: </td> <td> {{ datos.fedicion }}</td>
+                  {% else %}
+                  <td>Ultima edicion de perfil: </td> <td> Ninguna</td>
+                  {% endif %}
                 </tr>
                 
 

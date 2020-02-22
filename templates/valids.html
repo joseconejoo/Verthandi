@@ -8,122 +8,134 @@
 	<div class="container">
 
 		<div class="col-xs-12 text-center" style="padding:60px;">
-		  <h1 class="fblanc">Direccion de Informatica</h1>
-		  
-		  <br>
+			<h1 class="fblanc">Dirección de Informática</h1>
+
+			<br>
 		</div>
+		<table class="bg-color min-height1">
+			<tr>
+				<th>Nº</th>
+				<th>Código de Registro</th>
+				<th>Nivel</th>
+				{% if codigo.pk == 4 or codigo.pk == 3 %}
+				<th>Sub área</th>
+				{% endif %}
+				<th>Opciones</th>
 
-		{% for codigo in code %}
-
-
-		    <div class="codigo text-center">
-		      <h2 style="color: white;">{{codigo.nom_nivel }}</h2>
-		    </div>
-		    <table class="bg-color min-height1">
-		    <tr>
-		      <th></th>
-		      <th>Código</th>
-		      {% if codigo.pk == 4 or codigo.pk == 3 %}
-		      <th>Sub área</th>
-		      {% endif %}
-		      <th></th>
-
-		    </tr>
-		   
-		    <!-- hola -->
-
-		    {% if codigo.pk == 3 %}
-
-		      {% for subareas in sub_a %}
-		        <tr>
-
-		            <div class="">
-		              <td>
-		                <h3>{{ forloop.counter }}</h3>
-		                </td>
-		                  <td>
-		                  	{% for coord in coord %}
-		                  	{% if subareas.pk == coord.sub_area.pk %}
-		                  	{{coord.codigo}}
-		                  	{% endif %}
-		                  	{% endfor %}
-
-		                  </td>
-		                  <td>
-		                    {{subareas.nombre}}
-
-		                  </td>
-
-		                  <td>
-		                  	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
-
-		                  </td>
-		                </span>
-		            </div>
-		            </tr>
-
-		      {% endfor %}
-		      {% elif codigo.pk == 4 %}
-
-		        {% for subareas in sub_a %}
-		          <tr>
-
-		              <div class="">
-		                <td>
-		                  <h3>{{ forloop.counter }}</h3>
-		                  </td>
-		                    <td>
+			</tr>
+			{% for codigo in code %}
 
 
-		                    </td>
-		                    <td>
-		                      {{subareas.nombre}}
+			<!-- hola -->
 
-		                    </td>
+			{% if codigo.pk == 3 %}
 
-		                    <td>
-		                    	<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+			{% for subareas in sub_a %}
+			<tr>
 
-		                    </td>
-		                  </span>
-		              </div>
-		              </tr>
+				<div class="">
+					<td>
+						<h3>{{ forloop.counter }}</h3>
+					</td>
+					<td>
+						{% for coord in coord %}
+						{% if subareas.pk == coord.sub_area.pk %}
+						{{coord.codigo}}
+						{% endif %}
+						{% endfor %}
 
-		        {% endfor %}
-		    {% else %}
-		    <tr>
+					</td>
+					<td>
+						{{subareas.nombre}}
 
-		        <div class="">
-		          <td>
-		            <h3>{{ forloop.counter }}</h3>
-		            </td>
-		              <td>
-		                {{ codigo.codigo1 }}
+					</td>
 
-		              </td> 
-		              <td>
-		                {% if codigo.codigo1 %}
+					<td>
+						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
 
-		                <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Del1_codigo' codigo.codigo1pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
-		                {% else %}
-		                <a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+					</td>
+				</span>
+			</div>
+		</tr>
 
-		                {% endif %}
-		              </td>
+		{% endfor %}
+		{% elif codigo.pk == 4 %}
 
-		            </span>
-		        </div>
-		        </tr>
+		{% for subareas in sub_a %}
+		<tr>
 
-		    {% endif %}
+			<div class="">
+				<td>
+					<h3>{{ forloop.counter }}</h3>
+				</td>
+				<td>
 
-		    </table>
 
-		{% endfor %}	</div>
+				</td>
+				<td>
+					{{subareas.nombre}}
 
-	<div style="min-height: 166px;">
-		
+				</td>
+
+				<td>
+					<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
+
+				</td>
+			</span>
+		</div>
+	</tr>
+
+	{% endfor %}
+	{% else %}
+	<tr>
+
+		<div class="">
+			<td>
+				<h3>{{ forloop.counter }}</h3>
+			</td>
+			<td class="min-width-table2">
+				{% if codigo.codigo1 %}
+				{{ codigo.codigo1 }}
+				{% else %}
+				Ningún Código
+				{% endif %}
+				
+
+			</td> 
+			<td>
+				{{codigo.nom_nivel }}
+			</td>
+			<td>
+				{% if codigo.codigo1 %}
+
+				<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Del1_codigo' codigo.codigo1pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+
+				<a data-toggle="modal" data-target="" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary" disabled><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
+				{% else %}
+				<a data-toggle="modal" data-target="" data-id="" data-href="" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary" disabled><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+
+				<a data-toggle="modal" data-target="#myModal1" data-id="#myModal1" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
+
+				{% endif %}
+			</td>
+
+		</span>
 	</div>
+</tr>
+
+{% endif %}
+
+
+
+{% endfor %}	
+
+</table>
+
+</div>
+
+<div style="min-height: 166px;">
+
+</div>
 
 </div>
 
@@ -132,40 +144,41 @@
 
 
 <div class="container-modal">
-  <div class="modal fade" id="myModal1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <div class="modal-header">
-          <h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
+	<div class="modal fade" id="myModal1">
+		<div class="modal-dialog">
+			<div class="modal-content">
 
-          <button type="button" class="close" data-dismiss="modal"></button>
-        </div>
-        
-        <div class="modal-body" id="popupb">
-          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+				<div class="modal-header">
+					<h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
 
-            <fieldset>
-            	{% csrf_token %}
-            <div class="col-md-6">
-            	<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+					<button type="button" class="close" data-dismiss="modal"></button>
+				</div>
 
-            </div>
-            <div class="col-md-6">
-            	<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
-            	
-            </div>
-              
-            </fieldset>
-            <br>
+				<div class="modal-body" id="popupb">
+					<form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+
+						<fieldset>
+							{% csrf_token %}
+							<div class="col-md-6">
+								<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+
+							</div>
+							<div class="col-md-6">
+								<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+
+							</div>
+
+						</fieldset>
+						<br>
 
 
-          </form>
-        </div>
-                          
-      </div>
-    </div>
-  
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
 </div>
 
 

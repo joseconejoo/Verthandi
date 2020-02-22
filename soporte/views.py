@@ -9,9 +9,11 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileRe
 from .models import NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
+
+from django.contrib import messages
 
 import random
 
@@ -54,13 +56,22 @@ def registros1(request):
             cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
             post.is_active=0
             post2=form2.save(commit=False)
+
+            lista_num =[1,2,3,4,5]
+            if numero_nivel in lista_num:
+                post2.cod_area = unidad2.objects.get(pk=16)
+
+            if cod_usu_n2.pk == 1:
+                post.is_superuser=True
             post.save()
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
+            
             post2.nivel_usua=cod_usu_n2
             post2.save()
             #Niveles.objects.create(user=User.objects.get(id=post.pk))
             activate = True
+            messages.success(request, 'Registro Realizado exitosamente, Debe esperar la Aprobacion del administrador')
             return redirect('login')
     else:
         foxr = UserCreationForm()
@@ -129,7 +140,7 @@ def post_list2(request):
 
 def a_us(request):
     if request.user.is_authenticated==True:
-        
+
         v_us = User.objects.filter(is_active=0).order_by('id')
         Verthandi=[]
         for Skuld in v_us:
@@ -150,9 +161,10 @@ def userAP(request, pk):
     if request.user.is_superuser:
         Verthandi = get_object_or_404(User, pk=pk)
         #print (Verthandi['is_active'])
-        Verthandi.is_active = False
+        Verthandi.is_active = True
         #Verthandi.is_active = True
         Verthandi.save()
+        messages.success(request, 'Form submission successful')
         return redirect('a_us')
 
     else:
@@ -171,6 +183,7 @@ def userNE(request, pk):
 
 
 def datos_u(request, pk):
+
     try:
         dat=Datos.objects.get(pk=pk)
         Verthandi=User.objects.get(pk=pk)
@@ -208,7 +221,7 @@ def datose(request, pk):
     return render(request, 'datose.html', {'form': form})
 
 def Datos1(request):
-    if request.user.is_superuser or request.user.is_superuser:
+    if request.user.is_superuser or request.user.datos.nivel_usua:
         pass
     else:
         return redirect('post_noti')
@@ -399,3 +412,47 @@ def Del1_codigo(request,pk):
 
 def Error(request):
     return render(request, "Negado.html")
+
+
+def personal_inf(request):
+    posts=None
+
+    return render(request, 'personal_inf.html', {'posts': posts})
+
+def registros_personal_inf(request):
+    formlistoption = None
+    formlistoption = unidad2.objects.filter().order_by('id')
+    if request.method == "POST":
+        foxr = UserCreationForm(request.POST)
+        form2= DatosRF(request.POST)
+        form3Cod = CodigosF(request.POST)
+        if foxr.is_valid() and form2.is_valid():
+            codd = request.POST.get('codigo')
+            post = foxr.save(commit=False)
+            cod_usu_n = get_object_or_404(Codigos, codigo=codd)
+            numero_nivel = int(str(cod_usu_n.nivel_num.pk))
+            cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
+            post.is_active=0
+            post2=form2.save(commit=False)
+
+            lista_num =[1,2,3,4,5]
+            if numero_nivel in lista_num:
+                post2.cod_area = unidad2.objects.get(pk=16)
+
+            if cod_usu_n2.pk == 1:
+                post.is_superuser=True
+            post.save()
+            usuario1 = User.objects.get(pk=post.pk)
+            post2.usuario=usuario1
+            
+            post2.nivel_usua=cod_usu_n2
+            post2.save()
+            activate = True
+            messages.success(request, 'Registro Realizado exitosamente, Debe esperar la Aprobacion del administrador')
+            return redirect('login')
+    else:
+        foxr = UserCreationForm()
+        form2 = DatosRF()
+        form3Cod = CodigosF()
+
+    return render(request, 'registros1.html', {'form3':form3Cod,'form': foxr, "form2":form2, 'formOpti':formlistoption})
