@@ -7,29 +7,44 @@
 <div class="bg-color" class="section-padding">
 	<div class="container">
 
-		<div class="col-xs-12 text-center" style="padding:60px;">
-			<h1 class="fblanc">Aceptar Usuarios</h1>
 
-			<br>
-		</div>
 		{% if messages %}
+		{% comment %}
 		<ul class="messages">
+			{% endcomment %}
+
 			{% for message in messages %}
 			{% if message.tags == 'success' %}
-			{% comment %}
-			<div class="alert1 success">
-				<span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
-				<strong></strong> <span id="alert1text"> {{ message }}</span>
+			<div class="content">
+				<div class="col-sm-6 col-sm-offset-3">
+					<div class="alert1 success">
+						<span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+						<strong></strong> <span id="alert1text"> {{ message }}</span>
+					</div>    
+
+				</div>
+
 			</div>
-			{% endcomment %}
 			{% endif %}
 
 			{% comment %}
 			<li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
 			{% endcomment %}
 			{% endfor %}
+
+			{% comment %}
 		</ul>
+		{% endcomment %}
 		{% endif %}
+
+
+		<div class="col-xs-12 text-center" style="padding:60px;">
+			<h1 class="fblanc">Aceptar Usuarios</h1>
+
+			<br>
+		</div>
+
+
 		<table class="bg-color">
 			<tr>
 				<th>Nº</th>

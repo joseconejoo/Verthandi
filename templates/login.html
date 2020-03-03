@@ -8,106 +8,120 @@
 
 
 {% block content %}
-  <div id="content">
-    <div class="header">
-      <div class="header-inner">
-        <!--navbar-branding/logo - hidden image tag & site name so things like Facebook to pick up, actual logo set via CSS for flexibility -->
-        <a class="navbar-brand center-block" href="{% url 'post_landing' %}" title="Home">
-          <h1 class="hidden">
-              <img src="img/logo.png" alt="Siglas Logo">
-              Siglas
-            </h1>
-            <h2 class="logo-name">Siglas</h2>
-        </a>
-      </div>
+<div id="content">
+  <div class="header">
+    <div class="header-inner">
+      <!--navbar-branding/logo - hidden image tag & site name so things like Facebook to pick up, actual logo set via CSS for flexibility -->
+      <a class="navbar-brand center-block" href="{% url 'post_landing' %}" title="Home">
+        <h1 class="hidden">
+          <img src="img/logo.png" alt="Siglas Logo">
+          Siglas
+        </h1>
+        <h2 class="logo-name">Siglas</h2>
+      </a>
     </div>
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <div class="panel panel-default" id="loginP">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-            	Login
-              </h3>
-          </div>
-
-
-          <div class="panel-body">
-
-          	<form accept-charset="UTF-8" role="form" method='post'>
-
-          		<fieldset>
-          		  {% for field in form %}
-
-          		    {% csrf_token %}
-          		    <div class="errores">
-          		    </div>
-          		      {% if forloop.counter == 1%}
-          		      <div class="form-group">
-          		        <div class="input-group input-group-lg">
-          		          <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
-          		          {{field|login1:'form-control'}}
-          		        </div>
-          		      </div>
-          		      {% endif %}
-          		      {% if forloop.counter == 2%}
-          		      <div class="form-group">
-          		        <div class="input-group input-group-lg">
-          		          <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
-          		          {{field|login2:'form-control'}} 
-          		        </div>
-          		      </div>
-          		      {% endif %}
-
-          		      <p></p>
-          		      {% if field.help_text %}
-          		      <p class="help">{{ field.help_text|safe }}</p>
-          		      {% endif %}
-
-          		  {% endfor %}
-
-          		  <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-          		</fieldset>
-          		<br>
-          		<p class="m-b-0 m-t colorNegro">¿No tienes cuenta? <a href="{% url 'registros1' %}">Registrato de Usuario</a>.</p>
-
-
-          	</form>
-
-
-        </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /row -->
   </div>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+
+      <div class="panel panel-default" id="loginP">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+           Login
+         </h3>
+       </div>
+
+
+       <div class="panel-body">
+
+         <form accept-charset="UTF-8" role="form" method='post'>
+
+          <fieldset>
+            {% for field in form %}
+
+            {% csrf_token %}
+            <div class="errores">
+            </div>
+            {% if forloop.counter == 1%}
+            <div class="form-group">
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+                {{field|login1:'form-control'}}
+              </div>
+            </div>
+            {% endif %}
+            {% if forloop.counter == 2%}
+            <div class="form-group">
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
+                {{field|login2:'form-control'}} 
+              </div>
+            </div>
+            {% endif %}
+
+            <p></p>
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+
+            {% endfor %}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+          </fieldset>
+          <br>
+          <p class="m-b-0 m-t colorNegro">¿No tienes cuenta? <a href="{% url 'registros1' %}">Registrato de Usuario</a>.</p>
+
+
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /row -->
+</div>
 
 {% endblock %}
 
 {% block modals %}
 {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    {% if message.tags == 'success' %}
+
+
+{% for message in messages %}
+{% if message.tags == 'success' %}
+<div class="content">
+  <div class="col-sm-6 col-sm-offset-3">
     <div class="alert1 success">
       <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
       <strong></strong> <span id="alert1text"> {{ message }}</span>
-    </div>    {% endif %}
-    {% comment %}
-    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-    {% endcomment %}
-    {% endfor %}
-</ul>
+    </div>    
+
+  </div>
+  
+</div>
+{% endif %}
+
+{% comment %}
+<li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+{% endcomment %}
+{% endfor %}
+
 {% endif %}
 
 
 {% if form.errors %}
+<div class="content">
+  <div class="col-sm-6 col-sm-offset-3">
 
-<div class="alert1">
-  <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
-  <strong></strong> <span id="alert1text">su</span>
+    <div class="alert1">
+      <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong></strong> <span id="alert1text">su</span>
+    </div>
+  </div>
+  
 </div>
-
 <script type="text/javascript">
   var varka = '{{form.errors}}';
 

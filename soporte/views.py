@@ -61,7 +61,8 @@ def registros1(request):
             if numero_nivel in lista_num:
                 post2.cod_area = unidad2.objects.get(pk=16)
 
-            if cod_usu_n2.pk == 1:
+            lista_coord = [2]
+            if cod_usu_n2.pk in lista_coord:
                 post.is_superuser=True
             post.save()
             usuario1 = User.objects.get(pk=post.pk)
@@ -160,11 +161,12 @@ def a_us(request):
 def userAP(request, pk):
     if request.user.is_superuser:
         Verthandi = get_object_or_404(User, pk=pk)
+        nombr = Verthandi.username
         #print (Verthandi['is_active'])
         Verthandi.is_active = True
         #Verthandi.is_active = True
         Verthandi.save()
-        messages.success(request, 'Form submission successful')
+        messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
         return redirect('a_us')
 
     else:
@@ -174,8 +176,9 @@ def userAP(request, pk):
 def userNE(request, pk):
     if request.user.is_superuser:
         Verthandi = get_object_or_404(User, pk=pk)
+        nombr = Verthandi.username
         Verthandi.delete()
-        
+        messages.success(request, 'Usuario '+str(nombr)+' Eliminado exitosamente')
         return redirect('a_us')
 
     else:
@@ -325,39 +328,46 @@ def adm_sop_opcis_detNE(request, pk):
 
 def op_codigo(request):
     post = Codigos.objects.order_by('id')
-    post2 = NivelesNum.objects.order_by('id')[:2]
+    post22 = NivelesNum.objects.order_by('id')
+    post2 = NivelesNum.objects.order_by('id')#[1:]
     post3 = P_opci.objects.order_by('id')
-
-    coord = []
-    empl = []
+    sub_area = P_opci.objects.filter().order_by('id')
+    niveles_sub_areas = [4,5]
+    niveles_interes = [2,3,4]
+    lista_codigos = []
 
     for n_numeros in post2:
-        if n_numeros.pk == 3 or n_numeros.pk == 4:
-            lis_codigo = []
-            lis_sub = []
-            if Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]).exists():
-                for x in Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]):
-                    lis_codigo.append(int(str(x.pk))) 
-                for y in post3:
-                    for x in Codigos.objects.filter(sub_area=y.pk):
-                        if x.pk in lis_codigo:
-                            if n_numeros.pk == 3:
-                                coord.append(x)    
-                            elif n_numeros.pk == 4:
-                                empl.append(x)
-                            print('esta')
+        if n_numeros.pk in niveles_interes:
+            if n_numeros.pk in niveles_sub_areas:
+                lis_codigo = []
+                lis_sub = []
+                for x in sub_area:
+                    x123 = NivelesNum.objects.get(pk=n_numeros.pk)
+                    x123.sub_area = x
+                    x123.sub_areapk = x.pk
+                    lista_codigos.append(x123)
+                for x in Codigos.objects.filter(nivel_num=post22[n_numeros.pk-1]):
+                    lis_codigo.append(int(str(x.pk)))
                 #print (lis_codigos)
-        else:
-            if Codigos.objects.filter(nivel_num=post2[n_numeros.pk-1]).exists():
-                codigo = Codigos.objects.get(nivel_num=post2[n_numeros.pk-1])
-                n_numeros.codigo1 = codigo.codigo
-                n_numeros.codigo1pk = codigo.pk
+
+            else:
+                if Codigos.objects.filter(nivel_num=post22[n_numeros.pk-1]).exists():
+                    codigo = Codigos.objects.get(nivel_num=post22[n_numeros.pk-1])
+                    n_numeros.codigo1 = codigo.codigo
+                    n_numeros.codigo1pk = codigo.pk
+                else:
+                    n_numeros.sub_areapk = 0
+                lista_codigos.append(n_numeros)
+
 
     #post.delete()
-    return render(request, 'valids.html', {'code': post2,'sub_a':post3,'coord':coord,'empl':empl})
+    return render(request, 'valids.html', {'code': lista_codigos,'sub_a':post3})
 
 def Valid1_codigo(request,pk,pk1=0):
+    niveles_sub_areas = [4]
     if request.user.is_superuser or request.user.is_staff:
+        codigo = NivelesNum.objects.get(pk=pk)
+        print (codigo)
         if request.method == "POST":
             if pk1 == 0:
                 if Codigos.objects.filter(nivel_num=pk).exists():
@@ -416,8 +426,59 @@ def Error(request):
 
 def personal_inf(request):
     posts=None
+    niveles_v = NivelesNum.objects.filter().order_by('id')
+    sub_area = P_opci.objects.filter().order_by('id')
+    niveles_interes = [1,2,3,4]
+    niveles_sub_areas = [4]
+    niveles_lista = []
 
-    return render(request, 'personal_inf.html', {'posts': posts})
+    usuarios = []
+    usuarios2 = User.objects.filter().order_by('id')
+    for x in usuarios2:
+        usuarios.append(x)
+    usuarios_f = []
+    usuarios_i = []
+    for x in usuarios:
+        try:
+            if x.datos.nivel_usua.pk in niveles_interes:
+                if not (x.datos.nivel_usua.pk in usuarios_f) :
+                    usuarios_i.append(x)
+                    usuarios_f.append(x.datos.nivel_usua.pk)
+        except:
+            pass
+    #usuarios arriba filtrado
+    for x in niveles_v:
+        if x.pk in niveles_interes:
+            if x.pk in niveles_sub_areas:
+                for y in sub_area:
+                    x123 = NivelesNum.objects.get(pk=x.pk)
+                    x123.sub_area = str(y.nombre)
+                    niveles_lista.append(x123)
+            else:
+                agregado = False
+                for y in usuarios_i:
+                    if y.datos.nivel_usua.pk == x.pk:
+                        agregado = True
+                        x.encargado = y
+                        niveles_lista.append(x)
+                if not (agregado):
+                    niveles_lista.append(x)
+
+
+    """
+    for x in usuarios:
+        for y in range (0, (len(usuarios))-1):
+            usuario_ar = usuarios[y+1]
+            usu_act = usuarios [y]
+            try:
+                if (usu_act.datos.nivel_usua.pk) > (usuario_ar.datos.nivel_usua.pk):
+                    buff = usuario_ar
+                    usuarios[y+1] = usuarios[y]
+                    usuarios[y] = buff
+            except:
+                pass
+    """
+    return render(request, 'personal_inf.html', {'usuarios': usuarios_i,'niveles':niveles_lista})
 
 def registros_personal_inf(request):
     formlistoption = None

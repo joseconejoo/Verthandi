@@ -1254,9 +1254,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 .alert1 {
-  width: 45%;
+  width: 92%;
   height: auto;
-  margin-left: 27%;
+  margin-left: 4%;
   transform: translate(0%,20%);
 }
 
@@ -1582,6 +1582,8 @@ input[type=number]::-webkit-outer-spin-button {
   border:1px solid;
   overflow: hidden;
   background-color: transparent;
+
+  background: rgba(16,16,16,0.4);
   border-color: white;
 }
 
@@ -1599,6 +1601,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .menu_drop li .menu_drop a:hover,.menu_drop .dropdown:hover .dropbtn {
   background-color: transparent;
+  background: rgba(16,16,16,0.4);
 }
 
 .menu_drop li.dropdown {
@@ -1623,7 +1626,9 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: left;
 }
 
-.menu_drop .dropdown-content a:hover {background-color: #f1f1f1;}
+.menu_drop .dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .menu_drop .dropdown:hover .dropdown-content {
   display: block;
@@ -1632,4 +1637,6 @@ input[type=number]::-webkit-outer-spin-button {
 .no_color {
   background-color: rgba(0,0,0,0);
 }
-
+.no_color_background {
+  background-color: rgba(0,0,0,0);
+}

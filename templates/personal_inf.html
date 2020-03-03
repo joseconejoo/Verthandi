@@ -8,46 +8,77 @@
 	<div class="container">
 
 		<div class="col-xs-12 text-center" style="padding:60px;">
-			<h1 class="fblanc">Personal de Informática</h1>
+			<h1 class="fblanc">Dirección de Informática</h1>
 
 			<br>
 		</div>
-		<div class="col-md-14">
+		<table class="bg-color min-height1">
+			<tr>
+				<th>Nº</th>
+				<th>Nivel</th>
+				<th>Nombre</th>
+				<th>Opciones</th>
 
-			<div class="col-md-6">
-				<a href="{% url 'registros_personal_inf' %}">
-					<button class="btn btn-lg btn-block btn-primary responsive-width">
-						<span >
-							Crear Coordinador de Sub Area
-						</span>
-					</button>
+			</tr>
+			{% for personal_info in niveles %}
 
-				</a>
 
-			</div>
-			
-			{% comment %}
-			<div class="col-md-6">
-				<button class="btn btn-lg btn-primary btn-block responsive-width">holaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaa  aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa  aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa</button>
-			</div>
+			<!-- hola -->
 
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
-		<div class="col-md-6">
-			<button class="btn btn-lg btn-primary btn-block">hola</button>
-		</div>
+			<tr>
+
+				<div class="">
+					<td>
+						<h3>{{ forloop.counter }}</h3>
+					</td>
+					<td class="min-width-table2">
+						{{personal_info.nom_nivel }}
+						{% if personal_info.sub_area %}
+						{{ personal_info.sub_area }}
+						{% endif %}
+						
+					</td> 
+					<td>
+						{% if personal_info.encargado %}
+						<span style="">{{ personal_info.encargado.datos.nombre }} 
+						{{ personal_info.encargado.datos.apellido }} </span>
+						{% else %}
+						Vacante
+						{% endif %}
+
+					</td>
+					<td>
+						{% if personal_info.encargado %}
+
+						<a href="{% url 'datos_u' personal_info.encargado.pk %}">
+							<span class="btn btn-primary">Perfil </span>
+						</a>
+
+						{% else %}
+						<a>
+							<span class="btn btn-primary" disabled>Perfil </span>
+						</a>
+
+						{% endif %}
+					</td>
+
+				</div>
+			</tr>
+
+
+			{% endfor %}	
+
+		</table>
 
 	</div>
+
+	<div style="min-height: 166px;">
+
+	</div>
+
 </div>
 
 
-
-{% endcomment %}
 
 
 
@@ -57,7 +88,7 @@
 			<div class="modal-content">
 
 				<div class="modal-header">
-					<h4 class="modal-title text-center fblanc" id="text-mod1">Notificacion de f</h4>
+					<h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
 
 					<button type="button" class="close" data-dismiss="modal"></button>
 				</div>
@@ -87,11 +118,7 @@
 		</div>
 
 	</div>
-
-
-
-
-	{% endblock %}
+</div>
 
 
 
@@ -100,6 +127,15 @@
 
 
 
-	{% block modals %}
+{% endblock %}
 
-	{% endblock %}
+
+
+
+
+
+
+
+{% block modals %}
+
+{% endblock %}

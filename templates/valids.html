@@ -28,108 +28,48 @@
 
 			<!-- hola -->
 
-			{% if codigo.pk == 3 %}
-
-			{% for subareas in sub_a %}
 			<tr>
 
 				<div class="">
 					<td>
 						<h3>{{ forloop.counter }}</h3>
 					</td>
-					<td>
-						{% for coord in coord %}
-						{% if subareas.pk == coord.sub_area.pk %}
-						{{coord.codigo}}
+					<td class="min-width-table2">
+						{% if codigo.codigo1 %}
+						{{ codigo.codigo1 }}
+						{% else %}
+						Ningún Código
 						{% endif %}
-						{% endfor %}
+						
 
+					</td> 
+					<td class="min-width-table2">
+						{{codigo.nom_nivel }}
+						{{codigo.sub_area.nombre }}
 					</td>
 					<td>
-						{{subareas.nombre}}
+						{% if codigo.codigo1 %}
 
+						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Del1_codigo' codigo.codigo1pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+
+						<a data-toggle="modal" data-target="" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary" disabled><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
+						{% else %}
+						<a data-toggle="modal" data-target="" data-id="" data-href="" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary" disabled><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
+
+						<a data-toggle="modal" data-target="#myModal1" data-id="#myModal1" data-href="{% url 'Valid1_codigo' codigo.pk codigo.sub_areapk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
+
+						{% endif %}
 					</td>
 
-					<td>
-						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
-
-					</td>
 				</span>
 			</div>
 		</tr>
 
-		{% endfor %}
-		{% elif codigo.pk == 4 %}
-
-		{% for subareas in sub_a %}
-		<tr>
-
-			<div class="">
-				<td>
-					<h3>{{ forloop.counter }}</h3>
-				</td>
-				<td>
 
 
-				</td>
-				<td>
-					{{subareas.nombre}}
+		{% endfor %}	
 
-				</td>
-
-				<td>
-					<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk subareas.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Crear Codigo </span></a>
-
-				</td>
-			</span>
-		</div>
-	</tr>
-
-	{% endfor %}
-	{% else %}
-	<tr>
-
-		<div class="">
-			<td>
-				<h3>{{ forloop.counter }}</h3>
-			</td>
-			<td class="min-width-table2">
-				{% if codigo.codigo1 %}
-				{{ codigo.codigo1 }}
-				{% else %}
-				Ningún Código
-				{% endif %}
-				
-
-			</td> 
-			<td>
-				{{codigo.nom_nivel }}
-			</td>
-			<td>
-				{% if codigo.codigo1 %}
-
-				<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'Del1_codigo' codigo.codigo1pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
-
-				<a data-toggle="modal" data-target="" data-id="" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary" disabled><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
-				{% else %}
-				<a data-toggle="modal" data-target="" data-id="" data-href="" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar eliminacion"><span class="btn btn-primary" disabled><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Eliminar </span></a>
-
-				<a data-toggle="modal" data-target="#myModal1" data-id="#myModal1" data-href="{% url 'Valid1_codigo' codigo.pk 0 %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion" data-pestana_nom="Confirmar creacion"><span class="btn btn-primary"><i class="fa fa-plus" id="iconB" style="color:rgba(0, 204, 255,0.95);"></i>  Crear Codigo </span></a>
-
-				{% endif %}
-			</td>
-
-		</span>
-	</div>
-</tr>
-
-{% endif %}
-
-
-
-{% endfor %}	
-
-</table>
+	</table>
 
 </div>
 
