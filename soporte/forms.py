@@ -39,7 +39,7 @@ class DatosF(forms.ModelForm):
 class DatosRF(forms.ModelForm):
 	class Meta:
 		model = Datos
-		fields = ('nombre', 'apellido','cedula','cod_area')
+		fields = ('nombre', 'apellido','cedula','cod_area','nivel_usua')
 
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)

@@ -45,13 +45,13 @@ def registros1(request):
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
         form2= DatosRF(request.POST)
-        form3Cod = CodigosF(request.POST)
         #print (request.POST.get('codigo'))
         if foxr.is_valid() and form2.is_valid():
-            codd = request.POST.get('codigo')
+            #codd = request.POST.get('codigo')
             post = foxr.save(commit=False)
-            cod_usu_n = get_object_or_404(Codigos, codigo=codd)
-            numero_nivel = int(str(cod_usu_n.nivel_num.pk))
+            #cod_usu_n = get_object_or_404(Codigos, codigo=codd)
+            #numero_nivel = int(str(cod_usu_n.nivel_num.pk))
+            numero_nivel = request.POST.get('numero_nivel')
             #cod_usu_n2 = get_object_or_404(NivelesNum, pk=numero_nivel)
             cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
             post.is_active=0
@@ -77,13 +77,12 @@ def registros1(request):
     else:
         foxr = UserCreationForm()
         form2 = DatosRF()
-        form3Cod = CodigosF()
         
         """
         for x in range(0,1):
             print (formlistoption[0].id)
         """
-    return render(request, 'registros1.html', {'form3':form3Cod,'form': foxr, "form2":form2, 'formOpti':formlistoption})
+    return render(request, 'registros1.html', {'form': foxr, "form2":form2, 'formOpti':formlistoption})
 
 
 class login(LoginView):
@@ -267,6 +266,12 @@ def validar_usuario(request):
         'usuario_tomado': usu_ex
     }
     return JsonResponse(data)
+
+def aj_opcis_nivel(request):
+    #Ajax
+    nivel_usu = request.GET.get('num_nivel', None)
+    print ('FUNCIONA')
+    return render(request, 'old2/opciones.html', {'posts': nivel_usu})
 
 def opcis_admin(request):
     posts=None
@@ -479,6 +484,7 @@ def personal_inf(request):
                 pass
     """
     return render(request, 'personal_inf.html', {'usuarios': usuarios_i,'niveles':niveles_lista})
+
 
 def registros_personal_inf(request):
     formlistoption = None
