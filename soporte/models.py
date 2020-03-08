@@ -62,7 +62,7 @@ class Datos(models.Model):
     email = models.EmailField(null=True)
     fedicion = models.DateTimeField(blank=True, null=True)
     cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE)
-    sub_area = models.ForeignKey(P_opci,on_delete=models.CASCADE,null=True)
+    sub_area = models.ForeignKey(P_opci,on_delete=models.CASCADE,null=True,blank=True)
     nivel_usua = models.ForeignKey(NivelesNum,on_delete=models.CASCADE,null=True)
 
     def publish(self):

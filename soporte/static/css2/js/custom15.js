@@ -300,33 +300,3 @@ $("#id_tipo_sop").change(function () {
   }
 });
 
-function nivel_usua_123 () {
-
-    var url = $("#ProblemForm").attr("data-url2");
-    var nivel_ID = $(this).val();
-    alert('ASD',nivel_ID);
-    if (nivel_ID) {
-      alert('ASD2',url);
-      $.ajax({
-        url: url,
-        data: {
-          'num_nivel': nivel_ID
-        },
-        /*Yailet*/
-        /*data de consulta arriba, data de recibido abajo*/
-        success: function (data) {
-          $("#id_nivel_usua").html(data);
-        }
-      });
-
-    }
-
-    else if (!nivel_ID) {
-      alert('ASD3',nivel_ID);
-      data2 = '"<option value="">---------</option>"';
-      $("#id_nivel_usua").html(data2);
-
-    }
-  }
-var nivel_usua_var = $("#id_cod_area");
-nivel_usua_var.change(nivel_usua_123);

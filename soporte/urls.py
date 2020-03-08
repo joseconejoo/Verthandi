@@ -37,6 +37,7 @@ urlpatterns = [
     
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
+    path('ajax/valid_nivel_usu/', views.validar_nivel_usuario, name='ajax_valid_niv_usu'),
     path('ajax/opcionesP123/', views.aj_opcis_nivel, name='ajax_opcis_niveles'),
 
 ]

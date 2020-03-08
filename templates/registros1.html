@@ -32,7 +32,7 @@
        <div class="panel-body modal-dialog-registro">
 
          <div class="fields" id="dentroboto">
-          <form id="ProblemForm" accept-charset="UTF-8" role="form" method='post' data-url="{% url 'ajax_valid_usu' %}" data-url2="{% url 'ajax_opcis_niveles' %}">
+          <form id="ProblemForm" accept-charset="UTF-8" role="form" method='post' data-url="{% url 'ajax_valid_usu' %}" data-url2="{% url 'ajax_opcis_niveles' %}" data-url3="{% url 'ajax_valid_niv_usu' %}">
 
            <fieldset class="" id="focusim">
              {% for field in form %}
@@ -159,6 +159,15 @@
           </div>
         </div>
         {% endif %}
+        {% if forloop.counter == 6 %}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg" id="id_sub_area2">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            {{field|regist6:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+
 
         <p></p>
 
@@ -218,14 +227,21 @@
 
 
 
+
+
+
+{% endblock %}
+
+{% block modals%}
+
 <script type="text/javascript">
   function nivel_usua_123 () {
 
       var url = $("#ProblemForm").attr("data-url2");
       var nivel_ID = $(this).val();
-      alert('ASD',nivel_ID);
+      /*alert('ASD',nivel_ID);*/
       if (nivel_ID) {
-        alert('ASD2',url);
+        /*alert('ASD2',url);*/
         $.ajax({
           url: url,
           data: {
@@ -241,21 +257,69 @@
       }
 
       else if (!nivel_ID) {
-        alert('ASD3',nivel_ID);
+        /*alert('ASD3',nivel_ID);*/
         data2 = '"<option value="">---------</option>"';
         $("#id_nivel_usua").html(data2);
 
       }
     }
-  var nivel_usua_var = $("#id_cod_area");
-  nivel_usua_var.change(nivel_usua_123);
+  var n_cod_area = $("#id_cod_area");
+  n_cod_area.change(nivel_usua_123).change();
+
+
+
+
+  function sub_area_control_2 () {
+
+    var url = $("#ProblemForm").data('url3');
+    var nivel_usua_asp = $(this).val();
+    
+    if (nivel_usua_asp) {
+      $.ajax({
+        url: url,
+        data: {
+          'nivel_usua_v': nivel_usua_asp
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.nivel_sub_area) {
+            $("#id_sub_area2").css('display', 'table');
+            $("#id_sub_area").css('display', 'table-cell');
+          }
+          else {
+            $("#id_sub_area2").css('display', 'none');
+            $("#id_sub_area").css('display', 'none');
+          }
+        }
+      });
+
+    }
+    else if (!nivel_usua_asp) {
+      $("#id_sub_area2").css('display', 'none');
+      $("#id_sub_area").css('display', 'none');
+    }
+  
+
+  /*
+    if (nivel_usua_asp == 4) {
+
+
+      $("#id_sub_area2").css('display', 'table');
+      $("#id_sub_area").css('display', 'table-cell');
+    }
+    */
+  }
+  var n_nivel_usua = $("#id_nivel_usua");
+  n_nivel_usua.change(sub_area_control_2).change();
+
+
+
+
 
 </script>
 
 
-{% endblock %}
 
-{% block modals%}
 <script type="text/javascript">
   function check (e) {
     var url = $("#ProblemForm").data('url');
@@ -317,6 +381,12 @@
       }
       var userid = $("#id_username");
       userid.change(check).change();
+
+
+
+
+      
+
 
     </script>
 

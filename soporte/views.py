@@ -51,9 +51,9 @@ def registros1(request):
             post = foxr.save(commit=False)
             #cod_usu_n = get_object_or_404(Codigos, codigo=codd)
             #numero_nivel = int(str(cod_usu_n.nivel_num.pk))
-            numero_nivel = request.POST.get('numero_nivel')
+            numero_nivel = request.POST.get('nivel_usua')
             #cod_usu_n2 = get_object_or_404(NivelesNum, pk=numero_nivel)
-            cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
+            #1cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
             post.is_active=0
             post2=form2.save(commit=False)
 
@@ -62,13 +62,12 @@ def registros1(request):
                 post2.cod_area = unidad2.objects.get(pk=16)
 
             lista_coord = [2]
-            if cod_usu_n2.pk in lista_coord:
+            if numero_nivel in lista_coord:
                 post.is_superuser=True
             post.save()
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
             
-            post2.nivel_usua=cod_usu_n2
             post2.save()
             #Niveles.objects.create(user=User.objects.get(id=post.pk))
             activate = True
@@ -267,11 +266,45 @@ def validar_usuario(request):
     }
     return JsonResponse(data)
 
+def validar_nivel_usuario(request):
+    #Ajax
+    nivel_usuario_r = request.GET.get('nivel_usua_v', None)
+    nivel_sub_area = [4,5]
+    nivel_ex = False
+
+    if int(nivel_usuario_r) in nivel_sub_area:
+        nivel_ex = True
+
+    data = {
+        'nivel_sub_area': nivel_ex
+    }
+    return JsonResponse(data)
+
 def aj_opcis_nivel(request):
     #Ajax
-    nivel_usu = request.GET.get('num_nivel', None)
-    print ('FUNCIONA')
-    return render(request, 'old2/opciones.html', {'posts': nivel_usu})
+    cod_area_get = request.GET.get('num_nivel', None)
+    usu_niv = None
+    try:
+        usu_niv = unidad2.objects.get(nom_unidad__exact=cod_area_get)
+    except:
+        pass
+    area_interes = [16]
+    niveles_interes = [2,3,4]
+    usu_nivel = []
+    if usu_niv:
+        if usu_niv.pk in area_interes:
+            usu_niv2 = NivelesNum.objects.filter().order_by('id')
+            for x in usu_niv2:
+                if x.pk in niveles_interes:
+                    x.nombre = x.nom_nivel
+                    usu_nivel.append(x)
+    """
+    data = {
+        'usuario_tomado': usu_ex
+    }
+    """
+    print ('FUNCIONA', usu_nivel)
+    return render(request, 'old2/opciones.html', {'posts': usu_nivel})
 
 def opcis_admin(request):
     posts=None
@@ -442,6 +475,7 @@ def personal_inf(request):
     for x in usuarios2:
         usuarios.append(x)
     usuarios_f = []
+    usuarios_sub = []
     usuarios_i = []
     for x in usuarios:
         try:
@@ -449,9 +483,13 @@ def personal_inf(request):
                 if not (x.datos.nivel_usua.pk in usuarios_f) :
                     usuarios_i.append(x)
                     usuarios_f.append(x.datos.nivel_usua.pk)
+                elif (x.datos.nivel_usua.pk in niveles_sub_areas) and (x.datos.sub_area in usuarios_sub):
+                    pass
+
         except:
             pass
     #usuarios arriba filtrado
+    print (usuarios_i)
     for x in niveles_v:
         if x.pk in niveles_interes:
             if x.pk in niveles_sub_areas:

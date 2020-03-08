@@ -9,7 +9,7 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
+from .models import NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
 
 class CodigosF(forms.ModelForm):
 	class Meta:
@@ -39,7 +39,7 @@ class DatosF(forms.ModelForm):
 class DatosRF(forms.ModelForm):
 	class Meta:
 		model = Datos
-		fields = ('nombre', 'apellido','cedula','cod_area','nivel_usua')
+		fields = ('nombre', 'apellido','cedula','cod_area','nivel_usua','sub_area')
 
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
@@ -52,6 +52,18 @@ class DatosRF(forms.ModelForm):
 	    	self.data._mutable = True
 	    	self.data['cod_area'] = cod_area2
 	    	self.data._mutable = _mutable
+	    self.fields['nivel_usua'].queryset = NivelesNum.objects.none()
+
+	    if 'cod_area' in self.data:
+	        try:
+	            niveles_id = int(self.data.get('cod_area'))
+	            if niveles_id == 16:
+	            	self.fields['nivel_usua'].queryset = NivelesNum.objects.filter().order_by('id')
+	        except (ValueError, TypeError):
+	            pass  # invalid input from the client; ignore and fallback to empty City queryset
+	    elif self.instance.pk:
+	        self.fields['nivel_usua'].queryset = self.instance.cod_area.Niveles_Num_set.order_by('name')
+
 
 
 

@@ -1640,3 +1640,14 @@ input[type=number]::-webkit-outer-spin-button {
 .no_color_background {
   background-color: rgba(0,0,0,0);
 }
+
+/* Formulario */
+
+#id_sub_area {
+  display: none;
+}
+
+
+#id_sub_area2 {
+  display: none;
+}

@@ -80,6 +80,9 @@
 						{% if dat.pk == v_us1.pk %}
 						{{dat.nombre}} -
 						{{dat.nivel_usua}}
+						{% if dat.sub_area%}
+						{{dat.sub_area}}
+						{% endif %}
 
 						{% endif %}
 						{% endfor %}

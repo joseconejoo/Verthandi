@@ -20,15 +20,7 @@
                 <p> </p>
 
                 <td class="no_color_background">Nombre de usuario:</td>
-                {% if user.datos.nivel_usua.pk == 1 %}
-                <td class="no_color_background"> {{ datos.usuario|linebreaksbr }} - Usuario Coordinador </td>
-                {% elif user.is_superuser %}
-                <td> {{ datos.usuario|linebreaksbr }} - Usuario Administrador </td>
-                {% elif user.datos.nivel_usua.pk == 2 %}
-                <td> {{ datos.usuario|linebreaksbr }} - Usuario Secretaria </td>
-                {% else %}
-                <td> {{ datos.usuario|linebreaksbr }} </td>
-                {% endif %}
+                <td class="no_color_background"> {{ datos.usuario|linebreaksbr }} - {{datos.nivel_usua.nom_nivel}} </td>
                 <br>
                 <tr class="no_color_background">
                 <td class="no_color_background">Nombre: </td><td> {{ datos.nombre|linebreaksbr }}</td>

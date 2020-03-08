@@ -17,7 +17,9 @@
 		<tr>
 		  <th>Nº</th>
 		  <th>Nombre</th>
+      {% comment %}
 		  <th>Detalles</th>
+      {% endcomment %}
 		  <th>Modificar</th>
 
 
@@ -33,12 +35,14 @@
 		        </td>
 		        	<td class="min-width-table">
 		        	    {{opciones1x.nombre }}
-
+                  {% comment %}
 		        	    <td>
+
 		        	    	<a href="{% url 'adm_sop_opcis_det' opciones1x.pk %}">
 		        	    		<i class="fa fa-external-link" id="iconEnlace"></i>
 		        	    	</a>
 		        	    </td>
+                  {% endcomment %}
 		        	</td>
 
 
