@@ -1,0 +1,330 @@
+{% extends 'index2.html' %}
+{% load humanize %}
+{% load myfilters %}
+
+
+{% block title %}Registro{% endblock %}
+
+
+{% block content %}
+<div id="content">
+  <div class="header">
+    <div class="header-inner">
+      <!--navbar-branding/logo - hidden image tag & site name so things like Facebook to pick up, actual logo set via CSS for flexibility -->
+      <a class="navbar-brand center-block" href="{% url 'login' %}" title="Home">
+        <h1 class="hidden">
+          <img src="img/logo.png" alt="Valkyria Logo">
+          Valkyria
+        </h1>
+        <h2 class="logo-name">Siglas</h2>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="panel panel-default" id="loginP">
+        <div class="panel-heading bnegro2">
+          <h3 class="panel-title bnegro">
+           Registro de Usuarios
+
+         </h3>
+       </div>
+       <div class="panel-body modal-dialog-registro">
+
+         <div class="fields" id="dentroboto">
+          <form id="ProblemForm" accept-charset="UTF-8" role="form" method='post' data-url="{% url 'ajax_valid_usu' %}" data-url2="{% url 'ajax_opcis_niveles' %}" data-url3="{% url 'ajax_valid_niv_usu' %}">
+
+           <fieldset class="" id="focusim">
+             {% for field in form %}
+
+             {% csrf_token %}
+             <div class="errores">
+               {% if field.errors %}
+               <script type="text/javascript">
+                var varka = '{{field.errors}}';
+                varka = varka.replace(/\<li>/g, '');
+                varka = varka.replace(/\<\/li>/g, '');
+                varka = varka.replace(/\<\/ul>/g, '');
+                varka = varka.replace(/\<ul class="errorlist">/g, '')
+                varka = varka.replace(new RegExp("[^a-zA-ZñÑ0-9úáéíó. ]", "g"), " ");
+                varka = varka.replace(/The two password fields didn t match./g,"Las dos contraseñas no coinciden.");
+                varka = varka.replace('.', '.\n\n');
+                varka = varka.replace(/Debe contener al menos 8 caracteres.Esta contraseña es demasiado común.Esta contraseña es completamente numérica./g,"Debe contener al menos 8 caracteres. Es demasiado común. Es completamente numérica.");
+
+                alert(varka);
+              </script>
+              {% endif %}
+            </div>
+            {% if forloop.counter == 1%}
+            <div class="form-group col-md-12">
+             <div class="input-group input-group-lg">
+               <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+               {{field|regist1:'form-control '}}
+               <span class="input-group-addon2" id="spaniconBRe">
+                <i class="fa fa-times" id="iconBRe" ></i>
+                <i class="fa fa-check" id="iconBRe2" ></i>
+              </span>
+
+            </div>
+
+          </div>
+          {% endif %}
+          {% if forloop.counter == 2%}
+          <div class="form-group col-md-6 col-sm-6">
+           <div class="input-group input-group-lg">
+             <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
+             {{field|regist2:'form-control '}} 
+           </div>
+         </div>
+         {% endif %}
+         {% if forloop.counter > 2%}
+         <div class="form-group col-md-6 col-sm-6">
+           <div class="input-group input-group-lg">
+             <span class="input-group-addon"><i class="fa fa-fw fa-lock" name='username'></i></span>
+             {{field|regist3:'form-control '}} 
+           </div>
+         </div>
+
+         {% endif %}
+
+
+         <p></p>
+
+         {% endfor %}
+
+         {% for field in form2 %}
+         {% if field.errors %}
+         <script type="text/javascript">
+          var varka = '{{field.errors}}';
+          varka = varka.replace(/\<li>/g, '');
+          varka = varka.replace(/\<\/li>/g, '');
+          varka = varka.replace(/\<\/ul>/g, '');
+          varka = varka.replace(/\<ul class="errorlist">/g, '')
+          varka = varka.replace('.', '.\n\n');
+
+
+          alert(varka);
+        </script>
+        {% endif %}
+
+        {% csrf_token %}
+        {% if forloop.counter == 1%}
+        <div class="form-group col-md-6 col-sm-6">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+            {{field|regist4:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if forloop.counter == 2%}
+        <div class="form-group col-md-6 col-sm-6">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+            {{field|regist5:'form-control '}}
+          </div>
+
+        </div>
+        {% endif %}
+        {% if forloop.counter == 3%}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            {{field|regist6:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if forloop.counter == 4%}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+            {{field|regist6:'form-control '}}
+          </div>
+        </div>
+        <script type="text/javascript">
+        </script>
+        {% comment %}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            <input list="cod_area2" name="cod_area" required id="id_cod_area" class="form-control ">
+            <datalist id="cod_area2">
+              {% for campo in formOpti %}
+              <option value="{{campo}}">
+
+              </option>
+              {% endfor %}
+            </datalist>
+
+          </div>
+        </div>
+        {% endcomment %}
+        {% endif %}
+        {% if forloop.counter == 5 %}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            {{field|regist6:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+        {% if forloop.counter == 6 %}
+        <div class="form-group col-md-12">
+          <div class="input-group input-group-lg" id="id_sub_area2">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            {{field|regist6:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+
+
+        <p></p>
+
+        {% endfor %}
+        {% for field in form3 %}
+        {% comment %}
+        {% if field.errors %}
+        <script type="text/javascript">
+          var varka = '{{field.errors}}';
+          varka = varka.replace(/\<li>/g, '');
+          varka = varka.replace(/\<\/li>/g, '');
+          varka = varka.replace(/\<\/ul>/g, '');
+          varka = varka.replace(/\<ul class="errorlist">/g, '')
+          varka = varka.replace('.', '.\n\n');
+
+
+          alert(varka);
+        </script>
+        {% endif %}
+        {% endcomment %}
+        {% csrf_token %}
+        {% if forloop.counter == 1%}
+        <div class="form-group col-md-12 col-sm-12">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-id-card-o" name='username'></i></span>
+            {{field|regist7:'form-control '}}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if forloop.counter == 2%}
+        <div class="form-group col-md-6 col-sm-6">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-fw fa-user" name='username'></i></span>
+            {{field|regist5:'form-control '}}
+          </div>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+      </fieldset>
+      <br>
+
+
+    </form>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+<!-- /row -->
+</div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block modals%}
+
+<script type="text/javascript">
+asd = $("#id_sub_area");
+asd.css('display', 'block');
+</script>
+
+
+
+<script type="text/javascript">
+  function check (e) {
+    var url = $("#ProblemForm").data('url');
+    var username = $(this).val();
+    var element = document.getElementById("id_username");
+    var variable;
+        /*
+        for (variable in $(this)) {
+          console.log(variable);
+        }
+        */
+        username = username.replace(new RegExp("[ ]+", "g"), "");
+
+        if (username) {
+          $.ajax({
+            url: url,
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.usuario_tomado) {
+                $("#id_username").removeClass("form-control-accept");
+                $("#spaniconBRe").removeClass("form-control-accept");
+                $("#id_username").addClass("form-control-neg");
+                $("#spaniconBRe").addClass("form-control-neg");
+                $("#spaniconBRe").css('display', 'table-cell');
+                $("#iconBRe2").css('display', 'none');
+                $("#iconBRe").css('display', 'inline');
+
+                /* $("#id_username").classList.add("form-control-neg"); */
+                /*alert("Un usuario con este nombre existe.");*/
+              }
+              else {
+                $("#id_username").removeClass("form-control-neg");
+                $("#spaniconBRe").removeClass("form-control-neg");
+                $("#id_username").addClass("form-control-accept");
+                $("#spaniconBRe").addClass("form-control-accept");
+
+                $("#spaniconBRe").css('display', 'table-cell');
+                $("#iconBRe").css('display', 'none');
+                $("#iconBRe2").css('display', 'inline');
+              }
+            }
+          });
+
+        }
+        else if (!username) {
+          $("#id_username").removeClass("form-control-neg");
+          $("#spaniconBRe").removeClass("form-control-neg");
+          $("#id_username").removeClass("form-control-accept");
+          $("#spaniconBRe").removeClass("form-control-accept");
+          $("#spaniconBRe").css('display', 'none');
+          $("#iconBRe").css('display', 'none');
+          $("#iconBRe2").css('display', 'none');
+
+        }
+        
+      }
+      var userid = $("#id_username");
+      userid.change(check).change();
+
+
+
+
+      
+
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+    </script>
+
+    {% endblock %}

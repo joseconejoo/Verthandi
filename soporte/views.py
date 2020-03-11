@@ -631,7 +631,6 @@ def personal_inf(request):
     """
     return render(request, 'personal_inf.html', {'niveles':niveles_lista})
 
-9
 def registros_personal_inf(request):
     formlistoption = None
     formlistoption = unidad2.objects.filter().order_by('id')
@@ -658,6 +657,7 @@ def registros_personal_inf(request):
             if numero_nivel in lista_coord:
                 post.is_superuser=True
             post.save()
+            post2.nivel_usua = NivelesNum.objects.get(pk=numero_nivel)
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
             
@@ -680,7 +680,7 @@ def registros_personal_inf(request):
 def personal_inf_v(request):
     if request.user.is_authenticated==True:
 
-        v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=6).order_by('id')
+        v_us = User.objects.filter(is_active=1).filter(datos__nivel_usua=6).order_by('id')
         Verthandi=[]
         for Skuld in v_us:
             try:
