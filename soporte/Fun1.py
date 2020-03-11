@@ -92,15 +92,21 @@ asdasdasd
 def niveles1_sin_ocupar():
 	usu_niv2 = NivelesNum.objects.filter().order_by('id')
 	usu_nivel = []
-	niveles_interes = [2,3,4]
+	niveles_interes = [2,3,4,5,6]
 	niveles_sub_areas = [4]
+	niveles_no_unicos = [5,6]
 	for x in usu_niv2:
 	    if x.pk in niveles_interes:
-	        if x.pk in niveles_sub_areas:
+	        if (x.pk) in niveles_sub_areas:
 	            a12 = usu_1xnivel_sub_area(x)
 	            if not(a12):
 	                x.nombre = x.nom_nivel
 	                usu_nivel.append(x)
+	            else:
+	            	pass
+	        elif (x.pk) in niveles_no_unicos:
+	        	x.nombre = x.nom_nivel
+	        	usu_nivel.append(x)
 	        else:
 	            a12 = usu_1xnivel(x)
 	            if not(a12):

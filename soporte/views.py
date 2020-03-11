@@ -72,7 +72,7 @@ def registros1(request):
             post2.save()
             #Niveles.objects.create(user=User.objects.get(id=post.pk))
             activate = True
-            messages.success(request, 'Registro Realizado exitosamente, Debe esperar la Aprobacion del administrador')
+            messages.success(request, 'Registro Realizado exitosamente, Debe esperar la Aprobacion del Director')
             return redirect('login')
     else:
         foxr = UserCreationForm()
@@ -144,13 +144,13 @@ def a_us(request):
         print (usu_nivel)
         Verthandi = []
         niveles_sub_areas = [4,5]
+        niveles_no_unicos = [5]
         usuarios_list = []
 
         for niveles_dispo in usu_nivel:
             if niveles_dispo.pk in niveles_sub_areas:
-                a12 = usu_1xnivel_sub_area2Form(int(niveles_dispo.pk))
-                for sub_a_dispo in a12:
-                    v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).filter(datos__sub_area=sub_a_dispo).order_by('id')
+                if niveles_dispo.pk in niveles_no_unicos:
+                    v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).order_by('id')
                     for Skuld in v_us:
                         try:
                             datos = Datos.objects.get(pk=Skuld.pk)
@@ -158,6 +158,18 @@ def a_us(request):
                             Verthandi.append(datos)
                         except:
                             pass
+                else:
+                    a12 = usu_1xnivel_sub_area2Form(int(niveles_dispo.pk))
+                    for sub_a_dispo in a12:
+                        v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).filter(datos__sub_area=sub_a_dispo).order_by('id')
+                        for Skuld in v_us:
+                            try:
+                                datos = Datos.objects.get(pk=Skuld.pk)
+                                usuarios_list.append(Skuld)
+                                Verthandi.append(datos)
+                            except:
+                                pass
+
             else:
                 v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).order_by('id')
                 for Skuld in v_us:
@@ -366,7 +378,8 @@ def validar_usuario(request):
 def validar_nivel_usuario(request):
     #Ajax3 sub_nivel usuario
     nivel_usuario_r = request.GET.get('nivel_usua_v', None)
-    niveles_sub_areas = [4]
+    niveles_sub_areas = [4,5]
+    niveles_no_unicos = [5]
     lista_sub_areas_dispo = []
 
     """
@@ -381,8 +394,12 @@ def validar_nivel_usuario(request):
     return JsonResponse(data)
     """
     a12 = None
-    if int(nivel_usuario_r) in niveles_sub_areas:
-        a12 = usu_1xnivel_sub_area2Form(int(nivel_usuario_r))
+    nivel_usuario_r = int(nivel_usuario_r)
+    if (nivel_usuario_r) in niveles_sub_areas:
+        if (nivel_usuario_r) in niveles_no_unicos:
+            a12 = P_opci.objects.filter().order_by('id')
+        else:
+            a12 = usu_1xnivel_sub_area2Form(int(nivel_usuario_r))
     else:
         niveles_sub = None
 
@@ -400,8 +417,9 @@ def aj_opcis_nivel(request):
     except:
         pass
     area_interes = [16]
-    niveles_interes = [2,3,4]
+    niveles_interes = [2,3,4,5]
     niveles_sub_areas = [4]
+    niveles_no_unicos = [5]
     usu_nivel = []
     if usu_niv:
         if usu_niv.pk in area_interes:
@@ -413,6 +431,11 @@ def aj_opcis_nivel(request):
                         if not(a12):
                             x.nombre = x.nom_nivel
                             usu_nivel.append(x)
+                        else:
+                            pass
+                    elif x.pk in niveles_no_unicos:
+                        x.nombre = x.nom_nivel
+                        usu_nivel.append(x)
                     else:
                         a12 = usu_1xnivel(x)
                         if not(a12):
@@ -424,6 +447,7 @@ def aj_opcis_nivel(request):
         'usuario_tomado': usu_ex
     }
     """
+    print (usu_nivel)
     return render(request, 'old2/opciones.html', {'posts': usu_nivel})
 
 def opcis_admin(request):
@@ -684,7 +708,7 @@ def registros_personal_inf(request):
             post2.save()
             #Niveles.objects.create(user=User.objects.get(id=post.pk))
             activate = True
-            messages.success(request, 'Registro realizado exitosamente, debe esperar la aprobación del administrador')
+            messages.success(request, 'Registro realizado exitosamente, debe esperar la aprobación del Director')
             return redirect('personal_inf_v')
     else:
         foxr = UserCreationForm()
