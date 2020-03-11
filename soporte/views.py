@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
-from .Fun1 import usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
+from .Fun1 import niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 
 from django.contrib import messages
 
@@ -140,17 +140,37 @@ def post_list2(request):
 
 def a_us(request):
     if request.user.is_authenticated==True:
+        usu_nivel = niveles1_sin_ocupar()
+        print (usu_nivel)
+        Verthandi = []
+        niveles_sub_areas = [4,5]
+        usuarios_list = []
 
-        v_us = User.objects.filter(is_active=0).order_by('id')
-        Verthandi=[]
-        for Skuld in v_us:
-            try:
-                datos = Datos.objects.get(pk=Skuld.pk)
-                Verthandi.append(datos)
-            except:
-                pass
+        for niveles_dispo in usu_nivel:
+            if niveles_dispo.pk in niveles_sub_areas:
+                a12 = usu_1xnivel_sub_area2Form(int(niveles_dispo.pk))
+                for sub_a_dispo in a12:
+                    v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).filter(datos__sub_area=sub_a_dispo).order_by('id')
+                    for Skuld in v_us:
+                        try:
+                            datos = Datos.objects.get(pk=Skuld.pk)
+                            usuarios_list.append(Skuld)
+                            Verthandi.append(datos)
+                        except:
+                            pass
+            else:
+                v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).order_by('id')
+                for Skuld in v_us:
+                    try:
+                        datos = Datos.objects.get(pk=Skuld.pk)
+                        usuarios_list.append(Skuld)
+                        Verthandi.append(datos)
+                    except:
+                        pass
 
-        return render(request, 'v_us2.html', {'v_us': v_us,'datos':Verthandi})
+
+
+        return render(request, 'v_us2.html', {'v_us': usuarios_list,'datos':Verthandi})
     
     else:
         return HttpResponseRedirect("/")

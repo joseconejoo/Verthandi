@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import P_opci, Datos
+from .models import NivelesNum ,P_opci, Datos
 
 
 def usu_1xnivel (nivel):
@@ -85,5 +85,25 @@ def usu_1xnivel_sub_area2Form (nivel):
 
 
 
+"""
+asdasdasd
+"""
 
-
+def niveles1_sin_ocupar():
+	usu_niv2 = NivelesNum.objects.filter().order_by('id')
+	usu_nivel = []
+	niveles_interes = [2,3,4]
+	niveles_sub_areas = [4]
+	for x in usu_niv2:
+	    if x.pk in niveles_interes:
+	        if x.pk in niveles_sub_areas:
+	            a12 = usu_1xnivel_sub_area(x)
+	            if not(a12):
+	                x.nombre = x.nom_nivel
+	                usu_nivel.append(x)
+	        else:
+	            a12 = usu_1xnivel(x)
+	            if not(a12):
+	                x.nombre = x.nom_nivel
+	                usu_nivel.append(x)
+	return usu_nivel
