@@ -303,7 +303,7 @@
         </div>
         
         <div class="modal-body" id="popupb">
-          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="" name="amxj">
 
             <fieldset>
               {% for field in form %}
@@ -326,22 +326,16 @@
 
                 </div>
                   {% if forloop.counter == 1%}
-                    {{field|addclass:'form-control blancColor'}}
-                  {% endif %}
-                  {% if forloop.counter == 2%}
-                    {{field|addclass:'form-control blancColor'}}
-                  {% endif %}
-                  {% if forloop.counter == 3%}
                     {{field|notifa3:'form-control blancColor'}}
                   {% endif %}
                   <div class="col-md-6">
-                    {% if forloop.counter == 4%}
+                    {% if forloop.counter == 2%}
                       {{field|notifa1:'form-control blancColor'}}
                     {% endif %}
 
                   </div>
                   <div class="col-md-6">
-                    {% if forloop.counter == 5%}
+                    {% if forloop.counter == 3%}
                       {{field|notifa2:'form-control blancColor'}}
                     {% endif %}
 

@@ -60,7 +60,7 @@
 
 
         {% if user.is_superuser %}
-        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'a_us' %}">Aprobación de usuarios</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'a_us' %}">Habilitación de usuarios</a>
         <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
         <a class="boton-abrir" id="M_boton-abrir" href="{% url 'opcisAdmin' %}">Opciones Avanzadas</a>
         <a class="boton-abrir" id="M_boton-abrir" href="{% url 'personal_inf' %}">Personal Informatica</a>
@@ -70,11 +70,17 @@
         {% if user.datos.nivel_usua.pk == 3 %}
         <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
         <a class="boton-abrir" id="M_boton-abrir" href="">Registrar Vacaciones</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'personal_inf_v' %}">Pasantes</a>
+        {% endif %}
+        {% if user.datos.nivel_usua.pk == 4 %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Notificaciones</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="">Personal subarea</a>
         {% endif %}
       </div>
-
+      {% if user.datos.nivel_usua %}
       <span onclick="openNav()" class="pull-right menu-icon">Menú ☰   </span>
-      {% if user.is_staff or user.is_superuser%}
+      {% endif %}
+      {% if user.is_staff or user.is_superuser or user.datos.nivel_usua.pk == 4 %}
       <i class="fa fa-bell-o pull-right menu-icon2"></i><span class="fa-badge menu-icon2 fa fa-small f_verde menu-icon3"><p class="text-center">1</p></span>
 
 
@@ -91,12 +97,23 @@
   <div class="menu_drop menu-icon-nomb">
     <ul>
       <li class="dropdown">
-        <a href="javascript:;" class="dropbtn">{{user.datos.nombre}} <i class="fa fa-sort-desc" id="iconB"></i></a>
+        <a href="javascript:;" class="dropbtn">       {% if user.datos.nivel_usua %}
+          {{user.datos.nombre}} 
+          {% else %}
+          reportador
+          {% endif %}
+
+
+          <i class="fa fa-sort-desc" id="iconB"></i></a>
         <div class="dropdown-content">
           {% if datos.usuario %}
           <a class="boton-abrir" id="M_boton-abrir" href="{% url 'datos_u' pk=user.pk  %}">Perfil</a>
           {% else %}
+          {% if user.datos.nivel_usua %}
+
           <a  href="{% url 'datos1' %}" id="M_boton-abrir" class="boton-abrir">Perfil</a>        
+          {% endif %}
+
           {% endif %}
           <a href="{% url 'logout' %}">Salir</a>
 

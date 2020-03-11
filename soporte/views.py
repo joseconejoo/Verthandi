@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
+from .Fun1 import usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 
 from django.contrib import messages
 
@@ -158,13 +159,37 @@ def a_us(request):
 
 def userAP(request, pk):
     if request.user.is_superuser:
+        niveles_interes = [2,3]
+        niveles_sub_areas = [4]
         Verthandi = get_object_or_404(User, pk=pk)
         nombr = Verthandi.username
         #print (Verthandi['is_active'])
-        Verthandi.is_active = True
-        #Verthandi.is_active = True
-        Verthandi.save()
-        messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
+        usuarios = User.objects.filter()
+        if Verthandi.datos.nivel_usua.pk in niveles_sub_areas:
+            asd = usu_1xnivel_sub_area_alt(Verthandi.datos.nivel_usua,Verthandi.datos.sub_area)
+            if not(asd):
+                Verthandi.is_active = True
+                Verthandi.save()
+                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+            else:
+                messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
+
+        elif Verthandi.datos.nivel_usua.pk in niveles_interes:
+            asd = usu_1xnivel_alt(Verthandi.datos.nivel_usua)
+            if not(asd):
+                Verthandi.is_active = True
+                Verthandi.save()
+                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+
+            else:
+                messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
+
+        else:
+            Verthandi.is_active = True
+            Verthandi.save()
+            messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+
+
         return redirect('a_us')
 
     else:
@@ -182,15 +207,67 @@ def userNE(request, pk):
     else:
         return redirect ("/")
 
+def userDES(request, pk):
+    if request.user.is_superuser:
+        Verthandi = get_object_or_404(User, pk=pk)
+        nombr = Verthandi.username
+        Verthandi.is_active = False
+        Verthandi.save()
+        messages.success(request, 'Usuario '+str(nombr)+' Deshabilitado exitosamente')
+        return redirect('datos_u', pk=pk)
+
+    else:
+        return redirect ("/")
+
+def userHAB(request, pk):
+    if request.user.is_superuser:
+        niveles_interes = [2,3]
+        niveles_sub_areas = [4]
+        Verthandi = get_object_or_404(User, pk=pk)
+        nombr = Verthandi.username
+        #print (Verthandi['is_active'])
+        usuarios = User.objects.filter()
+        if Verthandi.datos.nivel_usua.pk in niveles_sub_areas:
+            asd = usu_1xnivel_sub_area_alt(Verthandi.datos.nivel_usua,Verthandi.datos.sub_area)
+            if not(asd):
+                Verthandi.is_active = True
+                Verthandi.save()
+                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+            else:
+                messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
+
+        elif Verthandi.datos.nivel_usua.pk in niveles_interes:
+            asd = usu_1xnivel_alt(Verthandi.datos.nivel_usua)
+            if not(asd):
+                Verthandi.is_active = True
+                Verthandi.save()
+                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+
+            else:
+                messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
+
+        else:
+            Verthandi.is_active = True
+            Verthandi.save()
+            messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+
+
+        return redirect('datos_u', pk=pk)
+
+    else:
+        return redirect ("/")
 
 def datos_u(request, pk):
 
     try:
         dat=Datos.objects.get(pk=pk)
         Verthandi=User.objects.get(pk=pk)
-            
+        allow = False
+        if request.user.is_superuser:
+            if not (request.user.pk == Verthandi.pk) and not(Verthandi.datos.nivel_usua.pk == 1):
+                allow = True
         datos = get_object_or_404(Datos, pk=pk)
-        return render(request, 'datos_u.html', {'datos': datos,'dat': dat,'usuario1':Verthandi})
+        return render(request, 'datos_u.html', {'permisos_adm':allow,'datos': datos,'dat': dat,'usuario1':Verthandi})
 
     except:
         if request.method == "POST":
@@ -267,9 +344,12 @@ def validar_usuario(request):
     return JsonResponse(data)
 
 def validar_nivel_usuario(request):
-    #Ajax
+    #Ajax3 sub_nivel usuario
     nivel_usuario_r = request.GET.get('nivel_usua_v', None)
-    nivel_sub_area = [4,5]
+    niveles_sub_areas = [4]
+    lista_sub_areas_dispo = []
+
+    """
     nivel_ex = False
 
     if int(nivel_usuario_r) in nivel_sub_area:
@@ -279,9 +359,20 @@ def validar_nivel_usuario(request):
         'nivel_sub_area': nivel_ex
     }
     return JsonResponse(data)
+    """
+    a12 = None
+    if int(nivel_usuario_r) in niveles_sub_areas:
+        a12 = usu_1xnivel_sub_area2Form(int(nivel_usuario_r))
+    else:
+        niveles_sub = None
+
+    return render(request, 'old2/opciones.html', {'posts': a12})
+    
+
+
 
 def aj_opcis_nivel(request):
-    #Ajax
+    #Ajax4 opciones niveles
     cod_area_get = request.GET.get('num_nivel', None)
     usu_niv = None
     try:
@@ -290,20 +381,29 @@ def aj_opcis_nivel(request):
         pass
     area_interes = [16]
     niveles_interes = [2,3,4]
+    niveles_sub_areas = [4]
     usu_nivel = []
     if usu_niv:
         if usu_niv.pk in area_interes:
             usu_niv2 = NivelesNum.objects.filter().order_by('id')
             for x in usu_niv2:
                 if x.pk in niveles_interes:
-                    x.nombre = x.nom_nivel
-                    usu_nivel.append(x)
+                    if x.pk in niveles_sub_areas:
+                        a12 = usu_1xnivel_sub_area(x)
+                        if not(a12):
+                            x.nombre = x.nom_nivel
+                            usu_nivel.append(x)
+                    else:
+                        a12 = usu_1xnivel(x)
+                        if not(a12):
+                            x.nombre = x.nom_nivel
+                            usu_nivel.append(x)    
+                        
     """
     data = {
         'usuario_tomado': usu_ex
     }
     """
-    print ('FUNCIONA', usu_nivel)
     return render(request, 'old2/opciones.html', {'posts': usu_nivel})
 
 def opcis_admin(request):
@@ -370,7 +470,7 @@ def op_codigo(request):
     post2 = NivelesNum.objects.order_by('id')#[1:]
     post3 = P_opci.objects.order_by('id')
     sub_area = P_opci.objects.filter().order_by('id')
-    niveles_sub_areas = [4,5]
+    niveles_sub_areas = [4]
     niveles_interes = [2,3,4]
     lista_codigos = []
 
@@ -469,14 +569,15 @@ def personal_inf(request):
     niveles_interes = [1,2,3,4]
     niveles_sub_areas = [4]
     niveles_lista = []
-
+    """
     usuarios = []
     usuarios2 = User.objects.filter().order_by('id')
     for x in usuarios2:
         usuarios.append(x)
     usuarios_f = []
     usuarios_sub = []
-    usuarios_i = []
+    usuarios_i = []"""
+    """
     for x in usuarios:
         try:
             if x.datos.nivel_usua.pk in niveles_interes:
@@ -489,25 +590,32 @@ def personal_inf(request):
         except:
             pass
     #usuarios arriba filtrado
+
     print (usuarios_i)
+    """
     for x in niveles_v:
         if x.pk in niveles_interes:
             if x.pk in niveles_sub_areas:
                 for y in sub_area:
                     x123 = NivelesNum.objects.get(pk=x.pk)
                     x123.sub_area = str(y.nombre)
-                    niveles_lista.append(x123)
+                    usu = User.objects.filter(is_active=1).filter(datos__nivel_usua=x.pk).filter(datos__sub_area=y.pk)
+                    if usu:
+                        x123.encargado = usu[0]
+                        niveles_lista.append(x123)
+                    else:
+                        niveles_lista.append(x123)
             else:
                 agregado = False
-                for y in usuarios_i:
-                    if y.datos.nivel_usua.pk == x.pk:
-                        agregado = True
-                        x.encargado = y
-                        niveles_lista.append(x)
+                usu = User.objects.filter(is_active=1).filter(datos__nivel_usua=x.pk)
+                if usu:
+                    agregado = True
+                    x.encargado = usu[0]
+                    niveles_lista.append(x)
                 if not (agregado):
                     niveles_lista.append(x)
 
-
+    
     """
     for x in usuarios:
         for y in range (0, (len(usuarios))-1):
@@ -521,43 +629,68 @@ def personal_inf(request):
             except:
                 pass
     """
-    return render(request, 'personal_inf.html', {'usuarios': usuarios_i,'niveles':niveles_lista})
+    return render(request, 'personal_inf.html', {'niveles':niveles_lista})
 
-
+9
 def registros_personal_inf(request):
     formlistoption = None
     formlistoption = unidad2.objects.filter().order_by('id')
     if request.method == "POST":
         foxr = UserCreationForm(request.POST)
-        form2= DatosRF(request.POST)
-        form3Cod = CodigosF(request.POST)
+        form2= Datos_per_infoF(request.POST)
+        #print (request.POST.get('codigo'))
         if foxr.is_valid() and form2.is_valid():
-            codd = request.POST.get('codigo')
+            #codd = request.POST.get('codigo')
             post = foxr.save(commit=False)
-            cod_usu_n = get_object_or_404(Codigos, codigo=codd)
-            numero_nivel = int(str(cod_usu_n.nivel_num.pk))
-            cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
+            #cod_usu_n = get_object_or_404(Codigos, codigo=codd)
+            #numero_nivel = int(str(cod_usu_n.nivel_num.pk))
+            numero_nivel = 6
+            #cod_usu_n2 = get_object_or_404(NivelesNum, pk=numero_nivel)
+            #1cod_usu_n2 = NivelesNum.objects.get(pk=numero_nivel)
             post.is_active=0
             post2=form2.save(commit=False)
 
-            lista_num =[1,2,3,4,5]
+            lista_num =[1,2,3,4,5,6]
             if numero_nivel in lista_num:
                 post2.cod_area = unidad2.objects.get(pk=16)
 
-            if cod_usu_n2.pk == 1:
+            lista_coord = [2]
+            if numero_nivel in lista_coord:
                 post.is_superuser=True
             post.save()
             usuario1 = User.objects.get(pk=post.pk)
             post2.usuario=usuario1
             
-            post2.nivel_usua=cod_usu_n2
             post2.save()
+            #Niveles.objects.create(user=User.objects.get(id=post.pk))
             activate = True
-            messages.success(request, 'Registro Realizado exitosamente, Debe esperar la Aprobacion del administrador')
-            return redirect('login')
+            messages.success(request, 'Registro realizado exitosamente, debe esperar la aprobación del administrador')
+            return redirect('personal_inf_v')
     else:
         foxr = UserCreationForm()
-        form2 = DatosRF()
-        form3Cod = CodigosF()
+        form2 = Datos_per_infoF()
+        
+        """
+        for x in range(0,1):
+            print (formlistoption[0].id)
+        """
+    return render(request, 'registros1_personal.html', {'form': foxr, "form2":form2, 'formOpti':formlistoption})
 
-    return render(request, 'registros1.html', {'form3':form3Cod,'form': foxr, "form2":form2, 'formOpti':formlistoption})
+
+def personal_inf_v(request):
+    if request.user.is_authenticated==True:
+
+        v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=6).order_by('id')
+        Verthandi=[]
+        for Skuld in v_us:
+            try:
+                datos = Datos.objects.get(pk=Skuld.pk)
+                Verthandi.append(datos)
+            except:
+                pass
+
+        return render(request, 'v_us2_personal.html', {'v_us': v_us,'datos':Verthandi})
+    
+    else:
+        return HttpResponseRedirect("/")
+

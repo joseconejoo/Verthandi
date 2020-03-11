@@ -280,9 +280,17 @@
         data: {
           'nivel_usua_v': nivel_usua_asp
         },
-        dataType: 'json',
+        /*dataType: 'json',*/
         success: function (data) {
-          if (data.nivel_sub_area) {
+          var modif
+          /*
+          modif = data.replace('<option value="">---------</option>', '');
+          */
+
+          modif = data.replace(new RegExp('<option value="">---------</option>', "g"), 1);
+          /*console.log(modif);*/
+          if (modif!=1) {
+            $("#id_sub_area").html(data);
             $("#id_sub_area2").css('display', 'table');
             $("#id_sub_area").css('display', 'table-cell');
           }

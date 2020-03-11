@@ -1030,7 +1030,7 @@ th, td {
 
 
 tr:nth-child(even){background-color: rgba(0, 0, 0, 0.61)}
-tr .no_color:nth-child(even){background-color: rgba(0, 0, 0, 0)}
+tr[class=no_color_background]:nth-child(even){background-color: rgba(0, 0, 0, 0)}
 th {
   /*
   background-color: #000;

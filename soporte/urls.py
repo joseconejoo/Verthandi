@@ -15,6 +15,8 @@ urlpatterns = [
 	path('aceptarusers/', views.a_us, name='a_us'),
 	path('User?12@#|2aprove?/<int:pk>', views.userAP, name='userAP'),
 	path('User?14@#|2aprove?/<int:pk>', views.userNE, name='userNE'),
+    path('User?16@#|2aprove?/<int:pk>', views.userDES, name='userDES'),
+    path('User?18@#|2aprove?/<int:pk>', views.userHAB, name='userHAB'),
 
 	path('perfil/<int:pk>/', views.datos_u, name='datos_u'),
 	path('datos/<int:pk>/edit/', views.datose, name='datose'),
@@ -33,6 +35,8 @@ urlpatterns = [
     path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Delete<int:pk>', views.Del1_codigo, name='Del1_codigo'),
     path('Acceso_Denegado', views.Error, name='Error1'),
     path('Personal-Informatica', views.personal_inf, name='personal_inf'),
+
+    path('Personal-Informatica-v', views.personal_inf_v, name='personal_inf_v'),
     path('Personal-Informatica/Registro', views.registros_personal_inf, name='registros_personal_inf'),
     
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),

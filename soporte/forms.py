@@ -11,6 +11,8 @@ UserModel = get_user_model()
 
 from .models import NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
 
+from .Fun1 import usu_1xnivel_sub_area2Form
+
 class CodigosF(forms.ModelForm):
 	class Meta:
 		model = Codigos
@@ -34,7 +36,7 @@ class Datos_per_infoF(forms.ModelForm):
 class DatosF(forms.ModelForm):
 	class Meta:
 		model = Datos
-		fields = ('nombre', 'apellido','cedula')
+		fields = ('nombre', 'apellido')
 
 class DatosRF(forms.ModelForm):
 	class Meta:
@@ -53,6 +55,7 @@ class DatosRF(forms.ModelForm):
 	    	self.data['cod_area'] = cod_area2
 	    	self.data._mutable = _mutable
 	    self.fields['nivel_usua'].queryset = NivelesNum.objects.none()
+	    #self.fields['sub_area'].queryset = P_opci.objects.none()
 
 	    if 'cod_area' in self.data:
 	        try:
@@ -70,10 +73,12 @@ class DatosRF(forms.ModelForm):
 class sop_notifF(forms.ModelForm):
 	class Meta:
 		model = sop_notif
-		fields = ('tipo_sop','descrip1','problemaAd','nombre','num_pc')
+		#fields = ('tipo_sop','descrip1','problemaAd','nombre','num_pc')
+		fields = ('problemaAd','nombre','num_pc')
 
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
+	    """
 	    self.fields['descrip1'].queryset = P_detal.objects.none()
 
 	    if 'tipo_sop' in self.data:
@@ -84,7 +89,7 @@ class sop_notifF(forms.ModelForm):
 	            pass 
 	    elif self.instance.pk:
 	        self.fields['descrip1'].queryset = self.instance.tipo_sop.P_detal_set.order_by('nombre')
-
+		"""
 
 
 
