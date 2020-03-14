@@ -113,3 +113,16 @@ def niveles1_sin_ocupar():
 	                x.nombre = x.nom_nivel
 	                usu_nivel.append(x)
 	return usu_nivel
+
+
+
+def usu_1xnivel_area (nivel,area):
+
+	usu = User.objects.filter(is_active=1,datos__nivel_usua=nivel.pk,datos__cod_area=area.pk).exists()
+	"""
+	usu3 = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk)
+	for usu2 in usu3:
+		usu2.is_active = 0
+		usu2.save()
+	"""
+	return (usu)

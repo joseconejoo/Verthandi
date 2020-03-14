@@ -241,6 +241,9 @@
       var nivel_ID = $(this).val();
       /*alert('ASD',nivel_ID);*/
       if (nivel_ID) {
+        
+        $("#id_sub_area2").css('display', 'none');
+        $("#id_sub_area").css('display', 'none');
         /*alert('ASD2',url);*/
         $.ajax({
           url: url,
@@ -319,6 +322,7 @@
   }
   var n_nivel_usua = $("#id_nivel_usua");
   n_nivel_usua.change(sub_area_control_2).change();
+
 
 
 

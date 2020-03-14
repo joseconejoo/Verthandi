@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
-from .Fun1 import niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
+from .Fun1 import usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 
 from django.contrib import messages
 
@@ -418,8 +418,10 @@ def aj_opcis_nivel(request):
         pass
     area_interes = [16]
     niveles_interes = [2,3,4,5]
+    niveles_interes_areas = [7,8]
     niveles_sub_areas = [4]
     niveles_no_unicos = [5]
+    niveles_areas_no_unicos = [8]
     usu_nivel = []
     if usu_niv:
         if usu_niv.pk in area_interes:
@@ -440,8 +442,28 @@ def aj_opcis_nivel(request):
                         a12 = usu_1xnivel(x)
                         if not(a12):
                             x.nombre = x.nom_nivel
-                            usu_nivel.append(x)    
+                            usu_nivel.append(x)
+                        else:
+                            pass
+                else:
+                    pass
+        else:
+             usu_niv2 = NivelesNum.objects.filter().order_by('id')
+             for x in usu_niv2:
+                 if x.pk in niveles_interes_areas:
+                     if x.pk in niveles_no_unicos:
+                         x.nombre = x.nom_nivel
+                         usu_nivel.append(x)
+                     else:
+                        a12 = usu_1xnivel_area(x,usu_niv)
+                        if not (a12):
+                            print (a12)
+                            x.nombre = x.nom_nivel
+                            usu_nivel.append(x)
+                        else:
+                            pass
                         
+                 
     """
     data = {
         'usuario_tomado': usu_ex
