@@ -60,8 +60,10 @@ class DatosRF(forms.ModelForm):
 	    if 'cod_area' in self.data:
 	        try:
 	            niveles_id = int(self.data.get('cod_area'))
+
+	            self.fields['nivel_usua'].queryset = NivelesNum.objects.filter().order_by('id')
 	            if niveles_id == 16:
-	            	self.fields['nivel_usua'].queryset = NivelesNum.objects.filter().order_by('id')
+	            	pass
 	        except (ValueError, TypeError):
 	            pass  # invalid input from the client; ignore and fallback to empty City queryset
 	    elif self.instance.pk:

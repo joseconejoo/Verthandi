@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import NivelesNum ,P_opci, Datos
+from .models import NivelesNum ,P_opci, Datos,unidad2
 
 
 def usu_1xnivel (nivel):
@@ -92,9 +92,10 @@ asdasdasd
 def niveles1_sin_ocupar():
 	usu_niv2 = NivelesNum.objects.filter().order_by('id')
 	usu_nivel = []
-	niveles_interes = [2,3,4,5,6]
+	niveles_interes = [2,3,4,5,6,7]
+	#HACER VALIDACION DEL 7 POR AREA
 	niveles_sub_areas = [4]
-	niveles_no_unicos = [5,6]
+	niveles_no_unicos = [5,6,7]
 	for x in usu_niv2:
 	    if x.pk in niveles_interes:
 	        if (x.pk) in niveles_sub_areas:
@@ -118,7 +119,7 @@ def niveles1_sin_ocupar():
 
 def usu_1xnivel_area (nivel,area):
 
-	usu = User.objects.filter(is_active=1,datos__nivel_usua=nivel.pk,datos__cod_area=area.pk).exists()
+	usu = User.objects.filter(datos__cod_area=area.pk,is_active=1,datos__nivel_usua=nivel.pk).exists()
 	"""
 	usu3 = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk)
 	for usu2 in usu3:
@@ -126,3 +127,30 @@ def usu_1xnivel_area (nivel,area):
 		usu2.save()
 	"""
 	return (usu)
+
+
+def niveles1_sin_ocupar_area():
+	usu_niv2 = NivelesNum.objects.filter().order_by('id')
+	usu_nivel = []
+	niveles_interes = [7]
+	#HACER VALIDACION DEL 7 POR AREA
+	niveles_sub_areas = [4]
+	niveles_no_unicos = [5,6]
+	for x in usu_niv2:
+	    if x.pk in niveles_interes:
+	        if (x.pk) in niveles_sub_areas:
+	            a12 = usu_1xnivel_sub_area(x)
+	            if not(a12):
+	                x.nombre = x.nom_nivel
+	                usu_nivel.append(x)
+	            else:
+	            	pass
+	        elif (x.pk) in niveles_no_unicos:
+	        	x.nombre = x.nom_nivel
+	        	usu_nivel.append(x)
+	        else:
+	            a12 = usu_1xnivel(x)
+	            if not(a12):
+	                x.nombre = x.nom_nivel
+	                usu_nivel.append(x)
+	return usu_nivel

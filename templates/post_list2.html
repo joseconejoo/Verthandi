@@ -3,17 +3,17 @@
 {% load myfilters %}
 
 {% block content2 %}
-  {% if user.is_authenticated %}
-  <div class="M_d">
-    <p id="contSaludo"></p>
-    {{ user.username }}! Mira las nuevas noticias que hay.
-          
-  </div>
-      
-    <p></p>
-  {% else %}
-    <p>Usted es un visitante.</p>
-  {% endif %}
+{% if user.is_authenticated %}
+<div class="M_d">
+  <p id="contSaludo"></p>
+  {{ user.username }}! Mira las nuevas noticias que hay.
+  
+</div>
+
+<p></p>
+{% else %}
+<p>Usted es un visitante.</p>
+{% endif %}
 
 {% endblock %}
 
@@ -39,25 +39,23 @@
       <div class="col-md-12" style="padding-bottom:60px;">
         {% if user.is_superuser or user.is_staff %}
         <div class="item active left">
-          </div>
+        </div>
 
-          
-            <div class="container">
+        
+        <div class="container">
 
 
 
-              <table class="bg-color">
-              <tr>
-                  
-                
-                <th>Nº</th>
+          <table class="bg-color">
+            <tr>
 
-                <th>Nombre</th>
-                <th>Nº publicacione</th>
-                <th>Ultima publicacion</th>
-              </tr>
 
+              <th>Nº</th>
 
+              <th>Nombre</th>
+              <th>Nº publicacione</th>
+              <th>Ultima publicacion</th>
+            </tr>
 
 
 
@@ -67,219 +65,237 @@
 
 
 
-              <tr>
 
-                  <div class="">
-                    <td class="estado_prog_ver">
-                      <h3>1</h3>
-                      </td>
-                        <td>
-                           Problemas Solucionados
 
-                        </td>
-                        <td>
-                          0
-                        </td>
-                        <td>
-                          
-
-                        </td>
-                            
-
-
-                      </span>
-                  </div>
-                  </tr>
-
-
-
-
-                  <tr>
-
-                      <div class="">
-                        <td class="estado_prog_amar">
-                          <h3>2</h3>
-                          </td>
-                            <td>
-                               Soluciones en Proceso
-
-                            </td>
-                            <td>
-                              0
-                            </td>
-                            <td>
-                              
-
-                            </td>
-                                
-
-
-                          </span>
-                      </div>
-                      </tr>
-
-
-                    <tr>
-
-                        <div class="">
-                          <td class="estado_prog_red">
-                            <h3>3</h3>
-                            </td>
-                              <td>
-                                 Desincorporacion
-
-                              </td>
-                              <td>
-                                0
-                              </td>
-                              <td>
-                                
-
-                              </td>
-                                  
-
-
-                            </span>
-                        </div>
-                        </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  {% if form %}
-                  
-                  <a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
-
-                  {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-              </table>
-
-
-            </div>
-          </div>
-
-
-          <!-- de aqui para abajo modificar -->
-
-          {% if user.is_superuser or user.is_staff %}
-
-        <table class="bg-color">
-          <tr>
-              
-            
-            <th>Nº</th>
-
-            <th>Usuario - departamento</th>
-            <th>Nombre</th>
-            {% comment %}
-            <th>departamento</th>
-            <th>Perfil</th>
-            {% endcomment %}
-            <th>Problema</th>
-            <th>Enlace</th>
-          </tr>
-
-          <tr>
+            <tr>
 
               <div class="">
-                <td class="estado_prog_whit">
+                <td class="estado_prog_ver">
                   <h3>1</h3>
-                  </td>
-                    <td>
-                       eadministra - Departamento de administracion y contabilidad
+                </td>
+                <td>
+                 Problemas Solucionados
 
-                    </td>
-                    <td>
-                      Panclo de la Trinidad Palacios
-                    </td>
-                    <td>
-                      Mi equipo presenta fallas a la hora de intentar prenderlo, no hace nada.
-
-                    </td>
-                        
-
-                    <td>
-
-                        <a href="{% url 'noti_detalle' %}" class="btn btn-primary" >Ir</a>
-
-                    </td>
+               </td>
+               <td>
+                0
+              </td>
+              <td>
 
 
-                  </span>
-              </div>
-              </tr>
-
-        </table>          
+              </td>
+              
 
 
+            </span>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </tr>
 
+
+
+
+        <tr>
+
+          <div class="">
+            <td class="estado_prog_amar">
+              <h3>2</h3>
+            </td>
+            <td>
+             Soluciones en Proceso
+
+           </td>
+           <td>
+            0
+          </td>
+          <td>
+
+
+          </td>
+          
+
+
+        </span>
+      </div>
+    </tr>
+
+
+    <tr>
+
+      <div class="">
+        <td class="estado_prog_red">
+          <h3>3</h3>
+        </td>
+        <td>
+         Desincorporacion
+
+       </td>
+       <td>
+        0
+      </td>
+      <td>
+
+
+      </td>
+      
+
+
+    </span>
+  </div>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if form %}
+
+<a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
+
+<div style="min-height: 166px;">
+
+</div>
+<div style="min-height: 166px;">
+
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+
+</div>
+</div>
+</div>
+
+
+<!-- de aqui para abajo modificar -->
+
+{% if user.is_superuser or user.is_staff %}
+<div class="container">
+
+  <table class="bg-color">
+    <tr>
+
+
+      <th>Nº</th>
+
+      <th>Usuario - departamento</th>
+      <th>Nombre</th>
+      {% comment %}
+      <th>departamento</th>
+      <th>Perfil</th>
+      {% endcomment %}
+      <th>Problema</th>
+      <th>Enlace</th>
+    </tr>
+
+    <tr>
+
+      <div class="">
+        <td class="estado_prog_whit">
+          <h3>1</h3>
+        </td>
+        <td>
+         eadministra - Departamento de administracion y contabilidad
+
+       </td>
+       <td>
+        Panclo de la Trinidad Palacios
+      </td>
+      <td>
+        Mi equipo presenta fallas a la hora de intentar prenderlo, no hace nada.
+
+      </td>
+      
+
+      <td>
+
+        <a href="{% url 'noti_detalle' %}" class="btn btn-primary" >Ir</a>
+
+      </td>
+
+
+    </span>
+  </div>
+</tr>
+
+</table>          
+
+
+</div>
+</div>
+
+<div style="min-height: 166px;">
+
+</div>
+<!-- margen final, espacio final -->
+</div>
+
+</div>
+
+</div>
+
+</div>
 {% endif %}
 
 
@@ -295,7 +311,7 @@
   <div class="modal fade" id="myModal1">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         <div class="modal-header">
           <h4 class="modal-title text-center fnegr" id="pr1">Notificacion de Falla</h4>
 
@@ -305,59 +321,77 @@
         <div class="modal-body" id="popupb">
           <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="" name="amxj">
 
-            <fieldset>
+            <fieldset class="">
               {% for field in form %}
 
-                {% csrf_token %}
-                <div class="errores">
-                  {% if field.errors %}
-                  <script type="text/javascript">
-                    var varka = '{{field.errors}}';
-                    varka = varka.replace(/\<li>/g, '');
-                    varka = varka.replace(/\<\/li>/g, '');
-                    varka = varka.replace(/\<\/ul>/g, '');
-                    varka = varka.replace(/\<ul class="errorlist">/g, '')
-                    varka = varka.replace('.', '.\n\n');
+              {% csrf_token %}
+              <div class="errores">
+                {% if field.errors %}
+                <script type="text/javascript">
+                  var varka = '{{field.errors}}';
+                  varka = varka.replace(/\<li>/g, '');
+                  varka = varka.replace(/\<\/li>/g, '');
+                  varka = varka.replace(/\<\/ul>/g, '');
+                  varka = varka.replace(/\<ul class="errorlist">/g, '')
+                  varka = varka.replace('.', '.\n\n');
 
 
-                    alert(varka);
-                  </script>
+                  alert(varka);
+                </script>
+                {% endif %}
+
+              </div>
+              <div>
+                {% if forloop.counter == 1%}
+                {{field|notifa3:'form-control'}}
+                {% endif %}
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  {% if forloop.counter == 2%}
+                  {{field|notifa1:'form-control'}}
                   {% endif %}
 
                 </div>
-                  {% if forloop.counter == 1%}
-                    {{field|notifa3:'form-control blancColor'}}
+                <div class="col-sm-6">
+                  {% if forloop.counter == 3%}
+                  {{field|notifa2:'form-control'}}
                   {% endif %}
-                  <div class="col-md-6">
-                    {% if forloop.counter == 2%}
-                      {{field|notifa1:'form-control blancColor'}}
-                    {% endif %}
 
-                  </div>
-                  <div class="col-md-6">
-                    {% if forloop.counter == 3%}
-                      {{field|notifa2:'form-control blancColor'}}
-                    {% endif %}
+                </div>
 
-                  </div>
-                  <p></p>
-                  {% if field.help_text %}
-                  <p class="help">{{ field.help_text|safe }}</p>
-                  {% endif %}
+              </div>
+              <p></p>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
 
               {% endfor %}
 
-              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- text input -->
+                  <input type="text" class="form-control" placeholder="Enter ...">
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter ..." disabled="">
+                  </div>
+                </div>
+              </div>
+              <div class="botonModal">
+                <button class="btn btn-lg btn-block" type="submit" id="enviof-1">Enviar</button>
+              </div>
             </fieldset>
             <br>
 
 
           </form>
         </div>
-                          
+        
       </div>
     </div>
-  
+    
   </div>
 </div>
 

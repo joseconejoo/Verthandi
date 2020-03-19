@@ -52,7 +52,7 @@
 
 
 		<div class="col-xs-12 text-center" style="padding:60px;">
-			<h1 class="fblanc">Habilitar Usuarios</h1>
+			<h1 class="fblanc">Aprobar Usuarios</h1>
 
 			<br>
 		</div>
@@ -70,7 +70,7 @@
 				<th>Perfil</th>
 				{% endcomment %}
 
-				<th>Habilitar</th>
+				<th>Aprobar</th>
 
 			</tr>
 			{% for v_us1 in v_us %}
@@ -130,7 +130,7 @@
 					</td>
 					{% endcomment %}
 					<td>
-						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="Habilitación"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si</span></a>
+						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userAP' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="Aprobación"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si</span></a>
 
 						<a data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'userNE' v_us1.pk %}" data-nombre="{{v_us1.username }}" data-tipo="eliminacion"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No </span></a>
 
@@ -167,16 +167,19 @@
 				<div class="modal-body" id="popupb">
 					<form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
 
-						<fieldset>
+						<fieldset class="unalin">
 							{% csrf_token %}
-							<div class="col-md-6">
-								<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+
+							<div class="col-md-6 unalin2">
+								<button class="btn btn-lg btn-block" type="submit" id="enviof-1">Si</button>
 
 							</div>
-							<div class="col-md-6">
-								<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+							<div class="col-md-6 unalin2">
+								<button type="button" class="btn btn-lg btn-block" data-dismiss="modal">No</button>
 
 							</div>
+
+
 
 						</fieldset>
 						<br>

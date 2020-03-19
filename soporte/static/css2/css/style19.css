@@ -34,26 +34,26 @@ table {
     min-height: 325px;
 }
 .bg-color{
-  background-color: RGBA(0, 0, 0, 0.61);
+  background-color: rgba(0, 0, 0, 0.61)!important;
   min-height: 325px;
 }
 .bg-color2{
   min-height: 275px;
-  border-bottom: 275px solid RGBA(0, 0, 0, 0.71);
+  border-bottom: 275px solid rgba(0, 0, 0, 0.71);
   border-right: 75px solid transparent;
 }
 .bg-color21{
   min-height: 275px;
   border-bottom: 275px solid transparent;
-  border-right: 75px solid RGBA(0, 0, 0, 0.71);
+  border-right: 75px solid rgba(0, 0, 0, 0.71);
 }
 .bg-color3{
-  background-color: RGBA(0, 0, 0, 0.71);
+  background-color: rgba(0, 0, 0, 0.71);
   min-height: 275px;
 }
 
 .bg-colorlet4 {
-  background-color: RGBA(0, 0, 0, 0.71);
+  background-color: rgba(0, 0, 0, 0.71);
   min-height: 100%;
   min-width:50%;
   max-width: 50%;
@@ -328,24 +328,24 @@ table {
     padding: 7px 0;
 }
 .form-control, .form-group .form-control {
-    border: 0;
+    border: 0!important;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#060606), to(#060606));
-    background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#060606, #060606);
-    background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#060606, #060606);
-    background-image: linear-gradient(#009688, #009688), linear-gradient(#060606, #060606);
-    -webkit-background-size: 0 2px, 100% 1px;
-    background-size: 0 2px, 100% 1px;
-    background-repeat: no-repeat;
-    background-position: center bottom, center -webkit-calc(100% - 1px);
-    background-position: center bottom, center calc(100% - 1px);
-    background-color: rgba(0, 0, 0, 0);
+    background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#060606, #060606)!important;
+    background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#060606, #060606)!important;
+    background-image: linear-gradient(#009688, #009688), linear-gradient(#060606, #060606)!important;
+    -webkit-background-size: 0 2px, 100% 1px!important;
+    background-size: 0 2px, 100% 1px!important;
+    background-repeat: no-repeat!important;
+    background-position: center bottom, center -webkit-calc(100% - 1px)!important;
+    background-position: center bottom, center calc(100% - 1px)!important;
+    background-color: rgba(0, 0, 0, 0)!important;
     -webkit-transition: background 0s ease-out;
     -o-transition: background 0s ease-out;
     transition: background 0s ease-out;
     float: none;
     -webkit-box-shadow: none;
-    box-shadow: none;
-    border-radius: 0;
+    box-shadow: none!important;
+    border-radius: 0!important;
 }
 .contact-form {
     margin: 8px 0 9px !important;
@@ -816,7 +816,7 @@ table {
 }
 
 .fblanc {
-  color:#d9d9d9;
+  color:#e6e6e6;
 }
 
 .fnegr {
@@ -1004,7 +1004,7 @@ table input
 }
 
 th, td {
-  text-align: center;
+  text-align: center!important;
   border-right: transparent;
   /*
   border-right: 3px solid #99ccff;
@@ -1092,15 +1092,15 @@ th {
 }
 
 .modal-dialog input:focus {
-  background-image: none;
-  border-color: rgba(255, 255, 255,0.3);
-  box-shadow: none;
+  background-image: none!important;
+  border-color: rgba(255, 255, 255,0.3)!important;
+  box-shadow: none!important;
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
-  outline: 0 none;
-  border-bottom: 1px solid rgba(0, 0, 0,0.4);
+  outline: 0 none!important;
+  border-bottom: 1px solid rgba(0, 0, 0,0.4)!important;
 
-  outline: none;
+  outline: none!important;
 }
 
 .modal-dialog select:focus {
@@ -1650,4 +1650,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 #id_sub_area2 {
   display: none;
+}
+
+.bckblan {
+  background: white;
+  background-color: white;
 }

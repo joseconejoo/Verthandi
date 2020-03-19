@@ -12,7 +12,8 @@ from django.contrib.auth.models import User
 from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
-from .Fun1 import usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
+from .Fun1 import niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
+from .Fun2 import usu_add_1
 
 from django.contrib import messages
 
@@ -141,44 +142,32 @@ def post_list2(request):
 def a_us(request):
     if request.user.is_authenticated==True:
         usu_nivel = niveles1_sin_ocupar()
+        usu_nivel2 = niveles1_sin_ocupar_area()
         print (usu_nivel)
         Verthandi = []
         niveles_sub_areas = [4,5]
         niveles_no_unicos = [5]
+        niveles_areas = []
         usuarios_list = []
 
         for niveles_dispo in usu_nivel:
             if niveles_dispo.pk in niveles_sub_areas:
                 if niveles_dispo.pk in niveles_no_unicos:
+                    #lista de usuarios que se agregaran
                     v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).order_by('id')
-                    for Skuld in v_us:
-                        try:
-                            datos = Datos.objects.get(pk=Skuld.pk)
-                            usuarios_list.append(Skuld)
-                            Verthandi.append(datos)
-                        except:
-                            pass
+                    Verthandi,usuarios_list = usu_add_1(v_us,Verthandi,usuarios_list)
                 else:
                     a12 = usu_1xnivel_sub_area2Form(int(niveles_dispo.pk))
+                    #lista de usuarios que se agregaran
+                    # En caso de estar vacantes sus puestos
                     for sub_a_dispo in a12:
                         v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).filter(datos__sub_area=sub_a_dispo).order_by('id')
-                        for Skuld in v_us:
-                            try:
-                                datos = Datos.objects.get(pk=Skuld.pk)
-                                usuarios_list.append(Skuld)
-                                Verthandi.append(datos)
-                            except:
-                                pass
+                        Verthandi,usuarios_list = usu_add_1(v_us,Verthandi,usuarios_list)
 
             else:
-                v_us = User.objects.filter(is_active=0).filter(datos__nivel_usua=niveles_dispo.pk).order_by('id')
-                for Skuld in v_us:
-                    try:
-                        datos = Datos.objects.get(pk=Skuld.pk)
-                        usuarios_list.append(Skuld)
-                        Verthandi.append(datos)
-                    except:
-                        pass
+                v_us = User.objects.filter(is_active=0,datos__nivel_usua=niveles_dispo.pk).order_by('id')
+                Verthandi,usuarios_list = usu_add_1(v_us,Verthandi,usuarios_list)
+
 
 
 
@@ -202,7 +191,7 @@ def userAP(request, pk):
             if not(asd):
                 Verthandi.is_active = True
                 Verthandi.save()
-                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+                messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
             else:
                 messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
 
@@ -211,7 +200,7 @@ def userAP(request, pk):
             if not(asd):
                 Verthandi.is_active = True
                 Verthandi.save()
-                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+                messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
 
             else:
                 messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
@@ -219,7 +208,7 @@ def userAP(request, pk):
         else:
             Verthandi.is_active = True
             Verthandi.save()
-            messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+            messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
 
 
         return redirect('a_us')
@@ -264,7 +253,7 @@ def userHAB(request, pk):
             if not(asd):
                 Verthandi.is_active = True
                 Verthandi.save()
-                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+                messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
             else:
                 messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
 
@@ -273,7 +262,7 @@ def userHAB(request, pk):
             if not(asd):
                 Verthandi.is_active = True
                 Verthandi.save()
-                messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+                messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
 
             else:
                 messages.error(request, 'Usuario '+str(nombr)+' Ya existe un usuario con este cargo')
@@ -281,7 +270,7 @@ def userHAB(request, pk):
         else:
             Verthandi.is_active = True
             Verthandi.save()
-            messages.success(request, 'Usuario '+str(nombr)+' Habilitado exitosamente')
+            messages.success(request, 'Usuario '+str(nombr)+' Aprobado exitosamente')
 
 
         return redirect('datos_u', pk=pk)

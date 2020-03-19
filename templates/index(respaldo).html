@@ -1,0 +1,179 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siglas</title>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/familysatisfy-bree+serif-candal-pt+sans.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/bootstrap.min.css' %}">
+  <link href="{% static 'css2/lib/owlcarousel/owl.carousel.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css2/lib/owlcarousel/owl.theme.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css2/lib/owlcarousel/owl.transitions.min.css' %}" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/style19.css' %}">
+
+</head>
+
+<body class="page-index has-hero">
+  <section id="banner">
+    <div class="bg-color">
+      <div class="container">
+        <div class="row">
+          <div class="inner text-center">
+
+            <p class='titulo-s2'><img src="/static/css2/img/portuguesa12test3.png" class="imagen12">
+            Dirección de informática, Gobernación de Portuguesa - UPTP </p>
+
+            <div class="hero" id="highlighted">
+              <div class="inner">
+                <h1 class="logo-name">Siglas</h1>
+                <br>
+                {% block info%}
+                {% endblock %}
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="event">
+
+    {% block content %}
+    {% endblock %}
+  </section>
+  <header id="header">
+    <div class="container-fluid">
+      {% if user.is_authenticated %}
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'post_noti' %}">Notificaciones</a>
+
+
+        {% if user.is_superuser %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'a_us' %}">Habilitación de usuarios</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'opcisAdmin' %}">Opciones Avanzadas</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'personal_inf' %}">Personal Informatica</a>
+        {% endif %}
+        {% endif %}
+
+        {% if user.datos.nivel_usua.pk == 3 %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Asistencia</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="">Registrar Vacaciones</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'personal_inf_v' %}">Pasantes</a>
+        {% endif %}
+        {% if user.datos.nivel_usua.pk == 4 %}
+        <a class="boton-abrir" id="M_boton-abrir" href="{% url 'asisInf' %}">Notificaciones</a>
+        <a class="boton-abrir" id="M_boton-abrir" href="">Personal subarea</a>
+        {% endif %}
+      </div>
+
+      <div class="menu_drop menu-icon-nomb">
+        <ul>
+          <li class="dropdown">
+            <a href="javascript:;" class="dropbtn">{% if user.datos.nivel_usua %}
+              {{user.datos.nombre}} - {{user.datos.nivel_usua}}
+              {% else %}
+              reportador
+              {% endif %}
+
+
+              <i class="fa fa-sort-desc" id="iconB"></i></a>
+            <div class="dropdown-content">
+              {% if datos.usuario %}
+              <a class="boton-abrir" id="M_boton-abrir" href="{% url 'datos_u' pk=user.pk  %}">Perfil</a>
+              {% else %}
+              {% if user.datos.nivel_usua %}
+
+              <a  href="{% url 'datos1' %}" id="M_boton-abrir" class="boton-abrir">Perfil</a>        
+              {% endif %}
+
+              {% endif %}
+              <a href="{% url 'logout' %}">Salir</a>
+
+
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      {% if user.datos.nivel_usua %}
+      <span onclick="openNav()" class="pull-right menu-icon">Menú ☰   </span>
+      {% endif %}
+      {% if user.is_staff or user.is_superuser or user.datos.nivel_usua.pk == 4 %}
+      <i class="fa fa-bell-o pull-right menu-icon2"></i><span class="fa-badge menu-icon2 fa fa-small f_verde menu-icon3"><p class="text-center">1</p></span>
+
+
+      {% endif %}
+
+      {% else %}
+      <div class="menu-login22">
+        <a class="menu-login" href="{% url 'login' %}">Login</a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <footer class="footer text-center">
+    <div class="footer-top">
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6 text-center">
+          <div class="widget">
+            <h4 class="widget-title">Siglas
+              <div class="social-list">
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/groups/2144533458915020/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+              </div>
+            </h4>
+
+            <div class="credits">
+
+              <address> Venezuela, Portuguesa 3350</address>
+
+              <div class="credits">
+               © Siglas.  Diseño <a href="https://www.facebook.com/groups/2144533458915020/">Siglas Project</a>
+
+             </div>
+             <p class="clear-float">
+
+
+             </p>
+           </div>
+
+         </div>
+       </div>
+     </div>
+   </div>
+ </footer>
+ <!-- / footer -->
+ <script src="{% static 'css2/js/jquery.min.js' %}"></script>
+ <script src="{% static 'css2/js/jquery.easing.min.js' %}"></script>
+
+ <script src="{% static 'css2/js/bootstrap.min.js' %}"></script>
+
+
+ <script src="{% static 'css2/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+ <script src="{% static 'css2/lib/stellar/stellar.min.js' %}"></script>
+ <script src="{% static 'css2/lib/waypoints/waypoints.min.js' %}"></script>
+ <script src="{% static 'css2/lib/counterup/counterup.min.js' %}"></script>
+ <script src="{% static 'css2/contactform/contactform.js' %}"></script>
+
+
+ <script src="{% static 'css2/js/custom15.js' %}"></script>
+
+
+</body>
+
+</html>
+{% block modals %}
+{% endblock %}

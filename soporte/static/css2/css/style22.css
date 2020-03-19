@@ -1,0 +1,81 @@
+.unalin {
+	display: table;
+  white-space: nowrap;
+}
+.unalin2 {
+	display: inline-block;
+}
+.centrartodo {
+	white-space: nowrap;
+}
+
+/* modal  bols*/
+
+
+.modal-dialog button {
+  margin-top: 20%;
+  background: white;
+  color:black;
+  border-color: black;
+}
+
+
+.modal-dialog button:hover {
+  background: rgba(0, 0, 0,0.08);
+  color:black;
+  border-color: black;
+}
+
+.modal-dialog button:active,.modal-dialog button:target,.modal-dialog button:focus,.modal-dialog button:active:focus{
+  background: rgba(0, 0, 0,0.12);
+  border-color: black ;
+  color:black;
+  outline: 0 none;
+  box-shadow: none ;
+}
+
+.modal-dialog .close{
+  color: black;
+  font-size: 23px;
+}
+
+.modal-content {
+  background: transparent;
+}
+
+.modal-footer button {
+  background: white;
+}
+
+.main-footer2 {
+  background: #333;
+  border-top: none;
+}
+
+.mostmenu1 {
+  display: list-item;
+}
+
+.centrar_m {
+  margin-left: 20%;
+}
+
+.ordernartext {
+  white-space: normal;
+}
+
+.botonPer {
+  color: white;
+  background : rgba(0,0,0,0.10);
+}
+.botonPer:hover, .botonPer:active, .botonPer:focus {
+  color: white;
+  background : rgba(0,0,0,0.18);
+}
+.he100 {
+  height: 100%;
+}
+
+.botonModal button {
+  margin-top: 0%;
+}

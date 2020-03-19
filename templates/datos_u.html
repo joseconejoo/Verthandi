@@ -7,128 +7,129 @@
 
 <div class="bg-color" class="section-padding">
   <div class="container">
-    <div class="row">
-      {% if messages %}
-      {% comment %}
-      <ul class="messages">
-        {% endcomment %}
-
-        {% for message in messages %}
-        {% if message.tags == 'success' %}
-        <div class="content">
-          <div class="col-sm-6 col-sm-offset-3">
-            <div class="alert1 success">
-              <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
-              <strong></strong> <span id="alert1text"> {{ message }}</span>
-            </div>    
-
-          </div>
-
-        </div>
-        {% endif %}
-
-        {% if message.tags == 'error' %}
-        <div class="content">
-          <div class="col-sm-6 col-sm-offset-3">
-            <div class="alert1">
-              <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
-              <strong></strong> <span id="alert1text"> {{ message }}</span>
-            </div>    
-
-          </div>
-
-        </div>
-        {% endif %}
-
-        {% comment %}
-        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-        {% endcomment %}
-        {% endfor %}
-
-        {% comment %}
-      </ul>
+    {% if messages %}
+    {% comment %}
+    <ul class="messages">
       {% endcomment %}
+
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1 success">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
+
+        </div>
+
+      </div>
       {% endif %}
 
+      {% if message.tags == 'error' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
 
-
-
-
-      <div class="col-xs-12 text-center" style="padding:60px;">
-
-
-        <h1 class="header-h" ><p> Perfil</p></h1>
-      </div>
-
-      <div class="col-md-12" style="padding-bottom:60px;">
-        <div class="item active left">
         </div>
-        {% if user.is_superuser %}
-        <a class="btn btn-default" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
-        {% endif %}
-        <table class="bg-color">
-          <p> </p>
-          <tr class="no_color_background">
-            <td >Nombre de usuario:</td>
-            <td > {{ datos.usuario|linebreaksbr }} - {{datos.nivel_usua.nom_nivel}}
-              {% if datos.sub_area %}
-              {{datos.sub_area}} 
-              {% endif%}
-            </td>
-          </tr>
-          <tr class="no_color_background">
-            <td >Nombre: </td><td> {{ datos.nombre|linebreaksbr }}</td>
-          </tr>
-          <tr class='no_color_background'>
-            <td>Apellido: </td> <td>{{ datos.apellido|linebreaksbr }}</td>
-          </tr>
-          <tr class='no_color_background'>
-            <td>Cedula: </td> <td> {{ datos.cedula|intcomma }}</td>
-          </tr>
-          {% comment %}
-          <tr class='no_color'>
-            <td>Correo: </td> <td> {{ datos.email|linebreaksbr }}</td>
-          </tr>
-          {% endcomment %}
-
-
-          <tr class='no_color_background'>
-            {% if datos.fedicion %}
-            <td>Ultima edicion de perfil: </td> <td> {{ datos.fedicion }}</td>
-            {% else %}
-            <td>Ultima edicion de perfil: </td> <td> Ninguna</td>
-            {% endif %}
-          </tr>
-          {% if permisos_adm %}
-
-          <tr class='no_color_background'>
-            <td>Habilitacion: </td> 
-            <td>
-              {% if usuario1.is_active %}
-              <a data-toggle="modal" data-target="" data-id="" data-href="{% url 'userHAB' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Habilitación"><span class="btn btn-primary" disabled><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Habilitar</span></a>
-
-
-              <a data-toggle="modal" data-target="#myModal2" data-id="" data-href="{% url 'userDES' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Deshabilitación"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Deshabilitar </span></a>
-
-
-              {% else %}
-              <a data-toggle="modal" data-target="#myModal2" data-id="" data-href="{% url 'userHAB' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Habilitación"><span class="btn btn-primary"><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Habilitar</span></a>
-
-              <a data-toggle="modal" data-target="" data-id="" data-href="{% url 'userDES' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Deshabilitación"><span class="btn btn-primary" disabled><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Deshabilitar </span></a>
-
-
-              {% endif %}
-
-            </td>
-          </tr>
-          {% endif %}
-        </table>
 
       </div>
+      {% endif %}
+
+      {% comment %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+      {% endcomment %}
+      {% endfor %}
+
+      {% comment %}
+    </ul>
+    {% endcomment %}
+    {% endif %}
+
+
+
+
+
+    <div class="col-xs-12 text-center" style="padding:60px;">
+
+
+      <h1 class="fblanc" >Perfil</h1>
+    </div>
+
+    <div class="col-md-12" style="padding-bottom:60px;">
+      <div class="item active left">
+      </div>
+      {% if user.is_superuser %}
+      <a class="btn btn-default" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
+      {% endif %}
+      <table class="bg-color">
+        <p> </p>
+        <tr class="no_color_background">
+          <td >Nombre de usuario:</td>
+          <td > {{ datos.usuario|linebreaksbr }} - {{datos.nivel_usua.nom_nivel}}
+            {% if datos.sub_area %}
+            {{datos.sub_area}} 
+            {% endif%}
+          </td>
+        </tr>
+        <tr class="no_color_background">
+          <td >Nombre: </td><td> {{ datos.nombre|linebreaksbr }}</td>
+        </tr>
+        <tr class='no_color_background'>
+          <td>Apellido: </td> <td>{{ datos.apellido|linebreaksbr }}</td>
+        </tr>
+        <tr class='no_color_background'>
+          <td>Cedula: </td> <td> {{ datos.cedula|intcomma }}</td>
+        </tr>
+        {% comment %}
+        <tr class='no_color'>
+          <td>Correo: </td> <td> {{ datos.email|linebreaksbr }}</td>
+        </tr>
+        {% endcomment %}
+
+
+        <tr class='no_color_background'>
+          {% if datos.fedicion %}
+          <td>Ultima edicion de perfil: </td> <td> {{ datos.fedicion }}</td>
+          {% else %}
+          <td>Ultima edicion de perfil: </td> <td> Ninguna</td>
+          {% endif %}
+        </tr>
+        {% if permisos_adm %}
+
+        <tr class='no_color_background'>
+          <td>Habilitacion: </td> 
+          <td>
+            {% if usuario1.is_active %}
+            <a data-toggle="modal" data-target="" data-id="" data-href="{% url 'userHAB' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Habilitación"><span class="btn btn-primary disabled" disabled><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Habilitar</span></a>
+
+
+            <a data-toggle="modal" data-target="#myModal2" data-id="" data-href="{% url 'userDES' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Deshabilitación"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Deshabilitar </span></a>
+
+
+            {% else %}
+            <a data-toggle="modal" data-target="#myModal2" data-id="" data-href="{% url 'userHAB' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Habilitación"><span class="btn btn-primary"><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Habilitar</span></a>
+
+            <a data-toggle="modal" data-target="" data-id="" data-href="{% url 'userDES' usuario1.pk %}" data-nombre="{{datos.nombre }} {{datos.apellido }} ({{usuario1.username}})" data-tipo="Deshabilitación"><span class="btn btn-primary disabled" disabled><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  Deshabilitar </span></a>
+
+
+            {% endif %}
+
+          </td>
+        </tr>
+        {% endif %}
+      </table>
+
     </div>
   </div>
-</div>
-</div>
+  
+  <div style="min-height: 166px;">
+
+  </div>
+
 </div>
 
 
@@ -208,15 +209,13 @@
         <div class="modal-body" id="popupb">
           <form accept-charset="UTF-8" method='post' id="ProblemForm2" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
 
-            <fieldset>
+            <fieldset class="unalin">
               {% csrf_token %}
-              <div class="col-md-6">
-                <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
-
+              <div class="col-md-6 unalin2">
+                <button class="btn btn-lg btn-block" type="submit" id="enviof-1">Si</button>
               </div>
-              <div class="col-md-6">
-                <button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
-
+              <div class="col-md-6 unalin2">
+                <button type="button" class="btn btn-lg btn-block" data-dismiss="modal">No</button>
               </div>
 
             </fieldset>
