@@ -407,7 +407,7 @@ def aj_opcis_nivel(request):
         pass
     area_interes = [16]
     niveles_interes = [2,3,4,5]
-    niveles_interes_areas = [7,8]
+    niveles_interes_areas = [7]
     niveles_sub_areas = [4]
     niveles_no_unicos = [5]
     niveles_areas_no_unicos = [8]
