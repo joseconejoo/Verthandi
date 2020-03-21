@@ -2,12 +2,16 @@ from django.contrib.auth.models import User
 from .models import NivelesNum ,P_opci, Datos,unidad2
 
 
-def usu_1xnivel (nivel):
+def usu_1xnivel (nivel,area=False):
 
 	#usu = User.objects.filter(is_active=1).filter(datos_nombre='olwer')
 	#usu2 = User.objects.filter()
 	#print (nivel.pk)
-	usu = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk).exists()
+	##usu = None
+	##if not area:
+	usu = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk).exists()	
+	##else:
+	##	print('area',area)
 	"""
 	usu3 = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk)
 	for usu2 in usu3:
@@ -96,6 +100,8 @@ def niveles1_sin_ocupar():
 	#HACER VALIDACION DEL 7 POR AREA
 	niveles_sub_areas = [4]
 	niveles_no_unicos = [5,6,7]
+	niveles_areas_o = []
+
 	for x in usu_niv2:
 	    if x.pk in niveles_interes:
 	        if (x.pk) in niveles_sub_areas:
@@ -106,8 +112,12 @@ def niveles1_sin_ocupar():
 	            else:
 	            	pass
 	        elif (x.pk) in niveles_no_unicos:
-	        	x.nombre = x.nom_nivel
-	        	usu_nivel.append(x)
+	        	if (x.pk) in niveles_areas_o:
+	        		pass
+	        	else:
+	        		x.nombre = x.nom_nivel
+	        		usu_nivel.append(x)
+
 	        else:
 	            a12 = usu_1xnivel(x)
 	            if not(a12):
@@ -119,7 +129,7 @@ def niveles1_sin_ocupar():
 
 def usu_1xnivel_area (nivel,area):
 
-	usu = User.objects.filter(datos__cod_area=area.pk,is_active=1,datos__nivel_usua=nivel.pk).exists()
+	usu = User.objects.filter(datos__cod_area=area.pk,datos__nivel_usua=nivel.pk,is_active=1).exists()
 	"""
 	usu3 = User.objects.filter(is_active=1).filter(datos__nivel_usua=nivel.pk)
 	for usu2 in usu3:
@@ -154,3 +164,6 @@ def niveles1_sin_ocupar_area():
 	                x.nombre = x.nom_nivel
 	                usu_nivel.append(x)
 	return usu_nivel
+def usu_1xnivel_areas_o(nivel,area):
+	usua = User.objects.filter(datos__cod_area=area,datos__nivel_usua=nivel,is_active=1).exists()
+	return usua
