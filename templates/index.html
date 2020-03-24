@@ -17,6 +17,7 @@
   {% comment %}
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   {% endcomment %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/adm_ionicons.min.css' %}">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
   <!-- iCheck -->
@@ -35,7 +36,8 @@
   {% comment %}
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   {% endcomment %}
-
+  <link rel="stylesheet" type="text/css" href="{% static 'css2/css/adm_fonts.css' %}">
+  <!-- own css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css2/css/style22.css' %}">
 
 </head>
@@ -64,11 +66,23 @@
         <a href="#" class="nav-link">Contact</a>
       </li>
 
-      <!-- perfil dropdown -->
-      <div class="btn-group">
+      <!-- perfil nombre apellido dropdown -->
+      <div class="btn-group margender dropdown-menu-right">
         <a href="{% url 'datos_u' pk=user.pk %}">
-        <button type="button" class="btn botonPer he100">Perfil</button>
-      </a>
+          <button type="button" class="btn botonPer he100">
+            {% if user.datos.nivel_usua %}
+            {{user.datos.nombre}}
+            {% if user.datos.sub_area %}
+            {{user.datos.sub_area}}
+            {% endif %}
+            {% if user.datos.nivel_usua.pk == 7 %}
+            {{ user.datos.cod_area }}
+            {% endif %}
+            {% else %}
+            reportador
+            {% endif %}
+          </button>
+        </a>
         <button type="button" class="btn botonPer dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
           <span class="sr-only">Toggle Dropdown</span>
           <div class="dropdown-menu" role="menu">
@@ -78,145 +92,146 @@
             <a class="dropdown-item" href="#">Something else here</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
-            -->
-            
-          </div>
+          -->
+
+        </div>
+      </button>
+    </div>
+
+  </ul>
+  {% endcomment %}
+
+
+  {% comment %}
+  <!-- SEARCH FORM -->
+  <form class="form-inline ml-3">
+    <div class="input-group input-group-sm">
+      <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+      <div class="input-group-append">
+        <button class="btn btn-navbar" type="submit">
+          <i class="fas fa-search"></i>
         </button>
       </div>
-
-    </ul>
-    {% endcomment %}
-
+    </div>
+  </form>
+  {% endcomment %}
+  <!-- Right navbar links -->
+  <ul class="navbar-nav ml-auto">
+    <!-- Messages Dropdown Menu -->
     {% comment %}
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-comments"></i>
+        <span class="badge badge-danger navbar-badge">3</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="{% static 'dist/img/user1-128x128.jpg' %}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <div class="media-body">
+              <h3 class="dropdown-item-title">
+                Brad Diesel
+                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+              </h3>
+              <p class="text-sm">Call me whenever you can...</p>
+              <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="{% static 'dist/img/user8-128x128.jpg' %}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <div class="media-body">
+              <h3 class="dropdown-item-title">
+                John Pierce
+                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+              </h3>
+              <p class="text-sm">I got your message bro</p>
+              <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="{% static 'dist/img/user3-128x128.jpg' %}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <div class="media-body">
+              <h3 class="dropdown-item-title">
+                Nora Silvester
+                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+              </h3>
+              <p class="text-sm">The subject goes here</p>
+              <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
       </div>
-    </form>
+    </li>
     {% endcomment %}
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      {% comment %}
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+    <!-- Notifications Dropdown Menu -->
+    {% comment %}
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        <span class="badge badge-warning navbar-badge">15</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">15 Notifications</span>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <i class="fas fa-envelope mr-2"></i> 4 new messages
+          <span class="float-right text-muted text-sm">3 mins</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{% static 'dist/img/user1-128x128.jpg' %}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{% static 'dist/img/user8-128x128.jpg' %}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{% static 'dist/img/user3-128x128.jpg' %}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <i class="fas fa-users mr-2"></i> 8 friend requests
+          <span class="float-right text-muted text-sm">12 hours</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <i class="fas fa-file mr-2"></i> 3 new reports
+          <span class="float-right text-muted text-sm">2 days</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+      </div>
       {% endcomment %}
-      <!-- Notifications Dropdown Menu -->
-      {% comment %}
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-        {% endcomment %}
-      </li>
-      {% comment %}
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
-      {% endcomment %}
-    </ul>
-  </nav>
-  <!-- /.navbar -->
+    </li>
+    {% comment %}
+    <li class="nav-item">
+      <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+        <i class="fas fa-th-large"></i>
+      </a>
+    </li>
+    {% endcomment %}
+  </ul>
+</nav>
+<!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Siglas Logo" class="brand-image img-circle elevation-3"
-      style="opacity: .8">
-      <span class="brand-text font-weight-light">Siglas v3</span>
-    </a>
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Siglas Logo" class="brand-image img-circle elevation-3"
+    style="opacity: .8">
+    <span class="brand-text font-weight-light">Siglas v3</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <!-- imagen del perfil de usuario nombre de usuario -->
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <!-- imagen del perfil de usuario nombre de usuario -->
           <!--
           <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
         -->
@@ -224,10 +239,15 @@
       <div class="info">
         <a href="#" class="d-block ordernartext">
           {% if user.datos.nivel_usua %}
+          <!-- nombre y apellido --> 
+          <!-- perfil working -->
           {{user.datos.nombre}} {{user.datos.apellido}} - {{user.datos.nivel_usua}}
-           {% if user.datos.sub_area %}
-           {{user.datos.sub_area}}
-           {% endif %}
+          {% if user.datos.sub_area %}
+          {{user.datos.sub_area}}
+          {% endif %}
+          {% if user.datos.nivel_usua.pk == 7 %}
+          {{ user.datos.cod_area}}
+          {% endif %}
           {% else %}
           reportador
           {% endif %}
@@ -422,6 +442,16 @@
                 Notificaciones
               </p>
               <span class="badge badge-warning right">1</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if user.datos.nivel_usua.pk == 7 %}
+          <li class="nav-item">
+            <a href="{% url 'usuarioReport' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Usuario Reportador
+              </p>
             </a>
           </li>
           {% endif %}
@@ -925,8 +955,8 @@
   <div class="content-wrapper" style="" id="event">
 
 
-      {% block content %}
-      {% endblock %}
+    {% block content %}
+    {% endblock %}
 
   </div>
 
@@ -1554,9 +1584,10 @@
   <a href="#"><i class="far fa-twitter" aria-hidden="true"></i></a>
   <a href="https://www.facebook.com/groups/2144533458915020/"><i class="far fa-facebook" aria-hidden="true"></i></a>
 -->
-  <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 3.0.0
-  </div>
+
+<div class="float-right d-none d-sm-inline-block">
+  <b>Version</b> 3.0.0
+</div>
 </footer>
 
 <!-- Control Sidebar -->

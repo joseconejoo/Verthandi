@@ -79,3 +79,7 @@
 .botonModal button {
   margin-top: 0%;
 }
+
+.margender {
+  transform: translate(800%,0%);
+}

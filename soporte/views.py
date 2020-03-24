@@ -760,3 +760,5 @@ def personal_inf_v(request):
     else:
         return HttpResponseRedirect("/")
 
+def usuarioReport():
+    pass
