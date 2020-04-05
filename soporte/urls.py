@@ -39,7 +39,8 @@ urlpatterns = [
     path('Personal-Informatica-v', views.personal_inf_v, name='personal_inf_v'),
     path('Personal-Informatica/Registro', views.registros_personal_inf, name='registros_personal_inf'),
 
-    path('Reportador', views.usuarioReport, name='usuarioReport'),    
+    path('Reportador', views.usuarioReport, name='usuarioReport'),
+    path('Reportador/Registro', views.usuarioReportRegis, name='usuarioReportRegis'),
     
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),

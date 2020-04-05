@@ -1284,37 +1284,37 @@ input[type=number]::-webkit-outer-spin-button {
   
   outline: 0 none;
 
-  outline: none;
-  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000);
-  border-color: rgba(255, 0, 0,0);
+  outline: none!important;
+  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000)!important;
+  border-color: rgba(255, 0, 0,0)!important;
 
-  border-bottom: 1px solid rgba(255, 0, 0,0);
+  border-bottom: 1px solid rgba(255, 0, 0,0)!important;
 
-  box-shadow: 0px 1px 0px red;
+  box-shadow: 0px 1px 0px red!important;
 
 }
 
 /*comprobacion de usuario */
 #dentroboto .form-group .form-control-neg {
-  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000);
-  border-color: rgba(255, 0, 0,0.9);
+  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000)!important;
+  border-color: rgba(255, 0, 0,0.9)!important;
 
-  border-bottom: 1px solid rgba(255, 0, 0,0.9);
+  border-bottom: 1px solid rgba(255, 0, 0,0.9)!important;
 
-  box-shadow: 0px 1px 0px red;
+  box-shadow: 0px 1px 0px red!important;
 
 }
 
 #dentroboto .form-group .form-control-neg:focus {
   outline: 0 none;
 
-  outline: none;
-  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000);
-  border-color: rgba(255, 0, 0,0);
+  outline: none!important;
+  background-image: linear-gradient(#ff0000, #ff0000), linear-gradient(#ff0000, #ff0000)!important;
+  border-color: rgba(255, 0, 0,0)!important;
 
-  border-bottom: 1px solid rgba(255, 0, 0,0);
+  border-bottom: 1px solid rgba(255, 0, 0,0)!important;
 
-  box-shadow: 0px 1px 0px red;
+  box-shadow: 0px 1px 0px red!important;
 
 }
 
@@ -1322,37 +1322,37 @@ input[type=number]::-webkit-outer-spin-button {
   
   outline: 0 none;
 
-  outline: none;
-  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00);
-  border-color: rgba(0, 255, 0,0);
+  outline: none!important;
+  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00)!important;
+  border-color: rgba(0, 255, 0,0)!important;
 
-  border-bottom: 1px solid rgba(0, 255, 0,0.25);
+  border-bottom: 1px solid rgba(0, 255, 0,0.25)!important;
 
-  box-shadow: 0px 1px 0px green;
+  box-shadow: 0px 1px 0px green!important;
 
 }
 
 /*comprobacion de usuario */
 #dentroboto .form-group .form-control-accept {
-  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00);
-  border-color: rgba(0, 255, 0,0.9);
+  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00)!important;
+  border-color: rgba(0, 255, 0,0.9)!important;
 
-  border-bottom: 1px solid rgba(0, 255, 0,0.9);
+  border-bottom: 1px solid rgba(0, 255, 0,0.9)!important;
 
-  box-shadow: 0px 1px 0px green;
+  box-shadow: 0px 1px 0px green!important;
 
 }
 
 #dentroboto .form-group .form-control-accept:focus {
   outline: 0 none;
 
-  outline: none;
-  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00);
-  border-color: rgba(0, 255, 0,0);
+  outline: none!important;
+  background-image: linear-gradient(#00ff00, #00ff00), linear-gradient(#00ff00, #00ff00)!important;
+  border-color: rgba(0, 255, 0,0)!important;
 
-  border-bottom: 1px solid rgba(0, 255, 0,0.25);
+  border-bottom: 1px solid rgba(0, 255, 0,0.25)!important;
 
-  box-shadow: 0px 1px 0px green;
+  box-shadow: 0px 1px 0px green!important;
 
 }
 

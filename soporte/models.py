@@ -75,6 +75,13 @@ class Datos(models.Model):
 
 
 
+class report_usu_area(models.Model):
+    usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
+    cod_area = models.ForeignKey(unidad2, on_delete=models.CASCADE, blank=True)
+    nivel_usua = models.ForeignKey(NivelesNum,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.usuario)+" "+str(self.cod_area)
 
 class sop_notif(models.Model):
     usu_tec = models.ForeignKey('auth.User',on_delete=models.CASCADE, null=True, related_name='Tecnico')

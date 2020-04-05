@@ -87,21 +87,44 @@
               
 
 
-            </span>
+            </div>
+          </tr>
+
+
+
+
+          <tr>
+
+            <div class="">
+              <td class="estado_prog_amar">
+                <h3>2</h3>
+              </td>
+              <td>
+               Soluciones en Proceso
+
+             </td>
+             <td>
+              0
+            </td>
+            <td>
+
+
+            </td>
+            
+
+
           </div>
         </tr>
-
-
 
 
         <tr>
 
           <div class="">
-            <td class="estado_prog_amar">
-              <h3>2</h3>
+            <td class="estado_prog_red">
+              <h3>3</h3>
             </td>
             <td>
-             Soluciones en Proceso
+             Rechazado
 
            </td>
            <td>
@@ -114,116 +137,90 @@
           
 
 
-        </span>
+        </div>
+      </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {% if form %}
+
+      <a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic aumentoLetra" id="Parax123"> Nueva notificacion de falla</span></a>
+
+      <div style="min-height: 166px;">
+
       </div>
-    </tr>
+      <div style="min-height: 166px;">
+
+      </div>
+      {% endif %}
 
 
-    <tr>
-
-      <div class="">
-        <td class="estado_prog_red">
-          <h3>3</h3>
-        </td>
-        <td>
-         Desincorporacion
-
-       </td>
-       <td>
-        0
-      </td>
-      <td>
 
 
-      </td>
-      
 
 
-    </span>
+
+
+
+
+
+    </table>
+
+
   </div>
-</tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% if form %}
-
-<a class="text-center" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'post_noti' %}"><span class="btn btn-primary botonpublic" id="Parax123"> Nueva notificacion de falla</span></a>
-
-<div style="min-height: 166px;">
-
-</div>
-<div style="min-height: 166px;">
-
-</div>
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-
-</table>
-
-
-</div>
 </div>
 </div>
 
@@ -355,8 +352,8 @@
                 </div>
 
 
-              {% endif %}
-              {% if forloop.counter == 3%}
+                {% endif %}
+                {% if forloop.counter == 3%}
 
                 <div class="col-sm-6">
                   {{field|notifa2:'form-control'}}

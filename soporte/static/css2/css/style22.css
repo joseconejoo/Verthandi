@@ -83,3 +83,6 @@
 .margender {
   transform: translate(800%,0%);
 }
+.aumentoLetra {
+  font-size: 1.25rem;
+}

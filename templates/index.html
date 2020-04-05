@@ -296,7 +296,7 @@
 
           {% endcomment %}
           <!-- Comienza menu pro -->
-          <li class="nav-header" style="display: list-item;">Opciones Personales</li>
+          <li class="nav-header" style="display: list-item;">Opciones de cuenta</li>
           {% if datos.usuario %}
 
           <li class="nav-item">
@@ -330,9 +330,9 @@
             </a>
           </li>
 
-
+          {% if not user.report_usu_area %}
           <li class="nav-header" style="display: list-item;">Opciones del Sistema</li>
-
+          {% endif %}
           {% if user.is_staff or user.is_superuser %}
           <li class="nav-item">
             <a href="{% url 'post_noti' %}" class="nav-link">

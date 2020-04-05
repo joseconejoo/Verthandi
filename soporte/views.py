@@ -9,7 +9,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileRe
 from .models import NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+from .forms import report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion
 from .Fun1 import usu_1xnivel_areas_o, niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
@@ -331,9 +331,12 @@ def datose(request, pk):
     return render(request, 'datose.html', {'form': form})
 
 def Datos1(request):
-    if request.user.is_superuser or request.user.datos.nivel_usua:
-        pass
-    else:
+    try:
+        if request.user.is_superuser or (request.user.datos.nivel_usua):
+            pass
+        else:
+            return redirect('post_noti')
+    except:
         return redirect('post_noti')
     if request.method == "POST":
         form = DatosF(request.POST)
@@ -760,5 +763,66 @@ def personal_inf_v(request):
     else:
         return HttpResponseRedirect("/")
 
-def usuarioReport():
-    pass
+def usuarioReport(request):
+    Verthandi=User.objects.get(pk=request.user.pk)
+    #print (request.user.datos.nivel_usua,request.user.datos.nivel_usua.pk)
+    usu_reportador = User.objects.filter(report_usu_area__cod_area=request.user.datos.cod_area.pk,report_usu_area__nivel_usua=8)
+    #print (usu_reportador,usu_reportador[0])
+    allow = False
+    if usu_reportador:
+        datos = get_object_or_404(User, pk=usu_reportador[0].pk)
+    else:
+        datos = False
+    """
+    if request.user.is_superuser:
+        if not (request.user.pk == Verthandi.pk) and not(Verthandi.datos.nivel_usua.pk == 1):
+            allow = True
+    """
+    return render(request, 'datos_reportador.html', {'permisos_adm':allow,'datos': datos,'usuario1':Verthandi})
+
+def usuarioReportRegis(request):
+    formlistoption = None
+    formlistoption = unidad2.objects.filter().order_by('id')
+    usu_reportador = User.objects.filter(report_usu_area__cod_area=request.user.datos.cod_area.pk,report_usu_area__nivel_usua=8).exists()
+    if not (usu_reportador):
+        if request.method == "POST":
+            foxr = UserCreationForm(request.POST)
+            form2= report_usu_areaF(request.POST)
+            #print (request.POST.get('codigo'))
+            if foxr.is_valid() and form2.is_valid():
+                post = foxr.save(commit=False)
+                numero_nivel = 8
+                post.is_active=1
+                post2=form2.save(commit=False)
+
+                lista_num =[1,2,3,4,5,6]
+                if numero_nivel in lista_num:
+                    post2.cod_area = unidad2.objects.get(pk=16)
+
+                lista_coord = [2]
+                if numero_nivel in lista_coord:
+                    post.is_superuser=True
+                post2.cod_area = unidad2.objects.get(pk=request.user.datos.cod_area.pk)
+                post.save()
+                post2.nivel_usua = NivelesNum.objects.get(pk=numero_nivel)
+                usuario1 = User.objects.get(pk=post.pk)
+                post2.usuario=usuario1
+                
+                post2.save()
+                activate = True
+                messages.success(request, 'Registro realizado exitosamente')
+                return redirect('usuarioReport')
+        else:
+            foxr = UserCreationForm()
+            form2 = Datos_per_infoF()
+            form2 = None
+            
+            """
+            for x in range(0,1):
+                print (formlistoption[0].id)
+            """
+            #cambiado de form2 a form5 en el render
+        return render(request, 'registros1_personal.html', {'form': foxr, "form5":form2, 'formOpti':formlistoption})
+    return redirect('usuarioReport')
+
+

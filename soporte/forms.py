@@ -9,7 +9,7 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
+from .models import report_usu_area, NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
 
 from .Fun1 import usu_1xnivel_sub_area2Form
 
@@ -28,6 +28,10 @@ class P_opciF(forms.ModelForm):
 		model = P_opci
 		fields = ('nombre',)
 
+class report_usu_areaF(forms.ModelForm):
+	class Meta:
+		model = report_usu_area
+		fields = ('cod_area',)
 class Datos_per_infoF(forms.ModelForm):
 	class Meta:
 		model = Datos
