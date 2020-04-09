@@ -74,7 +74,7 @@
             {{datos.sub_area}} 
             {% endif%}
             {% if datos.nivel_usua.pk == 7 %}
-            {{ datos.cod_area }}
+            {{ datos.cod_area|lower }}
             {% endif %}
           </td>
         </tr>

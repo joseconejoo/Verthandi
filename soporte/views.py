@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .forms import report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
-from .Com import migracion
+from .Com import test_velocidad, migracion
 from .Fun1 import usu_1xnivel_areas_o, niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 from .Fun2 import usu_add_1
 
@@ -121,6 +121,12 @@ def post_list(request):
 
 def post_list2(request):
     #print (request.user.niveles.Nivel)
+    #test_velocidad()
+    """
+    asd = unidad2.objects.filter()
+    for x in asd:
+        print (x)
+    """
     posts=None
     if request.method == "POST":
         form = sop_notifF(request.POST)

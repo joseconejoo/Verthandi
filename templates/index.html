@@ -246,7 +246,7 @@
           {{user.datos.sub_area}}
           {% endif %}
           {% if user.datos.nivel_usua.pk == 7 %}
-          {{ user.datos.cod_area}}
+          {{ user.datos.cod_area|lower}}
           {% endif %}
           {% else %}
           reportador
