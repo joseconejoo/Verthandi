@@ -63,13 +63,14 @@
       <div class="item active left">
       </div>
       {% if user.is_superuser %}
-      <a class="btn btn-default" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
+      <a class="btn btn-default margin_left_edit_p" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
       {% endif %}
-      <table class="bg-color">
+      <table class="bg-colorTablePerfil text-center">
+
         <p> </p>
-        <tr class="no_color_background">
-          <td >Nombre de usuario:</td>
-          <td > {{ datos.usuario|linebreaksbr }} - {{datos.nivel_usua.nom_nivel}}
+        <tr class="no_color_background ">
+          <td class="min-width50-table">Nombre de usuario:</td>
+          <td class="min-width50-table"> {{ datos.usuario|linebreaksbr }} - {{datos.nivel_usua.nom_nivel}}
             {% if datos.sub_area %}
             {{datos.sub_area}} 
             {% endif%}

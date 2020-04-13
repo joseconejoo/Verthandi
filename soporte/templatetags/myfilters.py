@@ -34,12 +34,14 @@ def addclass(value, arg):
     return value.as_widget(attrs={'class': arg,'placeholder': "Nombre"})
 @register.filter(name='notifa2')
 def addclass(value, arg):
-    return value.as_widget(attrs={'class': arg,"placeholder": "Numero Pc"})
+    return value.as_widget(attrs={'class': arg,"placeholder": "Codigo equipo"})
 @register.filter(name='notifa3')
 def addclass(value, arg):
     return value.as_widget(attrs={'class': arg,"placeholder": "Detalles del problema"})
 
-
+@register.filter(name='notifa4')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Mensaje"})
 
 @register.filter(name='regist1')
 def addclass(value, arg):

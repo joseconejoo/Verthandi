@@ -59,6 +59,13 @@ table {
   max-width: 50%;
   margin-left: 25%;
 }
+.bg-colorTablePerfil{
+  background-color: rgba(0, 0, 0, 0.61);
+  min-height: 325px;
+  max-width: 75%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
 
 .bg-color3 p{
   margin-top: 3%;
@@ -830,6 +837,11 @@ table {
   margin-right: 15%;
 }
 
+.mrmen2 {
+  margin-left: 10%;
+  margin-right: 150%;
+}
+
 /* foto index 1 */
 #highlighted-slider img
 {
@@ -1023,6 +1035,9 @@ th, td {
   border-left: 5px solid red;
 }
 
+.estado_prog_blu {
+  border-left: 5px solid rgb(0, 181, 255);
+}
 
 .estado_prog_whit {
   border-left: 5px solid white;
@@ -1269,15 +1284,15 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .modal-dialog-registro #ProblemForm input:focus {
-  background-image: none;
-  border-color: rgba(255, 255, 255,0.3);
-  box-shadow: none;
+  background-image: none!important;
+  border-color: rgba(255, 255, 255,0.3)!important;
+  box-shadow: none!important;
   /*box-shadow: 0 1px 1px rgba(255, 255, 255,0.1) inset, 0 0 2px rgba(255, 255, 255,0.1);
   */
-  outline: 0 none;
-  border-bottom: 1px solid rgba(0, 0, 0,0.4);
-
-  outline: none;
+  outline: 0 none!important;
+  border-bottom: 1px solid rgba(0, 0, 0,0.4)!important;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  outline: none!important;
 }
 
 .modal-dialog-registro #ProblemForm .form-control-neg:focus + #spaniconBRe {
@@ -1563,6 +1578,10 @@ input[type=number]::-webkit-outer-spin-button {
   width:45%;
 }
 
+.min-width50-table {
+  width:50%;
+}
+
 .min-width-table2 {
   width: 20%;
 }
@@ -1655,4 +1674,9 @@ input[type=number]::-webkit-outer-spin-button {
 .bckblan {
   background: white;
   background-color: white;
+}
+
+
+.margin_left_edit_p {
+  margin-left: 15%;
 }

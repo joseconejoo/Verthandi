@@ -1,5 +1,6 @@
 {% load static %}
 {% load humanize %}
+{% load myfilters %}
 
 <!DOCTYPE html>
 <html>
@@ -241,7 +242,7 @@
           {% if user.datos.nivel_usua %}
           <!-- nombre y apellido --> 
           <!-- perfil working -->
-          {{user.datos.nombre}} {{user.datos.apellido}} - {{user.datos.nivel_usua}}
+          {{user.datos.nombre}} {{user.datos.apellido}} - {{user.datos.nivel_usua.nom_nivel}}
           {% if user.datos.sub_area %}
           {{user.datos.sub_area}}
           {% endif %}
@@ -435,6 +436,17 @@
           </li>
           {% endif %}
           {% if user.datos.nivel_usua.pk == 4 %}
+          <li class="nav-item">
+            <a href="{% url 'post_noti' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Notificaciones
+              </p>
+              <span class="badge badge-warning right">1</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if user.datos.nivel_usua.pk == 5 %}
           <li class="nav-item">
             <a href="{% url 'post_noti' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

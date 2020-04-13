@@ -92,7 +92,7 @@
 						{% for dat in datos %}
 						{% if dat.pk == v_us1.pk %}
 						{{dat.nombre}} {{dat.apellido}} -
-						{{dat.nivel_usua}}
+						{{dat.nivel_usua.nom_nivel}}
 						{% if dat.sub_area%}
 						{{dat.sub_area}}
 						{% endif %}

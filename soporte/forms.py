@@ -9,9 +9,14 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import report_usu_area, NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
+from .models import sop_notif_mes, bie_gob_bienes, report_usu_area, NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
 
 from .Fun1 import usu_1xnivel_sub_area2Form
+
+class sop_notif_mesF(forms.ModelForm):
+	class Meta:
+		model = sop_notif_mes
+		fields = ('mensaje','tipo_sop','estado_sop')
 
 class CodigosF(forms.ModelForm):
 	class Meta:
@@ -77,6 +82,16 @@ class DatosRF(forms.ModelForm):
 
 
 class sop_notifF(forms.ModelForm):
+	error_messages = {
+	    'Codigo12': _("El codigo \"%(codigo)s\" de equipo es invalido."),
+	}
+	def codigo_e_invalid(self):
+
+	    return forms.ValidationError(
+	        self.error_messages['Codigo12'],
+	        code='Codigo12',
+	        params={'codigo': self.data.get('num_pc')},
+	    )
 	class Meta:
 		model = sop_notif
 		#fields = ('tipo_sop','descrip1','problemaAd','nombre','num_pc')
@@ -84,6 +99,11 @@ class sop_notifF(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
+	    """
+	    self.dat = self.data.get('num_pc')
+	    if not(bie_gob_bienes.objects.filter(codigo_e=self.dat).exists()) and not(self.dat == None):
+	    	raise self.codigo_e_invalid()
+	    """
 	    """
 	    self.fields['descrip1'].queryset = P_detal.objects.none()
 
@@ -96,7 +116,13 @@ class sop_notifF(forms.ModelForm):
 	    elif self.instance.pk:
 	        self.fields['descrip1'].queryset = self.instance.tipo_sop.P_detal_set.order_by('nombre')
 		"""
-
+	def clean(self):
+		cleaned_data = super().clean()
+		numero_e = cleaned_data.get("num_pc")
+		print (numero_e)
+		#print (bie_gob_bienes.objects.get(codigo_e__exact=str(numero_e)))
+		if not(bie_gob_bienes.objects.filter(codigo_e=str(numero_e)).exists()) and (numero_e!=None):
+			raise self.codigo_e_invalid()
 
 
 

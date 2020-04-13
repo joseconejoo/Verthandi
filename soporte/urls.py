@@ -5,7 +5,9 @@ urlpatterns = [
 	path('', views.post_list, name='post_landing'),
 
 	path('notificaciones/', views.post_list2, name='post_noti'),
-	path('notificaciones/detalles', views.notiFalla, name='noti_detalle'),
+	path('notificaciones/detalles/<int:pk>', views.notiFalla, name='noti_detalle'),
+    path('notificaciones/<int:pk>', views.notif_results, name='notif_results'),
+
 
 	path('asistencia/informatica', views.asisInf, name='asisInf'),
 
@@ -42,6 +44,8 @@ urlpatterns = [
     path('Reportador', views.usuarioReport, name='usuarioReport'),
     path('Reportador/Registro', views.usuarioReportRegis, name='usuarioReportRegis'),
     
+    path('perfilRed/<int:pk>/', views.datos_uRed, name='datos_uRed'),
+
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),
     path('ajax/valid_nivel_usu/', views.validar_nivel_usuario, name='ajax_valid_niv_usu'),

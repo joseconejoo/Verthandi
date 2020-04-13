@@ -86,3 +86,34 @@
 .aumentoLetra {
   font-size: 1.25rem;
 }
+
+.centrar_detalles_notif {
+  margin-left: 25%;
+}
+.detalles_notif_top {
+  margin-top: 5%;
+}
+
+.min-widthAtenderNotif {
+  width: 50%;
+}
+
+.no_mostrar_form {
+  display: none;
+}
+
+.a_not_blue {
+  color: #e6e6e6;
+}
+
+.a_not_blue:hover {
+  color: #e6e6e6;
+}
+
+.a_not_blue2 {
+  color: white;
+}
+
+.a_not_blue2:hover {
+  color: white;
+}

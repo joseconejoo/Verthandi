@@ -6,12 +6,12 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
+from .models import estado_soporte_notif, sop_notif_mes, bie_gob_bienes, NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+from .forms import sop_notif_mesF, report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
-from .Com import test_velocidad, migracion
+from .Com import migracion_bienes_g_bienes, migracion_bienes_gobs, test_velocidad, migracion
 from .Fun1 import usu_1xnivel_areas_o, niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 from .Fun2 import usu_add_1
 
@@ -113,6 +113,12 @@ class login(LoginView):
 
 
 
+def datos_uRed(request,pk):
+    usuarioCoord = User.objects.filter(datos__cod_area=pk,datos__nivel_usua=7,is_active=1)
+    if (usuarioCoord[0]):
+        return redirect ('datos_u',pk=usuarioCoord[0].pk)
+
+
 def post_list(request):
     #print (request.user.niveles.Nivel)
     posts=None
@@ -127,22 +133,78 @@ def post_list2(request):
     for x in asd:
         print (x)
     """
+    #migracion_bienes_g_bienes()
+    #bie_gob_bienes.objects.all().delete()
     posts=None
+    notificacion_f = False
+    uservalidNotif = False
     if request.method == "POST":
         form = sop_notifF(request.POST)
         if form.is_valid():
+
             post = form.save(commit=False)
             post.cod_usu = request.user
             #post.fedicion = timezone.now()
+            post.fecha_pub = timezone.now()
+            numero_d_pc = post.num_pc
+            num_d_pc = bie_gob_bienes.objects.filter(codigo_e=numero_d_pc)[0]
+            post.nombre_e = num_d_pc.nombre
+            post.ubicacion_e = num_d_pc.idunidad.nom_unidad
+
             post.save()
+            messages.success(request,'Notificación enviada exitosamente')
             return redirect('post_noti')
     else:
-        if (request.user.is_superuser or request.user.is_staff):
+        Reportador = None
+        try:
+            Reportador = request.user.report_usu_area.nivel_usua
+        except:
+            pass
+        if not( Reportador ):
             form = None
         else:
             form = sop_notifF()
-    return render(request, 'post_list2.html', {'posts': posts, 'form': form})
+        niveles_ver_reports = [1,2,4,5]
+        if (Datos.objects.filter(pk=request.user.pk).exists()):
+            if request.user.datos.nivel_usua.pk in niveles_ver_reports:
+                uservalidNotif = True
+                notificacion_f = sop_notif.objects.filter(tipo_sop_id__isnull=True)
+                notificaciom_f = None
+        notif_num_cant = []
+        #sacando la informacion para mostrar del numero de publicaciones
+        for x in estado_soporte_notif.objects.filter():
+            informacion = []
+            sop_count = sop_notif.objects.filter(estado_sop=x.pk).count()
+            sop_ult = sop_notif.objects.filter(estado_sop=x.pk).order_by('-id')[:1]
+            informacion.append(x.nombre)
+            informacion.append(sop_count)
+            informacion.append(x.pk)
+            informacion.append(sop_ult)
+            notif_num_cant.append(informacion)
+        informacion = []
+        sop_count = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).count()
+        sop_ult = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).order_by('-id')[:1]
+        informacion.append('Por atender')
+        informacion.append(sop_count)
+        informacion.append(4)
+        informacion.append(sop_ult)
+        notif_num_cant.append(informacion)
 
+    return render(request, 'post_list2.html', {'notif_n_cant':notif_num_cant,'uservalidNotif':uservalidNotif,'notificaciones_f':notificacion_f,'posts': posts, 'form': form})
+
+def notif_results(request,pk):
+    #trabj1
+    notif_atend = [4]
+    uservalidNotif = True
+    sop_notifs = None
+    sop_notifs_nom = None
+    if not (pk in notif_atend):
+        sop_notifs = sop_notif.objects.filter(estado_sop=pk).order_by('-id')
+        sop_notifs_nom = estado_soporte_notif.objects.get(pk=pk)
+    else:
+        sop_notifs = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).order_by('-id')
+        sop_notifs_nom = 'Por atender'
+    return render(request, 'post_list2_notifs.html', {'sop_notifs_nom':sop_notifs_nom,'uservalidNotif':uservalidNotif,'notifs':sop_notifs})
 
 
 def a_us(request):
@@ -363,8 +425,64 @@ def Datos1(request):
     return render(request, 'datose.html', {'form': form})
 
 
-def notiFalla(request):
-    return render(request, 'notiF_detalle.html')
+def notiFalla(request,pk):
+    if request.method == "POST":
+        notif = get_object_or_404(sop_notif,pk=pk)
+        form = sop_notif_mesF(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.sop_notif_tick = sop_notif.objects.get(pk=pk)
+            post.usu_tec = request.user
+            if not(post.tipo_sop == notif.tipo_sop):
+                notif.tipo_sop = post.tipo_sop
+                notif.save()
+            else:
+                post.tipo_sop = None
+            if not(post.estado_sop == notif.estado_sop):
+                notif.estado_sop = post.estado_sop
+                notif.save()
+            else:
+                post.estado_sop = None
+            """
+            if (request.user.is_superuser):
+                post.cod_area = unidad2.objects.get(pk=1)
+            """
+            post.fecha_pub = timezone.now()
+            post.save()
+            return redirect('noti_detalle', pk=pk)
+    else:
+        notif = get_object_or_404(sop_notif,pk=pk)
+        nivel_atender = [5]
+        coord = False
+        #coordinador del usuario
+        atender = False
+        form = None
+        diagnostico = False
+        solucionado = False
+        solucionadosList = [1,3]
+        mensajes = sop_notif_mes.objects.filter(sop_notif_tick=pk)
+        if (notif.estado_sop):
+            if notif.estado_sop.pk in solucionadosList:
+                solucionado = True
+        if (notif.tipo_sop):
+            diagnostico = True
+
+        try:
+            if request.user.datos.nivel_usua.pk in nivel_atender:
+                form = sop_notif_mesF()
+                if notif.tipo_sop:
+                    form.initial['tipo_sop'] = notif.tipo_sop
+                if notif.estado_sop:
+                    form.initial['estado_sop'] = notif.estado_sop
+
+                atender = True
+
+        except:
+            pass
+
+        if User.objects.filter(datos__cod_area=pk,datos__nivel_usua=7,is_active=1).exists():
+            coord=True
+        return render(request, 'notiF_detalle.html', {'solucionado':solucionado,'mensajes':mensajes,'diagnostic':diagnostico,'form':form,'atend':atender,'noti_det':notif,'coord':coord})
 
 def asisInf(request):
     return render(request, 'asisInf.html')

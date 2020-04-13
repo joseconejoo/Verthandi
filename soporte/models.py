@@ -7,6 +7,16 @@ from django.utils import timezone
 
 # Create your models here.
 
+
+class bienes_gob_categoria(models.Model):
+    codigo = models.IntegerField(unique=True)
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.pk)+' '+(self.nombre)
+
+
+
 class P_opci(models.Model):
     nombre = models.CharField(max_length=30)
 
@@ -31,6 +41,15 @@ class NivelesNum(models.Model):
     def __str__(self):
         return str(self.nom_nivel)
     
+class bie_gob_bienes(models.Model):
+    codigo_e = models.CharField(unique=True,max_length=100)
+    cantidad = models.IntegerField()
+    nombre = models.CharField(max_length=100)
+    idunidad = models.ForeignKey(unidad2, on_delete=models.CASCADE)
+    idcategoria = models.ForeignKey(bienes_gob_categoria, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.pk)+' '+(self.nombre)
 
 class NivelDet(models.Model):
     usuario = models.OneToOneField('auth.User',on_delete=models.CASCADE, primary_key=True, unique=True)
@@ -83,17 +102,39 @@ class report_usu_area(models.Model):
     def __str__(self):
         return str(self.usuario)+" "+str(self.cod_area)
 
+class estado_soporte_notif(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.nombre)
+
+
 class sop_notif(models.Model):
     usu_tec = models.ForeignKey('auth.User',on_delete=models.CASCADE, null=True, related_name='Tecnico')
     cod_usu = models.ForeignKey('auth.User',on_delete=models.CASCADE, related_name='Usuario')
-    tipo_sop = models.ForeignKey(P_opci,on_delete=models.CASCADE)
+    tipo_sop = models.ForeignKey(P_opci,on_delete=models.CASCADE, null=True)
     descrip1 =  models.ForeignKey(P_detal,on_delete=models.CASCADE, null=True)
-    nombVer = RegexValidator(regex=r'^[a-zA-ZñÑ]+$', message="Solo letras para el nombre por favor.")
+    nombVer = RegexValidator(regex=r'^[a-zA-ZñáéíóúäëïöüÑàèìòù\s]+$', message="Solo letras para el nombre por favor.")
     nombre = models.CharField(validators=[nombVer],max_length=200)
-    num_pc = models.IntegerField()
+    num_pc = models.CharField(max_length=90,blank=True,null=True)
+    nombre_e = models.CharField(max_length=190,blank=True,null=True)
+    ubicacion_e = models.CharField(max_length=90,blank=True,null=True)
+    categoria_e = models.CharField(max_length=90,blank=True,null=True)
     problemaAd = models.CharField(max_length=500)
-    estado_sop = models.IntegerField(null=True)
+    estado_sop = models.ForeignKey(estado_soporte_notif,on_delete=models.CASCADE,null=True)
+    fecha_pub = models.DateTimeField(blank=True)
+
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
+class sop_notif_mes(models.Model):
+    sop_notif_tick = models.ForeignKey(sop_notif,on_delete=models.CASCADE,blank=True)
+    usu_tec = models.ForeignKey(User,on_delete=models.CASCADE)
+    mensaje = models.CharField(max_length=500)
+    tipo_sop = models.ForeignKey(P_opci,on_delete=models.CASCADE, null=True,blank=True)
+    estado_sop = models.ForeignKey(estado_soporte_notif,on_delete=models.CASCADE,null=True,blank=True)
+    fecha_pub = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return str(self.id)

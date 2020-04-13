@@ -1,0 +1,276 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load myfilters %}
+
+{% block content2 %}
+{% if user.is_authenticated %}
+<div class="M_d">
+  <p id="contSaludo"></p>
+  {{ user.username }}! Mira las nuevas noticias que hay.
+  
+</div>
+
+<p></p>
+{% else %}
+<p>Usted es un visitante.</p>
+{% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color" class="section-padding">
+  <div class="container">
+    <!-- Comienza mensajes -->
+    {% if messages %}
+    {% comment %}
+    <ul class="messages">
+      {% endcomment %}
+
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1 success">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
+
+        </div>
+
+      </div>
+      {% endif %}
+
+      {% if message.tags == 'error' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
+
+        </div>
+
+      </div>
+      {% endif %}
+
+      {% comment %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+      {% endcomment %}
+      {% endfor %}
+
+      {% comment %}
+    </ul>
+    {% endcomment %}
+    {% endif %}
+    <!-- Termina mensajes -->
+
+    <div class="row">
+      <div class="col-sm-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Notificaciones catalogadas en: {{sop_notifs_nom|lower}}</h1>
+        
+        <br>
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+  <!-- de aqui para abajo modificar -->
+
+  {% if uservalidNotif %}
+  <div class="container bg-color">
+
+    <table class="bg-color">
+      <tr>
+
+
+        <th>Nº</th>
+
+        <th>Usuario - departamento</th>
+        <th>Nombre</th>
+        {% comment %}
+        <th>departamento</th>
+        <th>Perfil</th>
+        {% endcomment %}
+        <th>Problema</th>
+        <th>Enlace</th>
+      </tr>
+
+      {% for notis in notifs %}
+      <tr>
+        <div class="">
+          <!-- color eliminado -->
+          <td class="">
+            <h3>{{ forloop.counter }}</h3>
+          </td>
+          <td>
+           {{notis.cod_usu}} - {{notis.cod_usu.report_usu_area.cod_area|lower}}
+
+         </td>
+         <td>
+          {{notis.nombre}}
+        </td>
+        <td>
+          {{notis.problemaAd}}
+
+        </td>
+
+
+        <td>
+
+          <a href="{% url 'noti_detalle' notis.pk %}" class="btn btn-primary" >Ir</a>
+
+        </td>
+
+
+      </div>
+    </tr>
+    {% endfor %}
+
+
+
+
+
+
+</table>          
+
+
+</div>
+<div style="min-height: 166px;">
+
+</div>
+</div>
+
+
+<!-- margen final, espacio final -->
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title text-center fnegr" id="pr1">Notificacion de Falla</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="" name="amxj">
+
+            <fieldset class="">
+              {% if form.errors %}
+              <script type="text/javascript">
+                var varka = '{{form.errors}}';
+                varka = varka.replace(/\<li>/g, '');
+                varka = varka.replace(/\<\/li>/g, '');
+                varka = varka.replace(/\<\/ul>/g, '');
+                varka = varka.replace(/\<ul class="errorlist">/g, '')
+                varka = varka.replace(/__all__<ul class="errorlist nonfield">/g, '')
+                varka = varka.replace(/&quot;/g, '"')
+                varka = varka.replace('.', '.\n\n');
+
+
+                alert(varka);
+              </script>
+              {% endif %}
+
+              {% for field in form %}
+
+              {% csrf_token %}
+              <div class="errores">
+                {% if field.errors %}
+                <script type="text/javascript">
+                  var varka = '{{field.errors}}';
+                  varka = varka.replace(/\<li>/g, '');
+                  varka = varka.replace(/\<\/li>/g, '');
+                  varka = varka.replace(/\<\/ul>/g, '');
+                  varka = varka.replace(/\<ul class="errorlist">/g, '')
+                  varka = varka.replace('.', '.\n\n');
+
+
+                  alert(varka);
+                </script>
+                {% endif %}
+
+              </div>
+              <div>
+                {% if forloop.counter == 1%}
+                {{field|notifa3:'form-control'}}
+                {% endif %}
+              </div>
+
+              {% if forloop.counter == 2%}
+              <div class="row">
+
+                <div class="col-sm-6">
+                  {{field|notifa1:'form-control'}}
+                </div>
+
+
+                {% endif %}
+                {% if forloop.counter == 3%}
+
+                <div class="col-sm-6">
+                  {{field|notifa2:'form-control'}}
+                </div>
+              </div>
+              {% endif %}
+
+
+              <p></p>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
+
+              {% endfor %}
+              
+              <div class="botonModal">
+                <button class="btn btn-lg btn-block" type="submit" id="enviof-1">Enviar</button>
+              </div>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+{% comment %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{% endcomment %}
+
+{% endblock %}

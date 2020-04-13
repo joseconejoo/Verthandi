@@ -1,16 +1,19 @@
 {% extends 'index.html' %}
+{% load myfilters %}
 
 {% block content %}
 <div class="bg-color" class="section-padding">
   <div class="container">
-    <div class="row bg-colorlet4">
-      <div class="text-center" style="padding:5px;">
-        <h1 class="fblanc"> Problema: {{ post.titulo }} <span></span>        {% if user.is_authenticated and user.is_superuser %}
-        {% endif %} </h1>
+    <div class="row bg-colorlet4 centrar_detalles_notif">
+      <div class="text-center detalles_notif_top  col-sm-12" style="padding:5px;">
+        <p></p>
+        <h1 class="fblanc mrmen"> Problema: {{ post.titulo }} <span></span>
+        </h1>
+        <br>
 
       </div>
-        <br>
-        <br>
+      <br>
+      <br>
 
 
 
@@ -18,52 +21,118 @@
 
 
 
-        <div class="">
-            <p class="fblanc mrmen">Mi equipo presenta fallas a la hora de intentar prenderlo, no hace nada.  </p>
+      <div class="col-sm-12" style="">
 
-            <p class="fblanc mrmen">{{ post.texto|linebreaksbr }}</p>
-            <p class="fblanc mrmen">Autor: eadministra - Panclo de la Trinidad Palacios {{ post.autor }}</p>
-            <p class="fblanc mrmen">Area: Departamento de administracion y contabilidad</p>
+        <p class="fblanc mrmen" style=""> {{noti_det.problemaAd}}</p>
 
-            <div class="text-center">
-              <a class="btn btn-default" style="font-size: 15px;"required id="iconB" data-toggle="modal" data-target="#myModal1" data-id=""><span class="fa fa-pencil"> Responder </span></a>
-  
-            </div>
-            
+        <p class="fblanc mrmen">{{ post.texto|linebreaksbr }}</p>
+        <p class="fblanc mrmen">Codigo del equipo: {{noti_det.num_pc}}</p>
+        <p class="fblanc mrmen">Equipo: {{noti_det.nombre_e|lower}}</p>
+        <p class="fblanc mrmen">Ubicacion del equipo: {{noti_det.ubicacion_e|lower}}</p>
 
+        {% if coord %}
+        <p class="fblanc mrmen text-right">Autor: {{noti_det.nombre}}(<a href="{% url 'datos_uRed' noti_det.cod_usu.report_usu_area.cod_area.pk %}"> {{ noti_det.cod_usu }}</a>)</p>
+        {% else %}
+
+        <p class="fblanc mrmen text-right">Autor: {{ noti_det.cod_usu }}</p>
+        {% endif %}
+        <p class="fblanc mrmen text-right">Fecha: {{ noti_det.fecha_pub|date:'d \d\e F \d\e\l Y' }}</p>
+
+        <div class="text-center col-sm-12">
+          <!-- comienza atend -->
+          {% if atend %}
+
+          {% if diagnostic %}
+          {% if not solucionado %}
+          <a class="text-center col-sm-12" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'noti_detalle' noti_det.pk %}"><span class="btn btn-primary min-widthAtenderNotif aumentoLetra" id="Parax123"> Responder </span></a>
+
+          <p></p>
+          {% endif %}
+          {% else %}
+          <a class="text-center col-sm-12" required id="iconB" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'noti_detalle' noti_det.pk %}"><span class="btn btn-primary min-widthAtenderNotif aumentoLetra" id="Parax123"> Diagnosticar </span></a>
+          <p></p>
+          {% endif %}
+          {% endif %}
+          <!-- comienza atend -->
+          {% comment %}
+          <a class="btn btn-default" style="font-size: 15px;"required id="iconB" data-toggle="modal" data-target="#myModal1" data-id=""><span class="fa fa-pencil"> Responder </span></a>
+          {% endcomment %}
         </div>
 
 
+        <!-- comienzan respuestas, diagnosticos -->
+        {% for mess in mensajes %}
 
-
-
-
-
-
-
-
-
-
-        {% comment %}
-        <div class="">
-            {% if post.fecha_publicacion %}
-                <div class="fblanc mrmen">
-                    <span style=""> fecha: {{ post.fecha_publicacion }} </span>
-
-                </div>
-                <br>
-                
-            {% endif %}
-
-            <p class="fblanc mrmen">{{ post.texto|linebreaksbr }}</p>
-            <p class="fblanc mrmen">Autor: {{ post.autor }}</p>
+        <br>
+        <div class="text-left detalles_notif_top  col-sm-12" style="padding:5px;">
+          <p></p>
+          <h4 class="fblanc mrmen"> Actualizacion: {{ post.titulo }} <span></span>
+          </h4>
+          <br>
 
         </div>
-        {% endcomment %}
+        <div class="col-sm-12" style="">
+
+          <p class="fblanc mrmen" style=""> {{mess.mensaje}}</p>
+
+          <p class="fblanc mrmen">{{ post.texto|linebreaksbr }}</p>
+          <!-- verificar si hay cambios -->
+          {% if mess.tipo_sop or mess.estado_sop %}
+          <p class="fblanc mrmen">Cambios:</p>
+          {% if mess.tipo_sop%}
+          <p class="fblanc mrmen">- Se ha movido la notificacion al subárea de {{mess.tipo_sop}}</p>
+          {% endif %}
+          {% if mess.estado_sop %}
+          <p class="fblanc mrmen">- Se ha cambiado el estado de la notificacion a {{mess.estado_sop}}</p>
+          {% endif %}
+          {% endif %}
+          <!-- verificar si hay cambios Cerrar -->
+          <p class="fblanc mrmen text-right">Autor:<a class="a_not_blue" href="{% url 'datos_u' mess.usu_tec.pk %}"> {{mess.usu_tec.datos.nombre}} {{mess.usu_tec.datos.apellido}}</a></p>
+
+          {% comment %}
+          <p class="fblanc mrmen text-right">Fecha: {{ mess.fecha_pub|date:'d \d\e F \d\e\l Y' }}</p>
+          {% endcomment %}
+
+        </div>
+
+        {% endfor %}
+        <br>
+        <br>
+        <br>
+      </div>
+
+
+      <div style="min-height: 566px;">
+
+      </div>
+
+
+
+
+
+
+
+
+
+      {% comment %}
+      <div class="">
+        {% if post.fecha_publicacion %}
+        <div class="fblanc mrmen">
+          <span style=""> fecha: {{ post.fecha_publicacion }} </span>
+
+        </div>
+        <br>
+
+        {% endif %}
+
+        <p class="fblanc mrmen">{{ post.texto|linebreaksbr }}</p>
+        <p class="fblanc mrmen">Autor: {{ post.autor }}</p>
+
+      </div>
+      {% endcomment %}
     </div>
   </div>
 </div>
-
 
 
 
@@ -82,54 +151,97 @@
   <div class="modal fade" id="myModal1">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         <div class="modal-header">
-          <h4 class="modal-title text-center fblanc" id="pr1">Editar</h4>
+          <h4 class="modal-title text-center fnegr" id="pr1">Notificacion de Falla</h4>
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <div class="modal-body" id="popupb">
-          <form accept-charset="UTF-8" method='post' action="a" id="F-bs-1" name="amxj">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="" name="amxj">
 
-            <fieldset>
+            <fieldset class="">
+              {% if form.errors %}
+              <script type="text/javascript">
+                var varka = '{{form.errors}}';
+                varka = varka.replace(/\<li>/g, '');
+                varka = varka.replace(/\<\/li>/g, '');
+                varka = varka.replace(/\<\/ul>/g, '');
+                varka = varka.replace(/\<ul class="errorlist">/g, '')
+                varka = varka.replace(/__all__<ul class="errorlist nonfield">/g, '')
+                varka = varka.replace(/&quot;/g, '"')
+                varka = varka.replace('.', '.\n\n');
+
+
+                alert(varka);
+              </script>
+              {% endif %}
+
               {% for field in form %}
 
-                {% csrf_token %}
-                <div class="errores">
-                  {{ field.errors }}
+              {% csrf_token %}
+              <div class="errores">
+                {% if field.errors %}
+                <script type="text/javascript">
+                  var varka = '{{field.errors}}';
+                  varka = varka.replace(/\<li>/g, '');
+                  varka = varka.replace(/\<\/li>/g, '');
+                  varka = varka.replace(/\<\/ul>/g, '');
+                  varka = varka.replace(/\<ul class="errorlist">/g, '')
+                  varka = varka.replace('.', '.\n\n');
+
+
+                  alert(varka);
+                </script>
+                {% endif %}
+
+              </div>
+              <div>
+                {% if forloop.counter == 1%}
+                {{field|notifa4:'form-control'}}
+                {% endif %}
+              </div>
+
+              {% if forloop.counter == 2%}
+              <div class="row">
+
+                <div class="col-sm-6">
+                  {{field|notifa1:'form-control'}}
                 </div>
-                  {% if forloop.counter == 1%}
-                  <div class="">
-                    <div class="input-group-lg">
-                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder='Titulo' {{field}}
-                    </div>
-                  </div>
-                  {% endif %}
-                  {% if forloop.counter == 2%}
-                  <div class="">
-                    <div class="input-group-lg">
-                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder='Texto' {{field}}
-                    </div>
-                  </div>
-                  {% endif %}                  <p></p>
-                  {% if field.help_text %}
-                  <p class="help">{{ field.help_text|safe }}</p>
-                  {% endif %}
+
+
+                {% endif %}
+                {% if forloop.counter == 3%}
+
+                <div class="col-sm-6">
+                  {{field|notifa2:'form-control'}}
+                </div>
+              </div>
+              {% endif %}
+
+
+              <p></p>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
 
               {% endfor %}
-
-              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+              
+              <div class="botonModal">
+                <button class="btn btn-lg btn-block" type="submit" id="enviof-1">Enviar</button>
+              </div>
             </fieldset>
             <br>
 
 
           </form>
         </div>
-                          
+        
       </div>
     </div>
-  
+    
+  </div>
 </div>
 
 
