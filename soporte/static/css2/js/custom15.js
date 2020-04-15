@@ -315,7 +315,7 @@ function detected123 (e) {
     }
   })
 }
-
+// codigo001
 setInterval(function() {
     var elem = document.getElementById('Body_id');
     if (elem.classList.contains("sidebar-collapse")) { detected123(); }
