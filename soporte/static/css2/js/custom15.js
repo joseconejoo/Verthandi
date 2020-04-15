@@ -300,3 +300,26 @@ $("#id_tipo_sop").change(function () {
   }
 });
 
+
+// Menú correcciones
+function detected123 (e) {
+  $('.main-sidebar').hover(
+    function(){
+    $('.no_mos_in_colap').removeClass('text_block_import');
+  },
+  function(){
+    var elem = document.getElementById('Body_id');
+
+    if (elem.classList.contains("sidebar-collapse")){
+      $('.no_mos_in_colap').addClass('text_block_import');
+    }
+  })
+}
+
+setInterval(function() {
+    var elem = document.getElementById('Body_id');
+    if (elem.classList.contains("sidebar-collapse")) { detected123(); }
+    else {
+      $('.no_mos_in_colap').removeClass('text_block_import');
+    }
+}, 500);

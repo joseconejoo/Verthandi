@@ -37,6 +37,11 @@ table {
   background-color: rgba(0, 0, 0, 0.61)!important;
   min-height: 325px;
 }
+
+.bg-color-background{
+  background-color: rgba(0, 0, 0, 0.61)!important;
+  min-height: 325px;
+}
 .bg-color2{
   min-height: 275px;
   border-bottom: 275px solid rgba(0, 0, 0, 0.71);
@@ -98,9 +103,9 @@ table {
 
 .imagen12{
   /* para rezisear la imagen*/
-  max-height: 3em;
+  max-height: 2.5em;
   height: auto;
-  margin-right: 2%;
+  margin-left: 2%;
 }
 
 .section-padding{

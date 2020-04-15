@@ -42,7 +42,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css2/css/style22.css' %}">
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" id='Body_id'>
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -224,7 +224,7 @@
   <a href="#" class="brand-link">
     <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Siglas Logo" class="brand-image img-circle elevation-3"
     style="opacity: .8">
-    <span class="brand-text font-weight-light">Siglas v3</span>
+    <span class="brand-text font-weight-light">Siglas</span>
   </a>
 
   <!-- Sidebar -->
@@ -238,7 +238,7 @@
         -->
       </div>
       <div class="info">
-        <a href="#" class="d-block ordernartext">
+        <a href="#" class="d-block ordernartext no_mos_in_colap">
           {% if user.datos.nivel_usua %}
           <!-- nombre y apellido --> 
           <!-- perfil working -->
@@ -399,7 +399,7 @@
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Coordinadores</p>
+                  <p>Coordinadores áreas</p>
                 </a>
               </li>
             </ul>
@@ -1592,14 +1592,18 @@
 <footer class="main-footer main-footer2">
   <strong>Siglas &copy; 2020 <a href="https://www.facebook.com/groups/2144533458915020/">Siglas</a>.</strong>
   All rights reserved.
+
   <!--
   <a href="#"><i class="far fa-twitter" aria-hidden="true"></i></a>
   <a href="https://www.facebook.com/groups/2144533458915020/"><i class="far fa-facebook" aria-hidden="true"></i></a>
 -->
 
+<strong class=''><img src="/static/css2/img/portuguesa12test3.png" class="imagen12">
+Dirección de informática, Gobernación de Portuguesa - UPTP  </strong>
 <div class="float-right d-none d-sm-inline-block">
-  <b>Version</b> 3.0.0
+  <b>Version</b> 1.0.0
 </div>
+
 </footer>
 
 <!-- Control Sidebar -->

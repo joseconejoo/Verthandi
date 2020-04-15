@@ -193,7 +193,6 @@ def post_list2(request):
     return render(request, 'post_list2.html', {'notif_n_cant':notif_num_cant,'uservalidNotif':uservalidNotif,'notificaciones_f':notificacion_f,'posts': posts, 'form': form})
 
 def notif_results(request,pk):
-    #trabj1
     notif_atend = [4]
     uservalidNotif = True
     sop_notifs = None
@@ -479,9 +478,11 @@ def notiFalla(request,pk):
 
         except:
             pass
-
-        if User.objects.filter(datos__cod_area=pk,datos__nivel_usua=7,is_active=1).exists():
-            coord=True
+        try:
+            if User.objects.filter(datos__cod_area=notif.cod_usu.report_usu_area.cod_area.pk,datos__nivel_usua=7,is_active=1).exists():
+                coord=True
+        except:
+            pass
         return render(request, 'notiF_detalle.html', {'solucionado':solucionado,'mensajes':mensajes,'diagnostic':diagnostico,'form':form,'atend':atender,'noti_det':notif,'coord':coord})
 
 def asisInf(request):

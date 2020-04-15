@@ -117,3 +117,7 @@
 .a_not_blue2:hover {
   color: white;
 }
+
+.text_block_import {
+  white-space: nowrap;
+}
