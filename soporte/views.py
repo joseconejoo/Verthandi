@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
 
-from .models import estado_soporte_notif, sop_notif_mes, bie_gob_bienes, NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
+from .models import report_usu_area, estado_soporte_notif, sop_notif_mes, bie_gob_bienes, NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
 from .forms import sop_notif_mesF, report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
@@ -165,32 +165,64 @@ def post_list2(request):
         else:
             form = sop_notifF()
         niveles_ver_reports = [1,2,4,5]
+        niviveles_ver_reports_cord = [7]
+        notif_cord_nom = None
+        notif_num_cant = []
+
         if (Datos.objects.filter(pk=request.user.pk).exists()):
             if request.user.datos.nivel_usua.pk in niveles_ver_reports:
                 uservalidNotif = True
                 notificacion_f = sop_notif.objects.filter(tipo_sop_id__isnull=True)
-                notificaciom_f = None
-        notif_num_cant = []
-        #sacando la informacion para mostrar del numero de publicaciones
-        for x in estado_soporte_notif.objects.filter():
-            informacion = []
-            sop_count = sop_notif.objects.filter(estado_sop=x.pk).count()
-            sop_ult = sop_notif.objects.filter(estado_sop=x.pk).order_by('-id')[:1]
-            informacion.append(x.nombre)
-            informacion.append(sop_count)
-            informacion.append(x.pk)
-            informacion.append(sop_ult)
-            notif_num_cant.append(informacion)
-        informacion = []
-        sop_count = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).count()
-        sop_ult = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).order_by('-id')[:1]
-        informacion.append('Por atender')
-        informacion.append(sop_count)
-        informacion.append(4)
-        informacion.append(sop_ult)
-        notif_num_cant.append(informacion)
+                #notificaciom_f = None
 
-    return render(request, 'post_list2.html', {'notif_n_cant':notif_num_cant,'uservalidNotif':uservalidNotif,'notificaciones_f':notificacion_f,'posts': posts, 'form': form})
+
+                #sacando la informacion para mostrar del numero de publicaciones
+                for x in estado_soporte_notif.objects.filter():
+                    informacion = []
+                    sop_count = sop_notif.objects.filter(estado_sop=x.pk).count()
+                    sop_ult = sop_notif.objects.filter(estado_sop=x.pk).order_by('-id')[:1]
+                    informacion.append(x.nombre)
+                    informacion.append(sop_count)
+                    informacion.append(x.pk)
+                    informacion.append(sop_ult)
+                    notif_num_cant.append(informacion)
+                informacion = []
+                sop_count = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).count()
+                sop_ult = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False).order_by('-id')[:1]
+                informacion.append('Por atender')
+                informacion.append(sop_count)
+                informacion.append(4)
+                informacion.append(sop_ult)
+                notif_num_cant.append(informacion)
+            elif request.user.datos.nivel_usua.pk in niviveles_ver_reports_cord:
+                uservalidNotif = True
+                reportadors = report_usu_area.objects.filter(cod_area=request.user.datos.cod_area)[0]
+                notif_cord_nom = 'del usuario '+str(reportadors.usuario.username)
+                notificacion_f = sop_notif.objects.filter(tipo_sop_id__isnull=True,cod_usu=reportadors.pk)
+                #notificaciom_f = None
+
+                #sacando la informacion para mostrar del numero de publicaciones
+                for x in estado_soporte_notif.objects.filter():
+                    informacion = []
+                    sop_count = sop_notif.objects.filter(estado_sop=x.pk,cod_usu=reportadors.pk).count()
+                    sop_ult = sop_notif.objects.filter(estado_sop=x.pk,cod_usu=reportadors.pk).order_by('-id')[:1]
+                    informacion.append(x.nombre)
+                    informacion.append(sop_count)
+                    informacion.append(x.pk)
+                    informacion.append(sop_ult)
+                    notif_num_cant.append(informacion)
+                informacion = []
+                sop_count = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False,cod_usu=reportadors.pk).count()
+                sop_ult = sop_notif.objects.filter(estado_sop__isnull=True,tipo_sop__isnull=False,cod_usu=reportadors.pk).order_by('-id')[:1]
+                informacion.append('Por atender')
+                informacion.append(sop_count)
+                informacion.append(4)
+                informacion.append(sop_ult)
+                notif_num_cant.append(informacion)
+
+
+
+    return render(request, 'post_list2.html', {'notif_cord_nom':notif_cord_nom,'notif_n_cant':notif_num_cant,'uservalidNotif':uservalidNotif,'notificaciones_f':notificacion_f,'posts': posts, 'form': form})
 
 def notif_results(request,pk):
     notif_atend = [4]
@@ -824,6 +856,23 @@ def personal_inf(request):
                 pass
     """
     return render(request, 'personal_inf.html', {'niveles':niveles_lista})
+def personal_ot_coord(request):
+    #trabj1
+    posts=None
+
+    niveles_lista = []
+
+
+    areas = unidad2.objects.filter()
+    for x in areas:
+        lists = []
+        if Datos.objects.filter(nivel_usua=7,usuario__is_active=True,cod_area=x.pk).exists():
+            usuarios_coord_list = Datos.objects.filter(nivel_usua=7,usuario__is_active=True,cod_area=x.pk)[0]
+            usuarios_coord_list.encargado = usuarios_coord_list.usuario
+            usuarios_coord_list.nom_nivel = usuarios_coord_list.nivel_usua.nom_nivel
+            niveles_lista.append(usuarios_coord_list)
+
+    return render(request, 'personal_ot_coord.html', {'niveles':niveles_lista})
 
 def registros_personal_inf(request):
     formlistoption = None

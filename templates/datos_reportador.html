@@ -75,7 +75,7 @@
         <p> </p>
         <tr class="no_color_background">
           <td >Nombre de usuario:</td>
-          <td > {{ datos.username|linebreaksbr }} - {{datos.report_usu_area.cod_area}}
+          <td > {{ datos.username|linebreaksbr }} - {{datos.report_usu_area.cod_area|lower}}
             {% if datos.sub_area %}
             {{datos.sub_area}} 
             {% endif%}

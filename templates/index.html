@@ -397,7 +397,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'personal_ot_coord' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Coordinadores áreas</p>
                 </a>
@@ -458,6 +458,16 @@
           </li>
           {% endif %}
           {% if user.datos.nivel_usua.pk == 7 %}
+          <li class="nav-item">
+            <a href="{% url 'post_noti' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Notificaciones
+              </p>
+              <span class="badge badge-warning right">1</span>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="{% url 'usuarioReport' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>

@@ -37,6 +37,7 @@ urlpatterns = [
     path('opciones_avanzadas/Opciones-SoporteForm/Codigo/?8291Delete<int:pk>', views.Del1_codigo, name='Del1_codigo'),
     path('Acceso_Denegado', views.Error, name='Error1'),
     path('Personal-Informatica', views.personal_inf, name='personal_inf'),
+    path('Personal-Coordinadores-areas', views.personal_ot_coord, name='personal_ot_coord'),
 
     path('Personal-Informatica-v', views.personal_inf_v, name='personal_inf_v'),
     path('Personal-Informatica/Registro', views.registros_personal_inf, name='registros_personal_inf'),

@@ -34,7 +34,7 @@
         <p class="fblanc mrmen text-right">Autor: {{noti_det.nombre}}(<a href="{% url 'datos_uRed' noti_det.cod_usu.report_usu_area.cod_area.pk %}"> {{ noti_det.cod_usu }}</a>)</p>
         {% else %}
 
-        <p class="fblanc mrmen text-right">Autor: {{ noti_det.cod_usu }}</p>
+        <p class="fblanc mrmen text-right">Autor: {{ noti_det.nombre }}</p>
         {% endif %}
         <p class="fblanc mrmen text-right">Fecha: {{ noti_det.fecha_pub|date:'d \d\e F \d\e\l Y' }}</p>
 

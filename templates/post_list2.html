@@ -76,7 +76,11 @@
 
     <div class="row">
       <div class="col-sm-12 text-center" style="padding:60px;">
-        <h1 class="fblanc">Notificaciones de fallas</h1>
+        <h1 class="fblanc">Notificaciones de fallas
+          {% if notif_cord_nom%}
+            {{notif_cord_nom|lower}}
+          {% endif %}
+        </h1>
         
         <br>
       </div>
