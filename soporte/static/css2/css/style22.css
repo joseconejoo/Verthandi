@@ -121,3 +121,6 @@
 .text_block_import {
   white-space: nowrap;
 }
+.dropdown_perf {
+  right: 90%;
+}

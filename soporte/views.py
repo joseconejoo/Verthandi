@@ -389,6 +389,8 @@ def userHAB(request, pk):
         return redirect ("/")
 
 def datos_u(request, pk):
+    if not(request.user.is_authenticated):
+        return redirect('login')
 
     try:
         dat=Datos.objects.get(pk=pk)

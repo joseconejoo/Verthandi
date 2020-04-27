@@ -66,28 +66,82 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
+      {% endcomment %}
 
+
+    </ul>
+
+
+    {% comment %}
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    {% endcomment %}
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
       <!-- perfil nombre apellido dropdown -->
-      <div class="btn-group margender dropdown-menu-right">
+      <div class="dropdown dropdown_perf">
+        <!-- la clase dropdown, sumada mas la clase ul dropdown, especifican como se mostrara el texto.-->
+        <button type="button" class="btn botonPer he100 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          {% if user.datos.nivel_usua %}
+          {{user.datos.nombre}}
+          {% else %}
+          reportador
+          {% endif %}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" style="">
+          {% if user.datos.nivel_usua %}
+          <li class="dropdown-item">
+            <a href="{% url 'datos_u' pk=user.pk %}" class="fnegr">Perfil</a>
+          </li>
+          {% endif %}
+          <li class="dropdown-item"><a href="{% url 'logout' %}" class="fnegr">Salir</a></li>
+          <!--
+          <li class="dropdown-divider"></li>
+          <li class="dropdown-item"><a href="#">Separated link</a></li>
+          -->
+        </ul>
+      </div>
+      {% comment %}
+      <div class="btn-group dropdown-menu-right dropdown_perf">
+        {% if user.datos.nivel_usua %}
         <a href="{% url 'datos_u' pk=user.pk %}">
           <button type="button" class="btn botonPer he100">
             {% if user.datos.nivel_usua %}
             {{user.datos.nombre}}
-            {% if user.datos.sub_area %}
-            {{user.datos.sub_area}}
-            {% endif %}
-            {% if user.datos.nivel_usua.pk == 7 %}
-            {{ user.datos.cod_area }}
-            {% endif %}
             {% else %}
             reportador
             {% endif %}
           </button>
         </a>
+        {% else %}
+        <a>
+          <button type="button" class="btn botonPer he100">
+            {% if user.datos.nivel_usua %}
+            {{user.datos.nombre}}
+            {% else %}
+            reportador
+            {% endif %}
+          </button>
+        </a>
+        {% endif %}
+
+
         <button type="button" class="btn botonPer dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
           <span class="sr-only">Toggle Dropdown</span>
           <div class="dropdown-menu" role="menu">
-            <a class="dropdown-item" href="{% url 'logout' %}">Salir</a>
+            {% if user.datos.nivel_usua %}
+            <a href="{% url 'datos_u' pk=user.pk %}" class="dropdown-item">Perfil</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="dropdown-item">Salir</a>
             <!--
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
@@ -98,26 +152,9 @@
         </div>
       </button>
     </div>
+    {% endcomment %}
+    <!-- Termina Dropdown perf -->
 
-  </ul>
-  {% endcomment %}
-
-
-  {% comment %}
-  <!-- SEARCH FORM -->
-  <form class="form-inline ml-3">
-    <div class="input-group input-group-sm">
-      <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-      <div class="input-group-append">
-        <button class="btn btn-navbar" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </div>
-  </form>
-  {% endcomment %}
-  <!-- Right navbar links -->
-  <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
     {% comment %}
     <li class="nav-item dropdown">
@@ -296,7 +333,9 @@
           </li>
 
           {% endcomment %}
-          <!-- Comienza menu pro -->
+          <!-- Comienza menu izquierda pro -->
+          <!-- comienza perf menu izquierda -->
+          {% comment%}
           <li class="nav-header" style="display: list-item;">Opciones de cuenta</li>
           {% if datos.usuario %}
 
@@ -330,7 +369,8 @@
               </p>
             </a>
           </li>
-
+          {% endcomment %}
+          <!-- termina perf menu izquierda -->
           {% if not user.report_usu_area %}
           <li class="nav-header" style="display: list-item;">Opciones del Sistema</li>
           {% endif %}
@@ -375,7 +415,7 @@
               <li class="nav-item">
                 <a href="{% url 'adm_sop_opcis' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Sub áreas Informática</p>
+                  <p>Sub areas Informática</p>
                 </a>
               </li>
             </ul>
@@ -478,7 +518,7 @@
           </li>
           {% endif %}
 
-          <!-- termina menu pro -->
+          <!-- termina menu izquierda pro -->
           {% comment %}
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
