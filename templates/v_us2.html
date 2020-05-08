@@ -56,7 +56,16 @@
 
 			<br>
 		</div>
+		<form action="{% url 'a_us_bus' %}" method='post'>
+			{% csrf_token %}
+			<div class="col-md-12 text-center">
+				<div class="search-box1">
+					<input type="text" placeholder="Buscar por Cédula" name="B_V" value="{{buscar}}" required/><span></span>
+				</div>
+			</div>
+		</form>
 
+		<br>
 
 		<table class="bg-color">
 			<tr>
@@ -73,6 +82,13 @@
 				<th>Aprobar</th>
 
 			</tr>
+			{% if nada %}
+			<tr>
+				<td></td>
+				<td></td>
+				<td>No hay coincidencia</td>
+			</tr>
+			{% endif %}
 			{% for v_us1 in v_us %}
 
 

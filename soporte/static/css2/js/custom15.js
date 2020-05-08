@@ -323,3 +323,11 @@ setInterval(function() {
       $('.no_mos_in_colap').removeClass('text_block_import');
     }
 }, 500);
+
+var searchBox = document.querySelectorAll('.search-box1 input[type="text"] + span');
+
+searchBox.forEach(elm => {
+  elm.addEventListener('click', () => {
+    elm.previousElementSibling.value = '';
+  });
+});

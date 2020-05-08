@@ -15,6 +15,7 @@ urlpatterns = [
 	path('login/', views.login.as_view(), name='login'),
 
 	path('aceptarusers/', views.a_us, name='a_us'),
+    path('aceptarusers/?', views.a_us_bus, name='a_us_bus'),
 	path('User?12@#|2aprove?/<int:pk>', views.userAP, name='userAP'),
 	path('User?14@#|2aprove?/<int:pk>', views.userNE, name='userNE'),
     path('User?16@#|2aprove?/<int:pk>', views.userDES, name='userDES'),

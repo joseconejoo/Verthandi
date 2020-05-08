@@ -99,49 +99,51 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-right" style="">
           {% if user.datos.nivel_usua %}
-          <li class="dropdown-item">
-            <a href="{% url 'datos_u' pk=user.pk %}" class="fnegr">Perfil</a>
+          <li class="dropdown-item no_back_item">
+            <a href="{% url 'datos_u' pk=user.pk %}" class="fnegr wid100">Perfil</a>
           </li>
           {% endif %}
-          <li class="dropdown-item"><a href="{% url 'logout' %}" class="fnegr">Salir</a></li>
+          <li class="dropdown-item no_back_item">
+            <a href="{% url 'logout' %}" class="fnegr wid100">Salir</a>
+          </li>
           <!--
           <li class="dropdown-divider"></li>
           <li class="dropdown-item"><a href="#">Separated link</a></li>
-          -->
-        </ul>
-      </div>
-      {% comment %}
-      <div class="btn-group dropdown-menu-right dropdown_perf">
-        {% if user.datos.nivel_usua %}
-        <a href="{% url 'datos_u' pk=user.pk %}">
-          <button type="button" class="btn botonPer he100">
-            {% if user.datos.nivel_usua %}
-            {{user.datos.nombre}}
-            {% else %}
-            reportador
-            {% endif %}
-          </button>
-        </a>
-        {% else %}
-        <a>
-          <button type="button" class="btn botonPer he100">
-            {% if user.datos.nivel_usua %}
-            {{user.datos.nombre}}
-            {% else %}
-            reportador
-            {% endif %}
-          </button>
-        </a>
-        {% endif %}
+        -->
+      </ul>
+    </div>
+    {% comment %}
+    <div class="btn-group dropdown-menu-right dropdown_perf">
+      {% if user.datos.nivel_usua %}
+      <a href="{% url 'datos_u' pk=user.pk %}">
+        <button type="button" class="btn botonPer he100">
+          {% if user.datos.nivel_usua %}
+          {{user.datos.nombre}}
+          {% else %}
+          reportador
+          {% endif %}
+        </button>
+      </a>
+      {% else %}
+      <a>
+        <button type="button" class="btn botonPer he100">
+          {% if user.datos.nivel_usua %}
+          {{user.datos.nombre}}
+          {% else %}
+          reportador
+          {% endif %}
+        </button>
+      </a>
+      {% endif %}
 
 
-        <button type="button" class="btn botonPer dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
-          <span class="sr-only">Toggle Dropdown</span>
-          <div class="dropdown-menu" role="menu">
-            {% if user.datos.nivel_usua %}
-            <a href="{% url 'datos_u' pk=user.pk %}" class="dropdown-item">Perfil</a>
-            {% endif %}
-            <a href="{% url 'logout' %}" class="dropdown-item">Salir</a>
+      <button type="button" class="btn botonPer dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
+        <span class="sr-only">Toggle Dropdown</span>
+        <div class="dropdown-menu" role="menu">
+          {% if user.datos.nivel_usua %}
+          <a href="{% url 'datos_u' pk=user.pk %}" class="dropdown-item">Perfil</a>
+          {% endif %}
+          <a href="{% url 'logout' %}" class="dropdown-item">Salir</a>
             <!--
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
