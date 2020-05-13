@@ -705,7 +705,8 @@ table {
 
 .fullscreen-centered #content {
   background: transparent;
-  position: fixed;
+  position: absolute;
+  /* poner barras de navegacion */
   top: 50%;
   left: 50%;
   /* bring your own prefixes */
