@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from .models import NivelesNum ,P_opci, Datos,unidad2
-
+from .models import asistencia_personal, asistencias_p, NivelesNum ,P_opci, Datos,unidad2
+import datetime
 
 def usu_1xnivel (nivel,area=False):
 
@@ -167,3 +167,22 @@ def niveles1_sin_ocupar_area():
 def usu_1xnivel_areas_o(nivel,area):
 	usua = User.objects.filter(datos__cod_area=area,datos__nivel_usua=nivel,is_active=1).exists()
 	return usua
+
+
+
+def asis_re(empleados,hoy,x2,hactual2):
+	for emple in empleados:
+		if hactual2 > x2:
+			if not(asistencia_personal.objects.filter(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=emple)):
+			    asistencia_personal.objects.create(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=emple,asistente=False)
+
+
+
+def obten_tiem():
+	hoy = datetime.datetime.today()
+	hoy2 = datetime.date.today()
+	hactual = str(hoy)[11:]
+	hactual2=str(hactual)[:8]
+	x = '07:30:00'
+	x2 = '08:30:00'
+	return hoy,hoy2,hactual,hactual2,x,x2

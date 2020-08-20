@@ -1,0 +1,144 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load myfilters %}
+
+
+{% block content %}
+<div class="bg-color-background" class="section-padding">
+	<div class="container">
+
+		<div class="col-xs-12 text-center" style="padding:60px;">
+			<h1 class="fblanc">Empleados de Subáreas activos</h1>
+
+			<br>
+		</div>
+		<table class="bg-color min-height1">
+			<tr>
+				<th>Nº</th>
+				<th>Nivel</th>
+				<th>Nombre</th>
+				<th>Opciones</th>
+
+			</tr>
+			{% for personal_info in empleados1 %}
+
+			<!-- hola -->
+
+			<tr>
+
+				<div class="">
+					<td>
+						<h3>{{ forloop.counter }}</h3>
+					</td>
+					<td class="min-width-table2">
+						{{personal_info.nivel_usua }}
+						{% if personal_info.encargado.datos.nivel_usua.pk == 7 %}
+						{{ personal_info.encargado.datos.cod_area|lower}}
+						{% endif %}
+
+						{% if personal_info.sub_area %}
+						{{ personal_info.sub_area }}
+						{% endif %}
+						
+					</td> 
+					<td>
+						{% if personal_info %}
+						<span style="">{{ personal_info.nombre }} 
+						{{ personal_info.apellido }} </span>
+						{% else %}
+						Vacante
+						{% endif %}
+
+					</td>
+					<td>
+						{% if personal_info %}
+
+						<a href="{% url 'datos_u' personal_info.pk %}">
+							<span class="btn btn-primary">Perfil </span>
+						</a>
+
+						{% else %}
+						<a>
+							<span class="btn btn-primary disabled" >Perfil </span>
+						</a>
+
+						{% endif %}
+					</td>
+
+				</div>
+			</tr>
+
+
+			{% endfor %}	
+
+		</table>
+
+	</div>
+
+	<div style="min-height: 166px;">
+
+	</div>
+
+</div>
+
+
+
+
+
+<div class="container-modal">
+	<div class="modal fade" id="myModal1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h4 class="modal-title text-center fnegr" id="text-mod1">Notificacion de f</h4>
+
+					<button type="button" class="close" data-dismiss="modal"></button>
+				</div>
+
+				<div class="modal-body" id="popupb">
+					<form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="{% url 'ajax_opcisP' %}" name="amxj">
+
+						<fieldset>
+							{% csrf_token %}
+							<div class="col-md-6">
+								<button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Si</button>
+
+							</div>
+							<div class="col-md-6">
+								<button type="button" class="btn btn-lg btn-primary btn-block" data-dismiss="modal">No</button>
+
+							</div>
+
+						</fieldset>
+						<br>
+
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block modals %}
+
+{% endblock %}

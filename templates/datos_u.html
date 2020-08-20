@@ -53,7 +53,7 @@
 
 
 
-    <div class="col-xs-12 text-center" style="padding:60px;">
+    <div class="col-md-12 text-center" style="padding:60px;">
 
 
       <h1 class="fblanc" >Perfil</h1>
@@ -63,8 +63,19 @@
       <div class="item active left">
       </div>
       {% if user.is_superuser %}
-      <a class="btn btn-default margin_left_edit_p" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
+      <a class="btn btn-default margin_left_edit_p redondear_borde" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>editar</a>
       {% endif %}
+
+
+      {% if empleado %}
+      {% if asistenciasx1 %}
+      <a class="btn btn-primary margin_left_edit_p redondear_borde" href="{% url 'in_asisInf' pk=datos.pk %}"><span class="fa fa-pencil"></span>asistencias</a>
+      {% else %}
+      <a class="btn btn-primary margin_left_edit_p disabled no_cursor" href="{% url 'datose' pk=datos.pk %}"><span class="fa fa-pencil"></span>inasistencias</a>
+      {% endif %}
+      {% endif %}
+
+
       <table class="bg-colorTablePerfil text-center">
 
         <p> </p>
@@ -102,6 +113,19 @@
           <td>Ultima edicion de perfil: </td> <td> Ninguna</td>
           {% endif %}
         </tr>
+        {% if empleado %}
+        <tr class='no_color'>
+          <td>Notificaciones solucionadas ({{datos.usuario}}): </td> <td> {{ datos.solucionadas_usu|linebreaksbr }}</td>
+        </tr>
+        <tr class='no_color'>
+          <td>Notificaciones solucionadas (en total): </td> <td> {{ datos.solucionadas_totales|linebreaksbr }}</td>
+        </tr>
+
+        <tr class='no_color'>
+          <td>Notificaciones solucionadas en % ({{datos.usuario}}): </td> <td> {{ datos.soluciones_usu_porcent|linebreaksbr }} %</td>
+        </tr>
+
+        {% endif %}
         {% if permisos_adm %}
 
         <tr class='no_color_background'>

@@ -9,9 +9,86 @@ from django.contrib.auth import (
 from django.utils.translation import gettext as _
 UserModel = get_user_model()
 
-from .models import sop_notif_mes, bie_gob_bienes, report_usu_area, NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
+from .models import permisos_emple, sop_notif_mes, bie_gob_bienes, report_usu_area, NivelesNum, Codigos, unidad2, P_opci ,Datos, NivelDet, sop_notif, P_detal
 
 from .Fun1 import usu_1xnivel_sub_area2Form
+
+
+class perm_emple_nuevo(forms.ModelForm):
+	cedula = forms.IntegerField(
+	    label=_("cedula"),
+	)
+
+	class Meta:
+		model = permisos_emple
+		fields = ('fecha_ini_per','fecha_fin_per')
+	field_order = ['cedula','fecha_ini_per','fecha_fin_per']
+	"""
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    #pdb.set_trace()
+	    if self.data.get('cedula'):
+	    	pdb.set_trace()
+	    	cedu = self.data.get('cedula')
+	    	if not (User.objects.filter(datos__cedula=cedu).exists()):
+	    		raise self.codigo_e_invalid()
+	    	cedu2p = User.objects.get(datos__cedula=cedu)
+	    	cedu = cedu2p.pk
+	    	_mutable = self.data._mutable
+	    	self.data._mutable = True
+	    	self.data['cod_area'] = cedu
+	    	self.data._mutable = _mutable
+	"""
+
+
+class actu_contra(forms.ModelForm):
+	password1 = forms.CharField(
+	    label=_("Password"),
+	    strip=False,
+	    widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+	    help_text=password_validation.password_validators_help_text_html(),
+	)
+	password2 = forms.CharField(
+	    label=_("Password confirmation"),
+	    widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+	    strip=False,
+	    help_text=_("Enter the same password as before, for verification."),
+	)
+
+	class Meta:
+	    model = User
+	    fields = ()
+
+	def clean(self):
+		password = self.cleaned_data.get('password2')
+		if password:
+		    try:
+		        password_validation.validate_password(password, self.instance)
+		    except forms.ValidationError as error:
+		        self.add_error('password2', error)
+
+
+
+class recu_contra(forms.ModelForm):
+	error_messages = {
+	    'No_existe': _("El usuario \"%(usuario)s\" no existe."),
+	}
+	def codigo_e_invalid(self):
+
+	    return forms.ValidationError(
+	        self.error_messages['No_existe'],
+	        code='Codigo12',
+	        params={'usuario': self.data.get('username')},
+	    )
+
+	class Meta:
+	    model = User
+	    fields = ("username",)
+	def clean(self):
+		usuario_a = self.data.get('username')
+		if not (User.objects.filter(username=usuario_a).exists()):
+			raise self.codigo_e_invalid()
+
 
 class sop_notif_mesF(forms.ModelForm):
 	class Meta:
@@ -119,7 +196,7 @@ class sop_notifF(forms.ModelForm):
 	def clean(self):
 		cleaned_data = super().clean()
 		numero_e = cleaned_data.get("num_pc")
-		print (numero_e)
+		#print (numero_e)
 		#print (bie_gob_bienes.objects.get(codigo_e__exact=str(numero_e)))
 		if not(bie_gob_bienes.objects.filter(codigo_e=str(numero_e)).exists()) and (numero_e!=None):
 			raise self.codigo_e_invalid()

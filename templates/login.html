@@ -75,7 +75,17 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
           </fieldset>
           <br>
-          <p class="m-b-0 m-t colorNegro">¿No tienes cuenta? <a href="{% url 'registros1' %}">Registrato de Usuario</a>.</p>
+          <div class="">
+            <table>
+              <td class="no_color_background">
+                <a href="{% url 'registros1' %}" class="">Registro de usuarios</a>
+              </td>
+              <td class="no_color_background">
+                <a href="{% url 'cambio_contra_sol' %}" class="">Restablecer contraseña</a>
+              </td>
+            </table>
+          
+          </div>
 
 
         </form>
@@ -104,6 +114,19 @@
       <strong></strong> <span id="alert1text"> {{ message }}</span>
     </div>    
 
+  </div>
+  
+</div>
+{% endif %}
+
+{% if message.tags == 'error' %}
+<div class="content">
+  <div class="col-sm-6 col-sm-offset-3">
+
+    <div class="alert1">
+      <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong></strong> <span id="alert1text">{{ message }}</span>
+    </div>
   </div>
   
 </div>

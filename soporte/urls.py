@@ -8,8 +8,11 @@ urlpatterns = [
 	path('notificaciones/detalles/<int:pk>', views.notiFalla, name='noti_detalle'),
     path('notificaciones/<int:pk>', views.notif_results, name='notif_results'),
 
-
-	path('asistencia/informatica', views.asisInf, name='asisInf'),
+	path('asistencia/<int:pk>', views.asisInf, name='asisInf'),
+    path('asistencia_lista/', views.asis_list, name='asis_list'),
+    path('perfil/<int:pk>/asistencias', views.in_asisInf, name='in_asisInf'),
+    path('permiso_lista/', views.perm_emple_list, name='perm_emple_list'),
+    path('permiso_lista/agregar', views.perm_emple_agregar, name='perm_emple_agregar'),
 
 	path('registros1', views.registros1, name="registros1"),
 	path('login/', views.login.as_view(), name='login'),
@@ -39,6 +42,7 @@ urlpatterns = [
     path('Acceso_Denegado', views.Error, name='Error1'),
     path('Personal-Informatica', views.personal_inf, name='personal_inf'),
     path('Personal-Coordinadores-areas', views.personal_ot_coord, name='personal_ot_coord'),
+    path('Personal-Empleados-Informatica', views.personal_em_infor, name='personal_em_infor'),
 
     path('Personal-Informatica-v', views.personal_inf_v, name='personal_inf_v'),
     path('Personal-Informatica/Registro', views.registros_personal_inf, name='registros_personal_inf'),
@@ -47,6 +51,11 @@ urlpatterns = [
     path('Reportador/Registro', views.usuarioReportRegis, name='usuarioReportRegis'),
     
     path('perfilRed/<int:pk>/', views.datos_uRed, name='datos_uRed'),
+
+    path('Solicitud_Restablecimiento/', views.cambio_contra_sol, name='cambio_contra_sol'),
+    path('Lista_Restablecimiento/', views.cambio_contra_list, name='cambio_contra_list'),
+    path('Lista_Restablecimiento/<int:pk>', views.a_contra_restablecida, name='a_contra_restablecida'),
+    path('contraseña/actualizacion/<int:pk>', views.a_contra_inicio, name='a_contra_inicio'),
 
     path('ajax/opcionesP/', views.opcisP, name='ajax_opcisP'),
     path('ajax/valid_usu/', views.validar_usuario, name='ajax_valid_usu'),

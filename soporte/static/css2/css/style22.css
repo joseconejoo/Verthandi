@@ -98,6 +98,10 @@
   width: 50%;
 }
 
+.min-widthasisInf{
+  width: 50%;
+}
+
 .no_mostrar_form {
   display: none;
 }
@@ -206,4 +210,21 @@
   padding-right: 0;
   padding-left: 0;
   position: initial;
+}
+
+.muchaslineas {
+  white-space: normal;
+  display: contents;
+}
+
+.no_cursor {
+  cursor: no-drop;
+}
+
+.redondear_borde{
+  border-radius: 2rem 2rem 2rem 2rem;
+}
+
+.firmaax {
+  display: none;
 }

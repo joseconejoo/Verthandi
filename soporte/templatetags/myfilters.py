@@ -65,3 +65,15 @@ def addclass(value, arg):
 @register.filter(name='regist7')
 def addclass(value, arg):
     return value.as_widget(attrs={'class': arg,"placeholder": "Codigo para Registrar"})
+
+
+
+@register.filter(name='perm_info_1')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Cedula del empleado de informática"})
+@register.filter(name='perm_info_2')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Fecha inicio"})
+@register.filter(name='perm_info_3')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg,"placeholder": "Fecha finalización",'type':'number','type1':'"number"'})

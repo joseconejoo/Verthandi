@@ -1,24 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.utils import timezone
+import time
 
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, FileResponse, HttpResponseNotFound
 
-from .models import report_usu_area, estado_soporte_notif, sop_notif_mes, bie_gob_bienes, NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
+
+from .models import permisos_emple, reset_contra, asistencia_personal, asistencias_p, report_usu_area, estado_soporte_notif, sop_notif_mes, bie_gob_bienes, NivelesNum,Codigos,unidad2 ,P_opci, sop_notif, P_detal, NivelDet, Datos
 from django.contrib.auth.models import User
 
-from .forms import sop_notif_mesF, report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
+from .forms import perm_emple_nuevo, actu_contra, recu_contra, sop_notif_mesF, report_usu_areaF, Datos_per_infoF ,CodigosF ,DatosRF ,P_detalF ,P_opciF,AuthenticationForm, sop_notifF, DatosF
 
 from .Com import migracion_bienes_g_bienes, migracion_bienes_gobs, test_velocidad, migracion
-from .Fun1 import usu_1xnivel_areas_o, niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
+from .Fun1 import obten_tiem, asis_re, usu_1xnivel_areas_o, niveles1_sin_ocupar_area, usu_1xnivel_area, niveles1_sin_ocupar, usu_1xnivel_alt ,usu_1xnivel_sub_area_alt ,usu_1xnivel_sub_area2Form, usu_1xnivel, usu_1xnivel_sub_area
 from .Fun2 import a_us_func1,usu_add_1
 
 from django.contrib import messages
 
 import random
 
+import datetime
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import (
     REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
@@ -85,6 +88,65 @@ def registros1(request):
         """
     return render(request, 'registros1.html', {'form': foxr, "form2":form2, 'formOpti':formlistoption})
 
+
+def cambio_contra_sol(request):
+    #Trabajando
+    if request.method == "POST":
+        foxr = recu_contra(request.POST)
+        if (foxr.is_valid()):
+            usuario = request.POST.get('username')
+            usuario2 = User.objects.filter(username=usuario)[0]
+
+            if not(reset_contra.objects.filter(usuario_x = usuario2).exists()):
+                messages.success(request, 'Solicitud de restablecimiento de contraseña enviada al administrador para el usuario "'+(usuario)+'" de forma exitosa')
+                reset_contra.objects.create(usuario_x = usuario2, recuperada = False, fecha_soli=timezone.now())
+            else:
+                messages.error(request, 'Solicitud de restablecimiento de contraseña ya existe para el usuario "'+(usuario)+'"')
+
+            return redirect('login')
+
+    else:
+        foxr = recu_contra()
+    return render(request,'registros1_contrasena.html',{'form':foxr})
+
+def cambio_contra_list(request):
+    usuarios1 = ''
+    usuarios1 = reset_contra.objects.filter(recuperada=0)
+    return render(request,'v_us2_contrasena.html',{'v_us':usuarios1})
+
+def a_contra_restablecida(request,pk):
+    if request.user.is_authenticated==True:
+        solicitud = get_object_or_404(reset_contra,pk=pk)
+        usuario = get_object_or_404(User,pk=solicitud.usuario_x.pk)
+
+        messages.success(request,'Contraseña del usuario "'+str(usuario.username)+'" restablecida exitosamente')
+        usuario.set_password(str(usuario.datos.cedula))
+        solicitud.recuperada=True
+        usuario.save()
+        solicitud.save()
+        return redirect('cambio_contra_list')
+    
+    else:
+        return HttpResponseRedirect("/")
+
+def a_contra_inicio(request,pk):
+    if request.method == "POST":
+        foxr = actu_contra(request.POST)
+        if (foxr.is_valid()):
+            solicitud = get_object_or_404(reset_contra,pk=pk)
+            usuario = get_object_or_404(User,pk=solicitud.usuario_x.pk)
+            nueva_contra = request.POST.get('password2')
+
+            messages.success(request,'Contraseña del usuario "'+str(usuario.username)+'" actualizada exitosamente, inicie sesión con su nueva contraseña')
+            usuario.set_password(nueva_contra)
+
+            solicitud.delete()
+            usuario.save()
+            return redirect('login')
+
+    else:
+        foxr = actu_contra()
+    return render(request,'registros1_contrasenaForm.html',{'form':foxr})
 
 class login(LoginView):
     template_name = 'login.html'
@@ -371,17 +433,59 @@ def datos_u(request, pk):
     if not(request.user.is_authenticated):
         return redirect('login')
 
+    if reset_contra.objects.filter(usuario_x=request.user).exists():
+        restablecer = get_object_or_404(reset_contra,usuario_x=request.user)
+        return redirect('a_contra_inicio',pk=restablecer.pk)
+
+    asd=(datetime.date.today())
+    Dias_no_laboral = [5,6]
+    if not(int(datetime.date.today().weekday()) in Dias_no_laboral):
+        Verthandi=User.objects.get(pk=request.user.pk)
+        asd2=timezone.now()
+
+
+        hoy,hoy2,hactual,hactual2,x,x2 = obten_tiem()
+        if Verthandi.datos.nivel_usua.pk == 5:
+            if hactual2 >= x and hactual2 <= x2:
+                if not(asistencias_p.objects.filter(fecha_a=hoy2).exists()):
+                    asistencias_p.objects.create(fecha_a=hoy2)
+
+                if not(asistencia_personal.objects.filter(n_asistencia=asistencias_p.objects.filter(fecha_a=asd)[0],n_empleado=Verthandi)):
+                    asistencia_personal.objects.create(n_asistencia=asistencias_p.objects.filter(fecha_a=asd)[0],n_empleado=Verthandi,a_emple=asd2,asistente=True)    
+            elif hactual2 > x2:
+                if not(asistencias_p.objects.filter(fecha_a=hoy2).exists()):
+                    asistencias_p.objects.create(fecha_a=hoy2)
+        if (hactual2 > x2) or (hactual2 >= x and hactual2 <= x2):
+            if not(asistencias_p.objects.filter(fecha_a=hoy2).exists()):
+                asistencias_p.objects.create(fecha_a=hoy2)
+
+
+
     try:
         dat=Datos.objects.get(pk=pk)
         Verthandi=User.objects.get(pk=pk)
         allow = False
+        empleado = False
+        asistencias = False
         if request.user.is_superuser:
             if not (request.user.pk == Verthandi.pk) and not(Verthandi.datos.nivel_usua.pk == 1):
                 allow = True
         datos = get_object_or_404(Datos, pk=pk)
-        return render(request, 'datos_u.html', {'permisos_adm':allow,'datos': datos,'dat': dat,'usuario1':Verthandi})
+        #Check si es empleado
+        if datos.nivel_usua.pk==5:
+            empleado = True
+            asistencias = True
+            sop_solucionados = sop_notif_mes.objects.filter(usu_tec=Verthandi.pk,estado_sop=1).count()
+            datos.solucionadas_usu = sop_solucionados
+            sop_solycionados_total = sop_notif_mes.objects.filter(estado_sop=1).count()
+            datos.solucionadas_totales = sop_solycionados_total
+            datos.soluciones_usu_porcent = ((sop_solucionados*100)/sop_solycionados_total)
+
+
+        return render(request, 'datos_u.html', {'asistenciasx1':asistencias,'empleado':empleado,'permisos_adm':allow,'datos': datos,'dat': dat,'usuario1':Verthandi})
 
     except:
+        return HttpResponseNotFound("Si cree que esto es un error, por favor contacte con el administrador.")
         if request.method == "POST":
             form = DatosF(request.POST)
             if form.is_valid():
@@ -498,9 +602,6 @@ def notiFalla(request,pk):
             pass
         return render(request, 'notiF_detalle.html', {'solucionado':solucionado,'mensajes':mensajes,'diagnostic':diagnostico,'form':form,'atend':atender,'noti_det':notif,'coord':coord})
 
-def asisInf(request):
-    return render(request, 'asisInf.html')
-
 def opcisP(request):
     #Ajax
     tipo_sop_id = request.GET.get('tipo_sop')
@@ -598,7 +699,6 @@ def aj_opcis_nivel(request):
                      else:
                         a12 = usu_1xnivel_area(x,usu_niv)
                         if not (a12):
-                            print (a12)
                             x.nombre = x.nom_nivel
                             usu_nivel.append(x)
                         else:
@@ -610,7 +710,6 @@ def aj_opcis_nivel(request):
         'usuario_tomado': usu_ex
     }
     """
-    print (usu_nivel)
     return render(request, 'old2/opciones.html', {'posts': usu_nivel})
 
 def opcis_admin(request):
@@ -638,7 +737,6 @@ def adm_sop_opcisFormF(request,pk1):
     else:
         if (request.user.is_superuser):
             form = P_opciF(instance=pk1)
-            print(1,"\n1\n")
 
 def adm_sop_opcis_det(request,pk1):
     opcionesSop = P_detal.objects.filter(p_opci=pk1).order_by('id')
@@ -854,6 +952,17 @@ def personal_ot_coord(request):
 
     return render(request, 'personal_ot_coord.html', {'niveles':niveles_lista})
 
+def personal_em_infor(request):
+    posts=None
+
+    emple_lista = []
+
+    if Datos.objects.filter(nivel_usua=5,usuario__is_active=True).exists():
+        usu_empleados_inf = Datos.objects.filter(nivel_usua=5,usuario__is_active=True).order_by('sub_area')
+
+    return render(request, 'personal_emple_inf.html', {'empleados1':usu_empleados_inf})
+
+
 def registros_personal_inf(request):
     formlistoption = None
     formlistoption = unidad2.objects.filter().order_by('id')
@@ -979,4 +1088,142 @@ def usuarioReportRegis(request):
         return render(request, 'registros1_personal.html', {'form': foxr, "form5":form2, 'formOpti':formlistoption})
     return redirect('usuarioReport')
 
+def asis_di():
+    Dias_no_laboral = [5,6]
+    hoy,hoy2,hactual,hactual2,x,x2 = obten_tiem()
+    if not(int(datetime.date.today().weekday()) in Dias_no_laboral):
+        
+        if (hactual2 >= x and hactual2 <= x2):
+            #Hora ideal de llegada
+            pass
+        elif (hactual2 > x2):
+            #Hora Retardada
+            emple = User.objects.filter(is_active=1,datos__nivel_usua=5)
+            listaemp = []
+            for x in emple:
+                listaemp.append(x)
 
+            if (asistencias_p.objects.filter(fecha_a=hoy2).exists()):
+                asis_re(listaemp,hoy,x2,hactual2)
+        else:
+            pass
+
+
+    permisos_emp = permisos_emple.objects.filter().order_by('id')
+    for per_emple in permisos_emp:
+        if hoy2 == per_emple.fecha_ini_per:
+            if (asistencia_personal.objects.filter(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=per_emple.n_empleado)):
+                empleado_x = get_object_or_404(User,pk=per_emple.n_empleado.pk)
+                empleado_x.is_active = False
+                empleado_x.save()
+                asistencia_personal.objects.get(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=per_emple.n_empleado,asistente=False).delete()
+
+
+
+def asis_list(request):
+    """
+    primerodmes = datetime.date.today().replace(day=1)
+    ultdmes = (primerodmes - datetime.timedelta(days=1)).strftime("%Y-%m")+"-01"
+    print (ultdmes)
+    """
+    asisx0 = asistencias_p.objects.filter().order_by('-id')[:5]
+    return render(request, 'asis_list.html', {'asisx0':asisx0})
+
+def asisInf(request,pk):
+    asisx0 = asistencias_p.objects.filter(pk=pk)[0]
+    personal = asistencia_personal.objects.filter(n_asistencia=pk)
+
+    firmas1 = User.objects.filter(is_active = True,datos__nivel_usua = 2)[0]
+    firmas2 = User.objects.filter(is_active = True,datos__nivel_usua = 3)[0]    
+    print ('hola')
+    return render(request, 'asisInf.html',{'firmas_x2':firmas2,'firmas_x1':firmas1,'pers':personal,'asist':asisx0})
+
+
+def in_asisInf(request,pk):
+    asisx0 = None
+    personal = asistencia_personal.objects.filter(n_empleado=pk).order_by('-id')[:5]
+    nom = get_object_or_404(User,pk=pk)
+
+    firmas1 = User.objects.filter(is_active = True,datos__nivel_usua = 2)[0]
+    firmas2 = User.objects.filter(is_active = True,datos__nivel_usua = 3)[0]
+    """
+    terms = [2,3]
+    to_consul = None
+
+    for query in terms:
+        if User.objects.filter(is_active = True,datos__nivel_usua = query).exists():
+            firmas = User.objects.filter(is_active = True,datos__nivel_usua = query)
+            if to_consul is None:
+                to_consul = list(firmas)
+            else:
+                to_consul = to_consul + list(firmas)
+    """
+
+    return render(request, 'asisInf_perfil.html',{'firmas_x2':firmas2,'firmas_x1':firmas1,'nom':nom,'pers':personal,'asist':asisx0})
+
+
+def perm_emple_list(request):
+    if request.method == "POST":
+        pass
+    else:
+        foxr = perm_emple_nuevo()
+
+    permis_x = permisos_emple.objects.filter().order_by('-id')
+
+    firmas1 = User.objects.filter(is_active = True,datos__nivel_usua = 2)[0]
+    firmas2 = User.objects.filter(is_active = True,datos__nivel_usua = 3)[0]
+
+
+    """
+    terms = [2,3]
+    to_consul = None
+
+    for query in terms:
+        if User.objects.filter(is_active = True,datos__nivel_usua = query).exists():
+            firmas = User.objects.filter(is_active = True,datos__nivel_usua = query)
+            if to_consul is None:
+                to_consul = list(firmas)
+            else:
+                to_consul = to_consul + list(firmas)
+    """
+    return render(request, 'asisInf_permi.html', {'pers':permis_x,'form':foxr})
+
+def perm_emple_agregar(request):
+    if request.method == "POST":
+        foxr = perm_emple_nuevo(request.POST)
+        cedu = request.POST.get('cedula')
+        comprobados = 0
+
+        pkusu = False
+        pkusuE = User.objects.filter(datos__cedula=cedu,datos__nivel_usua=5).exists()
+
+        if not (pkusuE):
+            messages.error(request, 'No hay empleado de cédula "'+str(cedu)+'"')
+            comprobados += 1
+        
+        fecha_ini = request.POST.get('fecha_ini_per')
+        if fecha_ini < str(datetime.date.today()):
+            messages.error(request, 'No es una fecha valida "'+str(fecha_ini)+'" la fecha de inicio del permiso no puede ser anterior a la de hoy "'+str(datetime.date.today())+'"')
+            comprobados += 1
+
+        fecha_fin = request.POST.get('fecha_fin_per')
+        if fecha_fin < fecha_ini:
+            messages.error(request, 'No es una fecha valida "'+str(fecha_fin)+'" la fecha de finalización del permiso no puede ser menor a la de inicio "'+str(fecha_ini)+'"')
+            comprobados += 1
+
+        if pkusuE:
+            pkusu = User.objects.filter(datos__cedula=cedu,datos__nivel_usua=5)[0]
+            if permisos_emple.objects.filter(n_empleado=pkusu.pk).exists():
+                messages.error(request, 'El empleado ya tiene activo un permiso')
+                comprobados += 1            
+
+        if comprobados > 0:
+            return redirect('perm_emple_list')
+
+        if foxr.is_valid():
+            post = foxr.save(commit=False)
+            post.n_empleado = get_object_or_404(User,pk=pkusu.pk)
+            post.save()
+
+    
+        return redirect('perm_emple_list')

@@ -1,0 +1,417 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load myfilters %}
+
+
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color-background" class="section-padding">
+  <div class="container">
+
+
+
+
+
+
+    {% if messages %}
+    {% comment %}
+    <ul class="messages">
+      {% endcomment %}
+
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1 success">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
+
+        </div>
+
+      </div>
+      {% endif %}
+
+      {% if message.tags == 'error' %}
+      <div class="content">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="alert1">
+            <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong></strong> <span id="alert1text"> {{ message }}</span>
+          </div>    
+
+        </div>
+
+      </div>
+      {% endif %}
+
+      {% comment %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+      {% endcomment %}
+      {% endfor %}
+
+      {% comment %}
+    </ul>
+    {% endcomment %}
+    {% endif %}
+
+
+
+
+
+    <div class="row">
+      <div class="col-md-12 text-center" style="padding:60px;">
+        <h1 class="fblanc">Permisos de empleados Informática</h1>
+        <h1 class="fblanc">{{asist.fecha_a}}</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        <div class="item active left">
+          </div>
+
+          
+            <div class="container">
+
+
+              <a class="btn btn-primary redondear_borde blancColor" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'perm_emple_agregar' %}" data-nombre="{{v_us1.username }}" data-tipo="Aprobación"><span class="fa fa-plus" id="iconB"></span> Agregar permiso</a>
+
+              <br>
+              <br>
+              <table class="bg-color">
+              <tr>
+                <th>Nº</th>
+                <th>Nombre</th>
+                {% comment %}
+                <th>departamento</th>
+                <th>Perfil</th>
+                {% endcomment %}
+
+                <th>Fecha de inicio</th>
+                <th>Fecha de finalización</th>
+                <th>Perfil</th>
+
+              </tr>
+
+
+              {% for person in pers%}
+
+
+              <tr>
+
+                  <div class="">
+
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+
+                        <td>
+                          {{ person.n_empleado.datos.nombre}} 
+                          {{ person.n_empleado.datos.apellido}} 
+                        </td>
+                            
+
+                        <td>
+                          {{ person.fecha_ini_per }}
+
+                        </td>
+                        <td>
+                          {{ person.fecha_fin_per }}
+                        </td>
+
+                        <td>
+                          <a href="{% url 'datos_u' person.n_empleado.pk %}">
+                            <span class="btn btn-primary">Perfil </span>
+                          </a>
+                        </td>
+
+
+                    </div>
+                  </tr>
+                {% endfor %}
+                
+
+
+
+
+              <!-- ejemplo eliminado-->
+              {% comment %}
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>2</h3>
+                      </td>
+                        <td>
+                           Rufin 
+                        </td>
+                        <td>
+                          Rufo de la Trinidad Palacios
+                        </td>
+                            
+
+                        <td>
+
+                            <span id="iconB" class="fa fa-times" style="color:rgba(255, 0, 0,0.95);" ></span>
+
+                        </td>
+                      </div>
+                    </tr>
+                    {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'noti_detalle' v_us1.pk %}" class="btn btn-primary" >Ir</a>
+
+                        </td>
+                        <td>
+                          <a href="{% url 'userAP'%}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                        {% endcomment %}
+
+                      </span>
+                  </div>
+                  </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% for v_us1 in v_us %}
+              
+
+              <!-- hola -->
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+                        <td>
+                           {{v_us1.username }}
+
+                        </td>
+                        <td>
+                          {% for dat in datos %}
+                          {% if dat.pk == v_us1.pk %}
+                            {{dat.nombre}}
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td>
+                            {% for dat in datos %}
+                            {% if dat.pk == v_us1.pk %}
+                              {{dat.cedula|intcomma}}
+
+                              {% endif %}
+                              {% endfor %}
+
+                        </td>
+                            
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+                        </td>
+                        {% endcomment %}
+                        <td>
+                          <a href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                      </span>
+                  </div>
+                  </tr>
+              {% endfor %}
+              </table>
+
+            </div>
+          </div>
+
+          
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title text-center fnegr" id="pr1">Añadir permiso de empleado Informática</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' id="ProblemForm" dataP-url="" name="amxj">
+
+            <fieldset class="">
+              {% if form.errors %}
+              <script type="text/javascript">
+                var varka = '{{form.errors}}';
+                varka = varka.replace(/\<li>/g, '');
+                varka = varka.replace(/\<\/li>/g, '');
+                varka = varka.replace(/\<\/ul>/g, '');
+                varka = varka.replace(/\<ul class="errorlist">/g, '')
+                varka = varka.replace(/__all__<ul class="errorlist nonfield">/g, '')
+                varka = varka.replace(/&quot;/g, '"')
+                varka = varka.replace('.', '.\n\n');
+
+
+                alert(varka);
+              </script>
+              {% endif %}
+              
+              {% csrf_token %}
+              {% for field in form %}
+
+              <div class="errores">
+                {% if field.errors %}
+                <script type="text/javascript">
+                  var varka = '{{field.errors}}';
+                  varka = varka.replace(/\<li>/g, '');
+                  varka = varka.replace(/\<\/li>/g, '');
+                  varka = varka.replace(/\<\/ul>/g, '');
+                  varka = varka.replace(/\<ul class="errorlist">/g, '')
+                  varka = varka.replace('.', '.\n\n');
+
+
+                  alert(varka);
+                </script>
+                {% endif %}
+
+              </div>
+              <div>
+                {% if forloop.counter == 1%}
+                {{field|perm_info_1:'form-control'}}
+                {% endif %}
+              </div>
+
+              {% if forloop.counter == 2%}
+              <div class="row">
+
+                <div class="col-sm-6">
+                  Fecha de inicio
+                  <input type="date"
+                  {{field|perm_info_2:'form-control'}}
+                </div>
+
+
+                {% endif %}
+                {% if forloop.counter == 3%}
+
+                <div class="col-sm-6">
+                  Fecha de finalización
+                  <input type="date"
+                  {{field|perm_info_3:'form-control'}}
+                </div>
+              </div>
+              {% endif %}
+
+
+              <p></p>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
+
+              {% endfor %}
+              
+              <div class="botonModal">
+                <button class="btn btn-lg btn-block" type="submit" id="enviof-1">Enviar</button>
+              </div>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

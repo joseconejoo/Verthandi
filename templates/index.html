@@ -397,20 +397,11 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{% url 'asisInf' %}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Asistencia
-              </p>
-            </a>
-          </li>
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Configuración
+                Opciones
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -419,6 +410,12 @@
                 <a href="{% url 'adm_sop_opcis' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sub areas Informática</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'cambio_contra_list' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Restablecer contraseñas</p>
                 </a>
               </li>
             </ul>
@@ -440,6 +437,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{% url 'personal_em_infor' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Empleados Informática</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{% url 'personal_ot_coord' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Coordinadores áreas</p>
@@ -452,23 +455,24 @@
 
           {% if user.datos.nivel_usua.pk == 3 %}
           <li class="nav-item">
-            <a href="{% url 'asisInf' %}" class="nav-link">
+            <a href="{% url 'asis_list' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Asistencia
               </p>
             </a>
           </li>
+          <!-- comienza comentario secretaria-->
 
           <li class="nav-item">
-            <a href="{% url 'asisInf' %}" class="nav-link">
+            <a href="{% url 'perm_emple_list' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Permisos
               </p>
             </a>
           </li>
-
+          {% comment %}
           <li class="nav-item">
             <a href="{% url 'personal_inf_v' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -477,6 +481,8 @@
               </p>
             </a>
           </li>
+          {% endcomment %}
+          <!-- termina comentario secretaria-->
           {% endif %}
           {% if user.datos.nivel_usua.pk == 4 %}
           <li class="nav-item">
@@ -1652,11 +1658,13 @@
 -->
 
 <strong class=''><img src="/static/css2/img/portuguesa12test3.png" class="imagen12">
-Dirección de informática, Gobernación de Portuguesa - UPTP  </strong>
-<div class="float-right d-none d-sm-inline-block">
-  <b>Version</b> 1.0.0
-</div>
+Dirección de informática, Gobernación de Portuguesa - UPTP "Juan de Jesús Montilla" </strong>
 
+{% comment %}
+<div class="float-right d-none d-sm-inline-block desapTemp">
+  <b class="desapTemp">Version</b> <span class="desapTemp">1.0.0</span>
+</div>
+{% endcomment %}
 </footer>
 
 <!-- Control Sidebar -->
@@ -1705,3 +1713,8 @@ Dirección de informática, Gobernación de Portuguesa - UPTP  </strong>
 <script src="{% static 'css2/js/custom15.js' %}"></script>
 </body>
 </html>
+
+
+
+{% block contentImage %}
+{% endblock %}

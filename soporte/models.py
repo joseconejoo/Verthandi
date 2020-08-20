@@ -138,3 +138,24 @@ class sop_notif_mes(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class asistencias_p(models.Model):
+    fecha_a = models.DateField(unique=True)
+
+
+class asistencia_personal(models.Model):
+    n_asistencia = models.ForeignKey(asistencias_p,on_delete=models.CASCADE)
+    n_empleado = models.ForeignKey(User,on_delete=models.CASCADE)
+    a_emple = models.DateTimeField(null=True)
+    asistente = models.BooleanField(default=False)
+
+class reset_contra(models.Model):
+    usuario_x = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
+    recuperada = models.BooleanField(default=False)
+    fecha_soli = models.DateTimeField()
+
+class permisos_emple(models.Model):
+    n_empleado = models.ForeignKey(User,on_delete = models.CASCADE)
+    fecha_ini_per = models.DateField()
+    fecha_fin_per = models.DateField()

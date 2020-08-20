@@ -1,0 +1,434 @@
+{% extends 'index.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content2 %}
+  {% if user.is_authenticated %}
+  <div class="M_d">
+    <p id="contSaludo"></p>
+    {{ user.username }}! Mira las nuevas noticias que hay.
+          
+  </div>
+      
+    <p></p>
+  {% else %}
+    <p>Usted es un visitante.</p>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block info %}
+
+{% endblock %}
+
+
+
+{% block entrada %}
+
+{% endblock %}
+{% block content %}
+<div class="bg-color-background" class="section-padding">
+  <div class="container" id="dvContainer">
+    <div style="width: 200px;">
+      <img style="width:1000px;" src="{% static 'css2/img/max/banner_pagina.jpg' %}" alt="gob_cabeza" class="firmaax">  
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center" style="padding:60px;">
+        <h1 class="fblanc colorcitonegropapa">Asistencia del {{ nom.username}} </h1>
+        <h1 class="fblanc">{{asist.fecha_a}}</h1>
+        
+        <br>
+      </div>
+      <div class="col-md-12" style="padding-bottom:60px;">
+        <div class="item active left">
+          </div>
+
+          
+            <div class="container">
+
+              
+              <a class="btn btn-danger redondear_borde blancColor desapTemp" data-toggle="modal" data-target="#myModal1" data-id="" data-href="{% url 'perm_emple_agregar' %}" data-nombre="{{v_us1.username }}" data-tipo="Aprobación" id="btnPrint"><span class="fa fa-book desapTemp" id="iconB"></span> Exportar PDF</a>
+              <br>
+              <br>
+              {% comment %}
+              <input type="button" value="Print Div Contents" id="btnPrint" class="desapTemp" />
+              {% endcomment %}
+
+              <table class="bg-color colorcitonegropapa">
+              <tr class="colorcitonegropapa">
+                <th class="colorcitonegropapa">Nº</th>
+                <th class="colorcitonegropapa">Usuario </th>
+                <th class="colorcitonegropapa">Nombre</th>
+                <th class="colorcitonegropapa">Fecha</th>
+                {% comment %}
+                <th>departamento</th>
+                <th>Perfil</th>
+                {% endcomment %}
+
+                <th class="colorcitonegropapa">asistente</th>
+
+              </tr>
+
+
+              {% for person in pers%}
+
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+                        <td>
+                           {{ person.n_empleado.username}} 
+                        </td>
+                        <td>
+                          {{ person.n_empleado.datos.nombre}} 
+                          {{ person.n_empleado.datos.apellido}} 
+                        </td>
+                            
+                        <td>
+                          {{person.n_asistencia.fecha_a}}
+                        </td>
+                        <td>
+                          {% if person.asistente %}
+                            <span id="iconB" class="fa fa-check" style="color:rgba(0, 255, 0,0.95);" ></span>
+                          {% else %}
+                          <span id="iconB" class="fa fa-times" style="color:rgba(255, 0, 0,0.95);" ></span>
+
+                          {% endif %}
+                        </td>
+
+
+
+                    </div>
+                  </tr>
+                {% endfor %}
+                
+
+
+
+
+              <!-- ejemplo eliminado-->
+              {% comment %}
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>2</h3>
+                      </td>
+                        <td>
+                           Rufin 
+                        </td>
+                        <td>
+                          Rufo de la Trinidad Palacios
+                        </td>
+                            
+
+                        <td>
+
+                            <span id="iconB" class="fa fa-times" style="color:rgba(255, 0, 0,0.95);" ></span>
+
+                        </td>
+                      </div>
+                    </tr>
+                    {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'noti_detalle' v_us1.pk %}" class="btn btn-primary" >Ir</a>
+
+                        </td>
+                        <td>
+                          <a href="{% url 'userAP'%}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                        {% endcomment %}
+
+                      </span>
+                  </div>
+                  </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% for v_us1 in v_us %}
+              
+
+              <!-- hola -->
+
+              <tr>
+
+                  <div class="">
+                    <td>
+                      <h3>{{ forloop.counter }}</h3>
+                      </td>
+                        <td>
+                           {{v_us1.username }}
+
+                        </td>
+                        <td>
+                          {% for dat in datos %}
+                          {% if dat.pk == v_us1.pk %}
+                            {{dat.nombre}}
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td>
+                            {% for dat in datos %}
+                            {% if dat.pk == v_us1.pk %}
+                              {{dat.cedula|intcomma}}
+
+                              {% endif %}
+                              {% endfor %}
+
+                        </td>
+                            
+
+                        {% comment %}    
+                        <td>
+
+                            <a href="{% url 'datos_u' v_us1.pk %}" class="fa fa-user" style="font-size: 25px;"></a>
+
+                        </td>
+                        {% endcomment %}
+                        <td>
+                          <a href="{% url 'userAP' v_us1.pk %}"><span class="btn btn-primary" ><i class="fa fa-check" id="iconB" style="color:rgba(0, 255, 0,0.95);">  </i> Si.</span></a>
+
+                          <a href="{% url 'userNE' v_us1.pk %}"><span class="btn btn-primary"><i class="fa fa-times" id="iconB" style="color:rgba(255, 0, 0,0.95);"></i>  No. </span></a>
+
+                        </td>
+                      </span>
+                  </div>
+                  </tr>
+              {% endfor %}
+              </table>
+
+            </div>
+          </div>
+
+          
+          <div class="firmaax col-md-12">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <table>
+              <td class="colorcitonegropapa text-center col-md-12 min-widthasisInf">
+
+                  ________________________________
+
+                  <br>
+                  <br>
+                  <br>
+                  Coordinador: {{firmas_x1.datos.nombre}} {{firmas_x1.datos.apellido}}
+
+              </td>
+              <td class="colorcitonegropapa text-center col-md-12 min-widthasisInf">
+
+                  ________________________________
+
+                  <br>
+                  <br>
+                  <br>
+                  Secretaria: {{firmas_x2.datos.nombre}} {{firmas_x2.datos.apellido}}
+              </td>
+            </table>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+          </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-modal">
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title text-center fblanc" id="pr1">Nueva Publicacion</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body" id="popupb">
+          <form accept-charset="UTF-8" method='post' action="a" id="F-bs-1" name="amxj">
+
+            <fieldset>
+              {% for field in form2 %}
+
+                {% csrf_token %}
+                <div class="errores">
+                  {{ field.errors }}
+                </div>
+                  {% if forloop.counter == 1%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder='Titulo' {{field}}
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if forloop.counter == 2%}
+                  <div class="">
+                    <div class="input-group-lg">
+                      <input class="form-control" style="color: rgba(255, 255, 255,0.90);" placeholder="Informacion" type="text" {{field}} 
+                    </div>
+                  </div>
+                  {% endif %}
+                  <p></p>
+                  {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                  {% endif %}
+
+              {% endfor %}
+
+              <button class="btn btn-lg btn-primary btn-block" type="submit" id="enviof-1">Enviar</button>
+            </fieldset>
+            <br>
+
+
+          </form>
+        </div>
+                          
+      </div>
+    </div>
+  
+</div>
+
+
+
+    <script type="text/javascript" src="{% static 'css2/js/jquery1.8.3.min.js' %}"></script>
+
+    <script type="text/javascript">
+
+      /*
+      function printData()
+      {
+         var divToPrint=document.getElementById("#dvContainer");
+         newWin= window.open("");
+         newWin.document.write(divToPrint.outerHTML);
+         newWin.print();
+         newWin.close();
+      }
+
+      $('#btnPrint').on('click',function(){
+      printData();
+      })
+      */
+
+
+      
+      $("#btnPrint").click(function () {
+          //Hide all other elements other than printarea.
+          $(".desapTemp").css("display","none");
+          $(".firmaax").css("display","table-cell");
+          var colorAnte = $("#dvContainer").css('color');
+          $(".colorcitonegropapa").css("color","black");
+          
+          $("#dvContainer").css("dispay","none");
+          $("#dvContainer").show();
+          window.print();
+          var colorT = (colorAnte).toString();
+          console.log(colorT);
+          var cssT ="'css:"
+          var cssfT ="'"
+          var concaT = cssT.concat(colorT,cssfT);
+          console.log(concaT);
+          //$(".colorcitonegropapa").style.color = "blue";
+          $(".colorcitonegropapa").attr('style','css:rgb(33, 37, 41)!important!immportant');
+          $(".desapTemp").css("display","");
+          $(".firmaax").css("display","none");
+      });
+
+      
+      /*
+        $("#btnPrint").live("click", function () {
+            $(".desapTemp").css("display","none");
+            var divContents = $("#dvContainer").html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>DIV Contents</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+            $(".desapTemp").css("display","");
+
+        });
+        */
+    </script>
+
+
+
+
+
+{% endblock %}
+
+
+{% block contentImage%}
+<div style="width: 200px;">
+  <img style="width:1000px;" src="{% static 'css2/img/max/pie.jpg' %}" alt="gob_cabeza" class="firmaax">  
+</div>
+{% endblock %}
