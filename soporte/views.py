@@ -90,7 +90,6 @@ def registros1(request):
 
 
 def cambio_contra_sol(request):
-    #Trabajando
     if request.method == "POST":
         foxr = recu_contra(request.POST)
         if (foxr.is_valid()):
@@ -1092,7 +1091,18 @@ def asis_di():
     Dias_no_laboral = [5,6]
     hoy,hoy2,hactual,hactual2,x,x2 = obten_tiem()
     if not(int(datetime.date.today().weekday()) in Dias_no_laboral):
-        
+        #expiracion del permiso
+        def permisos_expir():
+            p_emple = permisos_emple.objects.filter().order_by('id')
+            
+            for em in p_emple:
+                if em.fecha_fin_per < datetime.date.today():
+                    empleado_x = get_object_or_404(User,pk=em.n_empleado.pk)
+                    empleado_x.is_active = True
+                    empleado_x.save()
+                    em.delete()
+
+        permisos_expir()
         if (hactual2 >= x and hactual2 <= x2):
             #Hora ideal de llegada
             pass
@@ -1112,11 +1122,11 @@ def asis_di():
     permisos_emp = permisos_emple.objects.filter().order_by('id')
     for per_emple in permisos_emp:
         if hoy2 == per_emple.fecha_ini_per:
-            if (asistencia_personal.objects.filter(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=per_emple.n_empleado)):
-                empleado_x = get_object_or_404(User,pk=per_emple.n_empleado.pk)
-                empleado_x.is_active = False
-                empleado_x.save()
+            if (asistencia_personal.objects.filter(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy).exists(),n_empleado=per_emple.n_empleado).exists()):
                 asistencia_personal.objects.get(n_asistencia=asistencias_p.objects.filter(fecha_a=hoy)[0],n_empleado=per_emple.n_empleado,asistente=False).delete()
+            empleado_x = get_object_or_404(User,pk=per_emple.n_empleado.pk)
+            empleado_x.is_active = False
+            empleado_x.save()
 
 
 
